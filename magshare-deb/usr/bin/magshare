@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# MagShare wrapper script
+# This script sets up the environment and launches MagShare
+
+# Set library path for plugins
+export LD_LIBRARY_PATH="/usr/lib/magshare:$LD_LIBRARY_PATH"
+
+# Launch MagShare
+exec /usr/bin/magshare-bin "$@"

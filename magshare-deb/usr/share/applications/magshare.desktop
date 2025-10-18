@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=MagShare
+Comment=Free LAN messenger and file sharing application
+Exec=/usr/bin/magshare
+Icon=magshare
+Terminal=false
+Type=Application
+Categories=Network;InstantMessaging;FileTransfer;
+Keywords=chat;messaging;lan;file sharing;network;
+StartupNotify=true
+StartupWMClass=magshare

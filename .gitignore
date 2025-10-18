@@ -1,0 +1,56 @@
+# Build artifacts
+build/
+*.o
+*.a
+*.so
+*.dll
+*.exe
+*.app
+*.dmg
+*.deb
+*.rpm
+Makefile
+.qmake.stash
+
+# Qt specific
+*.pro.user
+*.pro.user.*
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+*.qm
+
+# Temporary files
+*~
+*.tmp
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.creator
+*.creator.user
+
+# Test executables
+test/magshare
+test/beebeep
+
+# SVN (keeping for now as it exists)
+# .svn/
+
+# Distribution packages
+*.deb
+*.rpm
+*.tar.gz
+*.zip
+
+# Logs
+*.log
+
+# Core dumps
+core
+core.*

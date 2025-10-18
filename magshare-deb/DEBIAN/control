@@ -1,0 +1,18 @@
+Package: magshare
+Version: 1.1.0
+Section: net
+Priority: optional
+Architecture: amd64
+Depends: libc6, libqt5core5a, libqt5gui5, libqt5widgets5, libqt5network5, libqt5multimedia5, libqt5xml5, libqt5printsupport5, libqt5x11extras5
+Maintainer: MagShare <abdulgafoormohmd@gmail.com>
+Description: Free LAN messenger and file sharing application
+ MagShare is a secure LAN messenger that allows you to chat and share files
+ with other users on your local network without requiring internet connection.
+ Features include:
+  - Instant messaging across your LAN
+  - File and folder sharing
+  - Group chats
+  - User status management
+  - No server required
+  - Cross-platform compatibility
+Homepage: https://github.com/iamthemag

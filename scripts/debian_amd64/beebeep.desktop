@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=MagShare
+Version=1.0
+Exec=/usr/bin/beebeep
+Comment=MagShare free office messenger
+Icon=/usr/share/beebeep/beebeep.png
+Type=Application
+Terminal=false
+StartupNotify=false
+Encoding=UTF-8
+Categories=Office;InstantMessaging;

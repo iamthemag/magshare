@@ -64,7 +64,6 @@ SOURCES +=  core/Broadcaster.cpp \
   core/CoreDispatcher.cpp \
   core/CoreFileTransfer.cpp \
   core/CoreParser.cpp \
-  core/CoreShareDesktop.cpp \
   core/CoreUser.cpp \
   core/FileInfo.cpp \
   core/FileShare.cpp \

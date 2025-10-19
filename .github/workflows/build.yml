@@ -109,6 +109,9 @@ jobs:
         # Install NSIS if needed
         choco install nsis -y
         
+        # Add NSIS to PATH
+        echo "C:\Program Files (x86)\NSIS" >> $GITHUB_PATH
+        
         # Create installer script
         cat > installer.nsi << 'EOF'
         !define APPNAME "MagShare"
@@ -152,8 +155,8 @@ jobs:
         sectionEnd
         EOF
         
-        # Build installer
-        makensis installer.nsi
+        # Build installer (use full path as fallback)
+        "C:\Program Files (x86)\NSIS\makensis.exe" installer.nsi || makensis installer.nsi
       shell: bash
     
     - name: Upload Windows artifacts
@@ -188,6 +191,13 @@ jobs:
         
         # Copy binary
         cp test/magshare MagShare.app/Contents/MacOS/
+        
+        # Copy icon if it exists
+        if [ -f "src/magshare.icns" ]; then
+          cp src/magshare.icns MagShare.app/Contents/Resources/
+        elif [ -f "src/beebeep.icns" ]; then
+          cp src/beebeep.icns MagShare.app/Contents/Resources/magshare.icns
+        fi
         
         # Create Info.plist
         cat > MagShare.app/Contents/Info.plist << EOF
@@ -228,18 +238,31 @@ jobs:
         # Install create-dmg
         brew install create-dmg
         
-        # Create DMG
-        create-dmg \
-          --volname "MagShare" \
-          --volicon "MagShare.app/Contents/Resources/magshare.icns" \
-          --window-pos 200 120 \
-          --window-size 600 300 \
-          --icon-size 100 \
-          --icon "MagShare.app" 175 120 \
-          --hide-extension "MagShare.app" \
-          --app-drop-link 425 120 \
-          "MagShare-1.1.2.dmg" \
-          "MagShare.app"
+        # Create DMG (skip volume icon if not available)
+        if [ -f "MagShare.app/Contents/Resources/magshare.icns" ]; then
+          create-dmg \
+            --volname "MagShare" \
+            --volicon "MagShare.app/Contents/Resources/magshare.icns" \
+            --window-pos 200 120 \
+            --window-size 600 300 \
+            --icon-size 100 \
+            --icon "MagShare.app" 175 120 \
+            --hide-extension "MagShare.app" \
+            --app-drop-link 425 120 \
+            "MagShare-1.1.2.dmg" \
+            "MagShare.app"
+        else
+          create-dmg \
+            --volname "MagShare" \
+            --window-pos 200 120 \
+            --window-size 600 300 \
+            --icon-size 100 \
+            --icon "MagShare.app" 175 120 \
+            --hide-extension "MagShare.app" \
+            --app-drop-link 425 120 \
+            "MagShare-1.1.2.dmg" \
+            "MagShare.app"
+        fi
     
     - name: Upload macOS artifacts
       uses: actions/upload-artifact@v4

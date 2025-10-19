@@ -26,53 +26,51 @@ jobs:
         qmake magshare-desktop.pro
         make -j$(nproc)
     
-    - name: Create .deb package
-      run: |
-        mkdir -p debian/magshare/usr/bin
-        mkdir -p debian/magshare/usr/share/applications
-        mkdir -p debian/magshare/usr/share/pixmaps
-        mkdir -p debian/magshare/DEBIAN
-        
-        # Copy binary
-        cp test/magshare debian/magshare/usr/bin/
-        chmod +x debian/magshare/usr/bin/magshare
-        
-        # Create desktop file
-        cat > debian/magshare/usr/share/applications/magshare.desktop << EOF
-        [Desktop Entry]
-        Version=1.0
-        Type=Application
-        Name=MagShare
-        Comment=Secure LAN Messenger and File Sharing
-        Exec=magshare
-        Icon=magshare
-        Terminal=false
-        Categories=Network;InstantMessaging;
-        EOF
-        
-        # Extract icon from resources if available
-        if [ -f "src/beebeep.qrc" ]; then
-          # Try to extract icon - this is simplified, you might need rcc tool
-          cp debian/magshare/usr/share/pixmaps/magshare.png || true
-        fi
-        
-        # Create control file
-        cat > debian/magshare/DEBIAN/control << EOF
-        Package: magshare
-        Version: 1.1.2
-        Section: net
-        Priority: optional
-        Architecture: amd64
-        Depends: libqt5core5a, libqt5gui5, libqt5widgets5, libqt5network5, libqt5multimedia5
-        Maintainer: MagShare Team <team@magshare.net>
-        Description: Secure LAN Messenger and File Sharing
-         MagShare is a secure peer-to-peer messenger and file sharing application
-         designed for local area networks.
-        EOF
-        
-        # Build .deb package
-        dpkg-deb --build debian/magshare
-        mv debian/magshare.deb magshare_1.1.2_amd64.deb
+   - name: Create .deb package
+  run: |
+    mkdir -p debian/magshare/usr/bin
+    mkdir -p debian/magshare/usr/share/applications
+    mkdir -p debian/magshare/usr/share/pixmaps
+    mkdir -p debian/magshare/DEBIAN
+
+    # Copy binary
+    cp test/magshare debian/magshare/usr/bin/
+    chmod +x debian/magshare/usr/bin/magshare
+
+    # Copy icon from src folder to pixmaps
+    cp src/magshare.png debian/magshare/usr/share/pixmaps/magshare.png
+
+    # Create desktop file
+    cat > debian/magshare/usr/share/applications/magshare.desktop << EOF
+    [Desktop Entry]
+    Version=1.0
+    Type=Application
+    Name=MagShare
+    Comment=Secure LAN Messenger and File Sharing
+    Exec=magshare
+    Icon=magshare
+    Terminal=false
+    Categories=Network;InstantMessaging;
+    EOF
+
+    # Create control file
+    cat > debian/magshare/DEBIAN/control << EOF
+    Package: magshare
+    Version: 1.1.2
+    Section: net
+    Priority: optional
+    Architecture: amd64
+    Depends: libqt5core5a, libqt5gui5, libqt5widgets5, libqt5network5, libqt5multimedia5
+    Maintainer: MagShare Team <team@magshare.net>
+    Description: Secure LAN Messenger and File Sharing
+     MagShare is a secure peer-to-peer messenger and file sharing application
+     designed for local area networks.
+    EOF
+
+    # Build .deb package
+    dpkg-deb --build debian/magshare
+    mv debian/magshare.deb magshare_1.1.2_amd64.deb
+
     
     - name: Upload Linux artifacts
       uses: actions/upload-artifact@v4

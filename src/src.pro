@@ -11,8 +11,20 @@ macx {
     CONFIG -= app_bundle
     message( Building MagShare without BUNDLE )
   } else {
-    CONFIG += app_bundle
-    message( Building MagShare BUNDLE )
+    # Disable app_bundle for GitHub Actions CI builds to make executable available at test/magshare
+    # GitHub Actions sets CI=true and GITHUB_ACTIONS=true environment variables
+    CI_BUILD = $$(CI)
+    GITHUB_ACTIONS_BUILD = $$(GITHUB_ACTIONS)
+    !isEmpty(CI_BUILD) {
+      CONFIG -= app_bundle
+      message( Building MagShare without BUNDLE for CI build )
+    } else:!isEmpty(GITHUB_ACTIONS_BUILD) {
+      CONFIG -= app_bundle
+      message( Building MagShare without BUNDLE for GitHub Actions build )
+    } else {
+      CONFIG += app_bundle
+      message( Building MagShare BUNDLE )
+    }
   }
 }
 

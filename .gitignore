@@ -51,6 +51,5 @@ test/beebeep
 # Logs
 *.log
 
-# Core dumps
-core
+# Core dumps (but not src/core directory)
 core.*

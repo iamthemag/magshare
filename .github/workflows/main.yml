@@ -1,0 +1,98 @@
+name: build-release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            qt_host: linux
+            artifact_ext: deb
+          - os: windows-2022
+            qt_host: windows
+            artifact_ext: exe
+          - os: macos-13
+            qt_host: mac
+            artifact_ext: dmg
+    runs-on: ${{ matrix.os }}
+    env:
+      QT_VERSION: 5.15.2
+      PRO_FILE: magshare-desktop.pro
+      APP_NAME: MagShare
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Qt (aqtinstall)
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: ${{ matrix.qt_host }}
+          arch: ${{ matrix.os == 'windows-2022' && 'win64_msvc2019_64' || matrix.os == 'macos-13' && 'clang_64' || 'linux_gcc_64' }}
+          modules: qtbase qtmultimedia
+          cache: true
+
+      - name: Build (qmake)
+        shell: bash
+        run: |
+          qmake $PRO_FILE CONFIG+=release
+          if [[ "${{ matrix.os }}" == windows-* ]]; then nmake || mingw32-make; else make -j$(nproc); fi
+
+      - name: Deploy/package per-OS
+        shell: bash
+        run: |
+          set -e
+          if [[ "${{ matrix.os }}" == ubuntu-* ]]; then
+            # Stage files
+            STAGE=magshare-staging
+            mkdir -p $STAGE/usr/bin $STAGE/usr/share/applications $STAGE/usr/share/icons/hicolor/64x64/apps
+            cp ./test/magshare $STAGE/usr/bin/magshare
+            # (optional) copy .desktop + icons if in repo
+            test -f misc/magshare.desktop && cp misc/magshare.desktop $STAGE/usr/share/applications/magshare.desktop || true
+            test -f misc/icons/64x64/magshare.png && cp misc/icons/64x64/magshare.png $STAGE/usr/share/icons/hicolor/64x64/apps/magshare.png || true
+            # Minimal DEBIAN control
+            mkdir -p $STAGE/DEBIAN
+            VER=${GITHUB_REF_NAME#v}
+            cat > $STAGE/DEBIAN/control <<EOF
+            Package: magshare
+            Version: $VER
+            Section: utils
+            Priority: optional
+            Architecture: amd64
+            Depends: libc6 (>= 2.31), libqt5core5a, libqt5gui5, libqt5widgets5, libqt5multimedia5
+            Maintainer: MagShare
+            Description: MagShare LAN messenger
+            EOF
+            dpkg-deb --build $STAGE magshare_${VER}_amd64.deb
+            echo "ASSET=magshare_${VER}_amd64.deb" >> $GITHUB_ENV
+          elif [[ "${{ matrix.os }}" == windows-* ]]; then
+            # Collect and deploy Qt runtime
+            EXE=release/${{ env.APP_NAME }}.exe
+            test -f $EXE || EXE=./${{ env.APP_NAME }}.exe
+            windeployqt --release "$EXE"
+            # Zip portable bundle
+            BUNDLE_DIR=magshare-windows
+            mkdir -p $BUNDLE_DIR
+            cp -r $(dirname "$EXE")/* $BUNDLE_DIR/
+            7z a magshare_windows_portable.zip $BUNDLE_DIR/*
+            echo "ASSET=magshare_windows_portable.zip" >> $GITHUB_ENV
+          else
+            # macOS app bundle + dmg
+            APP=./${{ env.APP_NAME }}.app
+            test -d "$APP" || APP=./release/${{ env.APP_NAME }}.app
+            macdeployqt "$APP" -dmg
+            DMG=$(ls -1 *.dmg | head -n1)
+            echo "ASSET=$DMG" >> $GITHUB_ENV
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.ASSET }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

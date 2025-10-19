@@ -81,10 +81,10 @@ jobs:
           test/magshare
 
   build-windows:
-    runs-on: windows-latest
-    steps:
+  runs-on: windows-latest
+  steps:
     - uses: actions/checkout@v4
-    
+
     - name: Install Qt
       uses: jurplel/install-qt-action@v3
       with:
@@ -92,68 +92,93 @@ jobs:
         host: 'windows'
         target: 'desktop'
         arch: 'win64_msvc2019_64'
-    
+
     - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1
-    
+
     - name: Build application
       run: |
         qmake magshare-desktop.pro
         nmake release
       shell: cmd
-    
-    - name: Create Windows installer
+
+    - name: Deploy Qt dependencies
       run: |
-        # Install NSIS if needed
-        choco install nsis -y
-        
-        # Create installer script
+        windeployqt.exe --release --dir test test\magshare.exe
+      shell: cmd
+
+    - name: Install NSIS
+      run: choco install nsis -y
+      shell: powershell
+
+    - name: Create Windows installer with modern UI
+      run: |
+        # Copy .ico file to root (make sure src/magshare.ico exists in your repo)
+        cp src/magshare.ico magshare.ico
+
+        # Create placeholder LICENSE.txt if it doesn't exist
+        echo "MagShare License" > LICENSE.txt
+
+        # Create NSIS script with Modern UI 2 and proper DLL packaging
         cat > installer.nsi << 'EOF'
         !define APPNAME "MagShare"
         !define COMPANYNAME "MagShareSW"
         !define DESCRIPTION "Secure LAN Messenger and File Sharing"
-        !define VERSIONMAJOR 1
-        !define VERSIONMINOR 1
-        !define VERSIONBUILD 1
-        
-        RequestExecutionLevel admin
-        
-        InstallDir "$PROGRAMFILES64\${APPNAME}"
-        
+        !define VERSION "1.1.2"
+
+        !define MUI_ICON "magshare.ico"
+        !define MUI_UNICON "magshare.ico"
+        !define MUI_FINISHPAGE_RUN "$INSTDIR\magshare.exe"
+        !define MUI_FINISHPAGE_RUN_TEXT "Run MagShare"
+
+        !include "MUI2.nsh"
+
         Name "${APPNAME}"
-        outFile "MagShare-1.1.2-Setup.exe"
-        
-        page directory
-        page instfiles
-        
-        section "install"
-            setOutPath $INSTDIR
-            file "test\magshare.exe"
-            writeUninstaller "$INSTDIR\uninstall.exe"
-            
-            # Start Menu
-            createDirectory "$SMPROGRAMS\${APPNAME}"
-            createShortCut "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk" "$INSTDIR\magshare.exe"
-            
-            # Registry
-            WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME}"
-            WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString" "$INSTDIR\uninstall.exe"
-        sectionEnd
-        
-        section "uninstall"
-            delete "$INSTDIR\magshare.exe"
-            delete "$INSTDIR\uninstall.exe"
-            rmDir "$INSTDIR"
-            delete "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk"
-            rmDir "$SMPROGRAMS\${APPNAME}"
-            DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
-        sectionEnd
+        OutFile "MagShare-${VERSION}-Setup.exe"
+        InstallDir "$PROGRAMFILES64\${APPNAME}"
+        RequestExecutionLevel admin
+
+        !insertmacro MUI_PAGE_WELCOME
+        !insertmacro MUI_PAGE_LICENSE "LICENSE.txt"
+        !insertmacro MUI_PAGE_DIRECTORY
+        !insertmacro MUI_PAGE_INSTFILES
+        !insertmacro MUI_PAGE_FINISH
+
+        !insertmacro MUI_UNPAGE_CONFIRM
+        !insertmacro MUI_UNPAGE_INSTFILES
+
+        !insertmacro MUI_LANGUAGE "English"
+
+        Section "Install"
+          SetOutPath "$INSTDIR"
+          File /r "test\*"
+
+          CreateDirectory "$SMPROGRAMS\${APPNAME}"
+          CreateShortCut "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk" "$INSTDIR\magshare.exe" "" "$INSTDIR\magshare.exe"
+
+          CreateShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\magshare.exe" "" "$INSTDIR\magshare.exe"
+
+          WriteUninstaller "$INSTDIR\uninstall.exe"
+          WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME}"
+          WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString" "$INSTDIR\uninstall.exe"
+        SectionEnd
+
+        Section "Uninstall"
+          Delete "$INSTDIR\magshare.exe"
+          Delete "$INSTDIR\uninstall.exe"
+          Delete "$INSTDIR\magshare.ico"
+          RMDir /r "$INSTDIR"
+          Delete "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk"
+          RMDir "$SMPROGRAMS\${APPNAME}"
+          Delete "$DESKTOP\${APPNAME}.lnk"
+          DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
+        SectionEnd
         EOF
-        
+
         # Build installer
         makensis installer.nsi
       shell: bash
-    
+
     - name: Upload Windows artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -162,93 +187,9 @@ jobs:
           MagShare-1.1.2-Setup.exe
           test/magshare.exe
 
-  build-macos:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v3
-      with:
-        version: '5.15.2'
-        host: 'mac'
-        target: 'desktop'
-    
-    - name: Build application
-      run: |
-        qmake magshare-desktop.pro
-        make -j$(sysctl -n hw.ncpu)
-    
-    - name: Create .app bundle
-      run: |
-        mkdir -p MagShare.app/Contents/MacOS
-        mkdir -p MagShare.app/Contents/Resources
-        
-        # Copy binary
-        cp test/magshare MagShare.app/Contents/MacOS/
-        
-        # Create Info.plist
-        cat > MagShare.app/Contents/Info.plist << EOF
-        <?xml version="1.0" encoding="UTF-8"?>
-        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-        <plist version="1.0">
-        <dict>
-            <key>CFBundleDevelopmentRegion</key>
-            <string>English</string>
-            <key>CFBundleExecutable</key>
-            <string>magshare</string>
-            <key>CFBundleIconFile</key>
-            <string>magshare</string>
-            <key>CFBundleIdentifier</key>
-            <string>net.magshare.MagShare</string>
-            <key>CFBundleInfoDictionaryVersion</key>
-            <string>6.0</string>
-            <key>CFBundleName</key>
-            <string>MagShare</string>
-            <key>CFBundlePackageType</key>
-            <string>APPL</string>
-            <key>CFBundleShortVersionString</key>
-            <string>1.1.2</string>
-            <key>CFBundleVersion</key>
-            <string>1.1.2</string>
-            <key>NSHighResolutionCapable</key>
-            <true/>
-        </dict>
-        </plist>
-        EOF
-    
-    - name: Deploy Qt dependencies
-      run: |
-        macdeployqt MagShare.app
-    
-    - name: Create .dmg
-      run: |
-        # Install create-dmg
-        brew install create-dmg
-        
-        # Create DMG
-        create-dmg \
-          --volname "MagShare" \
-          --volicon "MagShare.app/Contents/Resources/magshare.icns" \
-          --window-pos 200 120 \
-          --window-size 600 300 \
-          --icon-size 100 \
-          --icon "MagShare.app" 175 120 \
-          --hide-extension "MagShare.app" \
-          --app-drop-link 425 120 \
-          "MagShare-1.1.2.dmg" \
-          "MagShare.app"
-    
-    - name: Upload macOS artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: magshare-macos
-        path: |
-          MagShare-1.1.2.dmg
-          MagShare.app
 
   create-release:
-    needs: [build-linux, build-windows, build-macos]
+    needs: [build-linux, build-windows]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
     steps:
@@ -261,7 +202,6 @@ jobs:
         files: |
           magshare-linux/magshare_1.1.2_amd64.deb
           magshare-windows/MagShare-1.1.2-Setup.exe
-          magshare-macos/MagShare-1.1.2.dmg
         draft: false
         prerelease: false
       env:

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUICREATETEXTFILE_H
-#define BEEBEEP_GUICREATETEXTFILE_H
+#ifndef MAGSHARE_GUICREATETEXTFILE_H
+#define MAGSHARE_GUICREATETEXTFILE_H
 
 #include "Config.h"
 #include "ui_GuiCreateTextFile.h"
@@ -56,4 +56,4 @@ private:
 // Inline Functions
 bool GuiCreateTextFile::sendAsFile() const { return m_sendAsFile; }
 
-#endif // BEEBEEP_GUICREATETEXTFILE_H
+#endif // MAGSHARE_GUICREATETEXTFILE_H

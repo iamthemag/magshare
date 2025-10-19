@@ -101,13 +101,13 @@ QByteArray ImageOptimizer::saveImage( const QImage& img, const QString& image_ty
   QBuffer buffer( &diff_img_bytes );
   buffer.open( QIODevice::WriteOnly );
   img.save( &buffer, image_type.toLatin1().constData(), image_quality );
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "ImageOptimizer saves image" << qPrintable( image_type ) << "(uncompressed) with size" << diff_img_bytes.size();
 #endif
   if( use_compression )
   {
     diff_img_bytes = qCompress( diff_img_bytes, compression_level );
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "ImageOptimizer compress image"<< qPrintable( image_type ) << "to size" << diff_img_bytes.size();
 #endif
   }
@@ -162,7 +162,7 @@ static inline int closest_match( QRgb pixel, const QVector<QRgb> &clut )
 /**********************************************/
 QImage ImageOptimizer::applyMedianCutAlgorithm( const QImage& img ) const
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   QElapsedTimer timer;
   timer.start();
 #endif
@@ -195,7 +195,7 @@ QImage ImageOptimizer::applyMedianCutAlgorithm( const QImage& img ) const
       }
     }
   }
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "MedianCutAlgorithm has checked the old palette in" << timer.elapsed() << "ms";
 #endif
 
@@ -218,7 +218,7 @@ QImage ImageOptimizer::applyMedianCutAlgorithm( const QImage& img ) const
       return qBlue( rgb1 ) < qBlue( rgb2 );
   });
 
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "MedianCutAlgorithm sorts colors in" << timer.elapsed() << "ms";
 #endif
 
@@ -234,7 +234,7 @@ QImage ImageOptimizer::applyMedianCutAlgorithm( const QImage& img ) const
     if( !list.isEmpty() )
       lists.append( list );
   }
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "MedianCutAlgorithm has created new" << lists.size() << "lists of colors in" << timer.elapsed() << "ms";
 #endif
 
@@ -244,7 +244,7 @@ QImage ImageOptimizer::applyMedianCutAlgorithm( const QImage& img ) const
     if( !list.isEmpty() )
       new_palette.append( list.at( list.size() / 2 ) );
   }
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "MedianCutAlgorithm has created new palette with" << new_palette.size() << "colors in" << timer.elapsed() << "ms";
 #endif
 
@@ -255,7 +255,7 @@ QImage ImageOptimizer::applyMedianCutAlgorithm( const QImage& img ) const
       new_img.setPixel( x, y, new_palette[ closest_match( img.pixel( x, y ), new_palette ) ] );
   }
 
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "MedianCutAlgorithm has worked for" << timer.elapsed() << "ms";
 #endif
   return new_img;

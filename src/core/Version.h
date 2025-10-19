@@ -26,27 +26,36 @@
 
 const char BEEBEEP_NAME[] = "MagShare";
 const char BEEBEEP_ORGANIZATION[] = "MagShareSW";
-const char BEEBEEP_ORGANIZATION_DOMAIN[] = "magshare.net";
-const char BEEBEEP_DNS_RECORD[] = "_magshare._tcp";
+const char MAGSHARE_ORGANIZATION_DOMAIN[] = "magshare.net";
+const char MAGSHARE_DNS_RECORD[] = "_magshare._tcp";
 const char BEEBEEP_WEBSITE[] = "https://github.com/iamthemag/magshare";
-const char BEEBEEP_DOWNLOAD_WEBSITE[] = "";
-const char BEEBEEP_DONATE_WEBSITE[] = "";
-const char BEEBEEP_HELP_WEBSITE[] = "https://github.com/iamthemag/magshare";
-const char BEEBEEP_LANGUAGE_WEBSITE[] = "language";
-const char BEEBEEP_NEWS_WEBSITE[] = "news";
-const char BEEBEEP_CHECK_VERSION_WEBSITE[] = "check_version.php";
-const char BEEBEEP_LAST_VERSION_FILE[] = "/releases/latest/download/VERSION.json";
-const char BEEBEEP_FACT_WEBSITE[] = "fact";
-const char BEEBEEP_TIPS_WEBSITE[] = "tips";
-const char BEEBEEP_FAQ_WEBSITE[] = "faq";
-const char BEEBEEP_GA_TRACKING_ID[] = "UA-57878696-4";
-const char BEEBEEP_GA_URL[] = "https://www.google-analytics.com/collect";
-const char BEEBEEP_GA_EVENT_VERSION[] = "1";
+const char MAGSHARE_DOWNLOAD_WEBSITE[] = "";
+const char MAGSHARE_DONATE_WEBSITE[] = "";
+const char MAGSHARE_HELP_WEBSITE[] = "https://github.com/iamthemag/magshare";
+const char MAGSHARE_LANGUAGE_WEBSITE[] = "language";
+const char MAGSHARE_NEWS_WEBSITE[] = "news";
+const char MAGSHARE_CHECK_VERSION_WEBSITE[] = "check_version.php";
+const char MAGSHARE_LAST_VERSION_FILE[] = "/releases/latest/download/VERSION.json";
+const char MAGSHARE_FACT_WEBSITE[] = "fact";
+const char MAGSHARE_TIPS_WEBSITE[] = "tips";
+const char MAGSHARE_FAQ_WEBSITE[] = "faq";
+const char MAGSHARE_GA_TRACKING_ID[] = "UA-57878696-4";
+const char MAGSHARE_GA_URL[] = "https://www.google-analytics.com/collect";
+const char MAGSHARE_GA_EVENT_VERSION[] = "1";
 const char HUNSPELL_VERSION[] = "1.7.0";
-const char BEEBEEP_VERSION[] = "1.1.0";
+const char BEEBEEP_VERSION[] = "1.1.2";
 const int BEEBEEP_PROTO_VERSION = 95;
 const int BEEBEEP_SETTINGS_VERSION = 18;
 const int BEEBEEP_BUILD = 1371;
+
+// MagShare constant mappings for backward compatibility
+#define MAGSHARE_NAME BEEBEEP_NAME
+#define MAGSHARE_VERSION BEEBEEP_VERSION
+#define MAGSHARE_PROTO_VERSION BEEBEEP_PROTO_VERSION
+#define MAGSHARE_SETTINGS_VERSION BEEBEEP_SETTINGS_VERSION
+#define MAGSHARE_BUILD BEEBEEP_BUILD
+#define MAGSHARE_ORGANIZATION BEEBEEP_ORGANIZATION
+#define MAGSHARE_WEBSITE BEEBEEP_WEBSITE
 
 #endif // BEEBEEP_VERSION_H
 

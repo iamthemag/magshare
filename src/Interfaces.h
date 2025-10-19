@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_INTERFACES_H
-#define BEEBEEP_INTERFACES_H
+#ifndef MAGSHARE_INTERFACES_H
+#define MAGSHARE_INTERFACES_H
 
 #include <QtPlugin>
 #include <QIcon>
@@ -71,6 +71,6 @@ public:
 inline void PluginInterface::setEnabled( bool new_value ) { m_isEnabled = new_value; }
 inline bool PluginInterface::isEnabled() const { return m_isEnabled; }
 
-Q_DECLARE_INTERFACE( TextMarkerInterface, "beebeep.plugin.TextMarkerInterface/2.0" )
+Q_DECLARE_INTERFACE( TextMarkerInterface, "magshare.plugin.TextMarkerInterface/2.0" )
 
-#endif // BEEBEEP_INTERFACES_H
+#endif // MAGSHARE_INTERFACES_H

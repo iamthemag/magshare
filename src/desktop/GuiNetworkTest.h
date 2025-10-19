@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUINETWORKTEST_H
-#define BEEBEEP_GUINETWORKTEST_H
+#ifndef MAGSHARE_GUINETWORKTEST_H
+#define MAGSHARE_GUINETWORKTEST_H
 
 #include "ui_GuiNetworkTest.h"
 #include "ConnectionSocket.h"
@@ -61,4 +61,4 @@ private:
 };
 
 
-#endif // BEEBEEP_GUINETWORKTEST_H
+#endif // MAGSHARE_GUINETWORKTEST_H

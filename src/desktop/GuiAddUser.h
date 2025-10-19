@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIADDUSER_H
-#define BEEBEEP_GUIADDUSER_H
+#ifndef MAGSHARE_GUIADDUSER_H
+#define MAGSHARE_GUIADDUSER_H
 
 #include "ui_GuiAddUser.h"
 #include "UserRecord.h"
@@ -61,4 +61,4 @@ private:
 // Inline Functions
 inline const QList<NetworkAddress>& GuiAddUser::networkAddressesToAdd() const { return m_networkAddresses; }
 
-#endif // BEEBEEP_GUIADDUSER_H
+#endif // MAGSHARE_GUIADDUSER_H

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIPRESETMESSAGELIST_H
-#define BEEBEEP_GUIPRESETMESSAGELIST_H
+#ifndef MAGSHARE_GUIPRESETMESSAGELIST_H
+#define MAGSHARE_GUIPRESETMESSAGELIST_H
 
 #include "Config.h"
 
@@ -62,4 +62,4 @@ private:
 };
 
 
-#endif // BEEBEEP_GUIPRESETMESSAGELIST_H
+#endif // MAGSHARE_GUIPRESETMESSAGELIST_H

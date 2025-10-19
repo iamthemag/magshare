@@ -107,7 +107,7 @@ void GuiRecordVoiceMessageSettings::encodingModeChanged( int button_clicked )
   }
   else
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qWarning() << "Invalid button id" << button_clicked << "clicked in GuiRecordVoiceMessageSettings::encodingModeChanged(...)";
 #endif
   }

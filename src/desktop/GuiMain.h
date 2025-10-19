@@ -21,13 +21,13 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIMAIN_H
-#define BEEBEEP_GUIMAIN_H
+#ifndef MAGSHARE_GUIMAIN_H
+#define MAGSHARE_GUIMAIN_H
 
 
 #include "Config.h"
 #include "FileTransferPeer.h"
-#ifdef BEEBEEP_USE_QXT
+#ifdef MAGSHARE_USE_QXT
  #include "qxtglobalshortcut.h"
 #endif
 class Chat;
@@ -48,10 +48,10 @@ class GuiSystemTray;
 class GuiFileTransfer;
 class GuiUserList;
 class User;
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   class GuiShareDesktop;
 #endif
-#ifdef BEEBEEP_USE_WEBENGINE
+#ifdef MAGSHARE_USE_WEBENGINE
   class GuiWebView;
 #endif
 
@@ -177,7 +177,7 @@ private slots:
   void askSaveGeometryAndState();
   void askResetGeometryAndState();
   void onChangeSettingOnExistingFile( QAction* );
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   void onShareDesktopImageAvailable( const User&, const QImage&, const QString&, QRgb );
   void onShareDesktopCloseEvent( VNumber );
   void onShareDesktopDeleteRequest( VNumber );
@@ -215,13 +215,13 @@ private slots:
   void onHideEmptyChatsRequest();
   void updateUser( const User& );
   void onApplicationFocusChanged( QWidget*, QWidget* );
-#ifdef BEEBEEP_USE_WEBENGINE
+#ifdef MAGSHARE_USE_WEBENGINE
   void showWebView();
   void onNewsLoad( bool );
 #endif
   void showNetworkTest();
   void onNetworkTestWindowClosed();
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
   void sendVoiceMessageToChat( VNumber, const QString&, qint64 );
   void showVoiceEncoderSettings();
 #endif
@@ -298,7 +298,7 @@ private:
   QList<GuiFloatingChat*> m_floatingChats;
   GuiFileSharing* mp_fileSharing;
   GuiHome* mp_home;
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   QList<GuiShareDesktop*> m_desktops;
 #endif
   QMenu* mp_menuMain;
@@ -370,7 +370,7 @@ private:
   QAction* mp_actPortBroadcast;
   QAction* mp_actPortListener;
   QAction* mp_actPortFileTransfer;
-#ifdef BEEBEEP_USE_MULTICAST_DNS
+#ifdef MAGSHARE_USE_MULTICAST_DNS
   QAction* mp_actMulticastDns;
 #endif
   QAction* mp_actMulticastGroupAddress;
@@ -389,7 +389,7 @@ private:
 
   QShortcut* mp_scMinimizeAllChats;
   QShortcut* mp_scShowNextUnreadMessage;
-#ifdef BEEBEEP_USE_QXT
+#ifdef MAGSHARE_USE_QXT
   QxtGlobalShortcut* mp_scShowAllChats;
   QxtGlobalShortcut* mp_scSendHelpMessage;
   QxtGlobalShortcut* mp_scSelectFirstChat;
@@ -401,18 +401,18 @@ private:
   bool m_coreIsConnecting;
   bool m_changeTabToUserListOnFirstConnected;
 
-#ifdef BEEBEEP_USE_WEBENGINE
+#ifdef MAGSHARE_USE_WEBENGINE
   GuiWebView* mp_webView;
   QAction* mp_actWebView;
 #endif
 
   GuiNetworkTest* mp_networkTest;
 
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
   // QMenu* mp_menuVoiceMessage; // Voice message menu disabled in UI
 #endif
 
   bool m_useFusionStyle;
 };
 
-#endif // BEEBEEP_GUIMAIN_H
+#endif // MAGSHARE_GUIMAIN_H

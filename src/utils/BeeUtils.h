@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIUTILS_H
-#define BEEBEEP_GUIUTILS_H
+#ifndef MAGSHARE_GUIUTILS_H
+#define MAGSHARE_GUIUTILS_H
 
 #include "Config.h"
 class User;
@@ -125,4 +125,4 @@ inline FileSizeType Bee::qVariantToFileSizeType( const QVariant& v, bool* ok ) {
 inline int Bee::toLittleEndianFromBig( int big_endian_int ) { return static_cast<int>(0 | ((big_endian_int & 0x00ff) << 8) | ((big_endian_int & 0xff00) >> 8)); }
 inline bool Bee::isTimeToCheck( int ticks, int tick_for_check ) { return tick_for_check > 0 && (ticks % tick_for_check == 0); }
 
-#endif // BEEBEEP_GUIUTILS_H
+#endif // MAGSHARE_GUIUTILS_H

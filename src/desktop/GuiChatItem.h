@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUICHATITEM_H
-#define BEEBEEP_GUICHATITEM_H
+#ifndef MAGSHARE_GUICHATITEM_H
+#define MAGSHARE_GUICHATITEM_H
 
 #include "BeeUtils.h"
 class Chat;
@@ -68,4 +68,4 @@ inline int GuiChatItem::unreadMessages() const { return data( 0, ChatUnreadMessa
 inline int GuiChatItem::onlineUsers() const { return data( 0, ChatOnlineUsers ).toInt(); }
 QDateTime GuiChatItem::lastMessageTimestamp() const { return data( 0, ChatLastMessageTimestamp ).toDateTime(); }
 
-#endif // BEEBEEP_GUICHATITEM_H
+#endif // MAGSHARE_GUICHATITEM_H

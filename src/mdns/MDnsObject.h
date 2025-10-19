@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_MDNSOBJECT_H
-#define BEEBEEP_MDNSOBJECT_H
+#ifndef MAGSHARE_MDNSOBJECT_H
+#define MAGSHARE_MDNSOBJECT_H
 
 #include "Config.h"
 #include "MDnsRecord.h"
@@ -62,4 +62,4 @@ protected:
 inline const MDnsRecord& MDnsObject::record() const { return m_record; }
 inline void MDnsObject::setRecord( const MDnsRecord& new_value ) { m_record = new_value; }
 
-#endif // BEEBEEP_MDNSOBJECT_H
+#endif // MAGSHARE_MDNSOBJECT_H

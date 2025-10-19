@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_EMOTICON_H
-#define BEEBEEP_EMOTICON_H
+#ifndef MAGSHARE_EMOTICON_H
+#define MAGSHARE_EMOTICON_H
 
 #include "Config.h"
 
@@ -93,4 +93,4 @@ inline int Emoticon::count() const { return m_count; }
 inline void Emoticon::addToCount( int value_to_add ) { m_count += value_to_add; };
 inline void Emoticon::resetCount() { m_count = 0; };
 
-#endif // BEEBEEP_EMOTICON_H
+#endif // MAGSHARE_EMOTICON_H

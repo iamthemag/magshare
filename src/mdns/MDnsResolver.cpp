@@ -95,7 +95,7 @@ void MDnsResolver::lookedUp( const QHostInfo& host_info )
   QString local_host_name = QHostInfo::localHostName();
   if( host_info.hostName() == local_host_name )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << qPrintable( objectName() ) << "skips local host name:" << host_info.hostName();
 #endif
     deleteLater();
@@ -105,7 +105,7 @@ void MDnsResolver::lookedUp( const QHostInfo& host_info )
   local_host_name.append( QString( ".local." ) );
   if( host_info.hostName() == local_host_name )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << qPrintable( objectName() ) << "skips local host name :" << host_info.hostName();
 #endif
     deleteLater();

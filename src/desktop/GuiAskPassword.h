@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIASKPASSWORD_H
-#define BEEBEEP_GUIASKPASSWORD_H
+#ifndef MAGSHARE_GUIASKPASSWORD_H
+#define MAGSHARE_GUIASKPASSWORD_H
 
 #include "Config.h"
 #include "ui_GuiAskPassword.h"
@@ -47,4 +47,4 @@ private:
 
 };
 
-#endif // BEEBEEP_GUIASKPASSWORD_H
+#endif // MAGSHARE_GUIASKPASSWORD_H

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUISAVEDCHAT_H
-#define BEEBEEP_GUISAVEDCHAT_H
+#ifndef MAGSHARE_GUISAVEDCHAT_H
+#define MAGSHARE_GUISAVEDCHAT_H
 
 #include "Config.h"
 
@@ -68,4 +68,4 @@ private:
 // Inline Functions
 inline const QString& GuiSavedChat::savedChatName() const { return m_savedChatName; }
 
-#endif // BEEBEEP_GUISAVEDCHAT_H
+#endif // MAGSHARE_GUISAVEDCHAT_H

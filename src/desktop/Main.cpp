@@ -34,7 +34,7 @@
 #include "HistoryManager.h"
 #include "Hive.h"
 #include "IconManager.h"
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   #include "ImageOptimizer.h"
 #endif
 #include "Log.h"
@@ -46,7 +46,7 @@
 #include "Random.h"
 #include "Settings.h"
 #include "ShortcutManager.h"
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
   #include "SpellChecker.h"
 #endif
 
@@ -159,7 +159,7 @@ int main( int argc, char *argv[] )
   Settings::instance().createApplicationUuid();
   Log::instance().setMaxLogLines( Settings::instance().maxLogLines() );
   qDebug() << "Log has set max lines to:" << Settings::instance().maxLogLines();
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   QFont chat_font = Settings::instance().chatFont();
   qDebug() << "Font selected for chat:" << chat_font.toString();
   qDebug() << "Font pixel size:" << chat_font.pixelSize();
@@ -224,7 +224,7 @@ int main( int argc, char *argv[] )
   /* Init Icon Provider */
   (void)GuiIconProvider::instance();
 
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   (void)ImageOptimizer::instance();
 #endif
 
@@ -242,7 +242,7 @@ int main( int argc, char *argv[] )
   if( !Settings::instance().customShortcuts().isEmpty() )
     ShortcutManager::instance().loadFromStringList( Settings::instance().customShortcuts() );
 
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
   /* Init SpellChecker */
   (void)SpellChecker::instance();
   if( !Settings::instance().dictionaryPath().isEmpty() )
@@ -315,12 +315,12 @@ int main( int argc, char *argv[] )
   EmoticonManager::close();
   IconManager::close();
   ColorManager::close();
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   ImageOptimizer::close();
 #endif
   AudioManager::close();
   ShortcutManager::close();
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
   SpellChecker::close();
 #endif
   qDebug() << "Exit with code:" << iRet;

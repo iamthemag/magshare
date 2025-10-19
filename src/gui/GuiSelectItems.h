@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_SELECTITEMS_H
-#define BEEBEEP_SELECTITEMS_H
+#ifndef MAGSHARE_SELECTITEMS_H
+#define MAGSHARE_SELECTITEMS_H
 
 #include "Config.h"
 #include "ui_GuiSelectItems.h"
@@ -58,4 +58,4 @@ private:
 // Inline functions
 inline QTreeWidget* GuiSelectItems::treeWidget() const { return mp_tw; }
 
-#endif // BEEBEEP_SELECTITEMS_H
+#endif // MAGSHARE_SELECTITEMS_H

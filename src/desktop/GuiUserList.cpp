@@ -562,7 +562,7 @@ void GuiUserList::checkAndSendUrls( QTreeWidgetItem* item, const QMimeData* sour
 
   foreach( QUrl url, source->urls() )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Checking pasted url:" << qPrintable( url.toString() );
 #endif
 

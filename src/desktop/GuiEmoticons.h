@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIEMOTICONS_H
-#define BEEBEEP_GUIEMOTICONS_H
+#ifndef MAGSHARE_GUIEMOTICONS_H
+#define MAGSHARE_GUIEMOTICONS_H
 
 #include "Config.h"
 #include "Emoticon.h"
@@ -100,4 +100,4 @@ inline const QList<QPushButton*>& GuiEmoticonWidget::emoticonButtons() const { r
 inline void GuiEmoticonWidget::setEmoticonGroup( Emoticon::Group new_value ) { m_emoticonGroup = new_value; }
 inline Emoticon::Group GuiEmoticonWidget::emoticonGroup() const { return m_emoticonGroup; }
 
-#endif // BEEBEEP_GUIEMOTICONS_H
+#endif // MAGSHARE_GUIEMOTICONS_H

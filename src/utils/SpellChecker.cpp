@@ -21,7 +21,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
 
 #include "Settings.h"
 #include "SpellChecker.h"
@@ -53,7 +53,7 @@ void SpellChecker::clearDictionary()
 {
   if( mp_hunspell )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "SpellChecker clear dictionary";
 #endif
     delete mp_hunspell;
@@ -151,7 +151,7 @@ bool SpellChecker::isGoodWord( const QString& word )
   if( mp_hunspell )
   {
     int spell_code = mp_hunspell->spell( std::string( mp_codec->fromUnicode( word ).constData() ) );
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Spell check if" << word << "is good:" << spell_code;
 #endif
    return spell_code != 0;
@@ -200,7 +200,7 @@ QStringList SpellChecker::suggest( const QString& word )
 
 void SpellChecker::ignoreWord( const QString& word )
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "SpellChecker has added" << word << "to ignore list";
 #endif
   addWord( word );
@@ -251,10 +251,10 @@ void SpellChecker::updateCompleter( const QString& word_to_complete )
     sl = suggest( word_to_complete );
 
   QStringListModel* slm = new QStringListModel( sl, mp_completer );
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "SpellChecker suggests" << slm->rowCount() << "words";
 #endif
   mp_completer->setModel( slm );
 }
 
-#endif // BEEBEEP_USE_HUNSPELL
+#endif // MAGSHARE_USE_HUNSPELL

@@ -1,7 +1,7 @@
 
 CONFIG(debug,debug|release) {
   message( Building MagShare in Debug Mode )
-  DEFINES += BEEBEEP_DEBUG
+  DEFINES += MAGSHARE_DEBUG
 } else {
   message( Building MagShare in Release Mode )
 }
@@ -32,10 +32,10 @@ include(../magshare.pri)
 message( Target folder: $$DESTDIR )
 
 TEMPLATE = app
-#DEFINES += BEEBEEP_DISABLE_FILE_TRANSFER
-#DEFINES += BEEBEEP_DISABLE_SEND_MESSAGE
-#DEFINES += BEEBEEP_DISABLE_VIDEO_CALL
-#DEFINES += BEEBEEP_USE_WEBENGINE
+#DEFINES += MAGSHARE_DISABLE_FILE_TRANSFER
+#DEFINES += MAGSHARE_DISABLE_SEND_MESSAGE
+#DEFINES += MAGSHARE_DISABLE_VIDEO_CALL
+#DEFINES += MAGSHARE_USE_WEBENGINE
 
 TARGET = magshare
 
@@ -43,7 +43,7 @@ QT += network xml widgets printsupport
 
 win32|unix {
   QT += multimedia
-#DEFINES += BEEBEEP_USE_VOICE_CHAT
+#DEFINES += MAGSHARE_USE_VOICE_CHAT
 }
 
 unix:!macx:!android: {
@@ -64,7 +64,7 @@ win32 {
 
 unix {
   contains(QMAKE_HOST.arch, armv7l* ): {
-    DEFINES += BEEBEEP_FOR_RASPBERRY_PI
+    DEFINES += MAGSHARE_FOR_RASPBERRY_PI
   }
 }
 
@@ -82,12 +82,12 @@ include(utils/utils.pri)
 win32|unix {
   include(qxt/qxt.pri)
   include(sharedesktop/sharedesktop.pri)
-  contains(DEFINES, BEEBEEP_USE_VOICE_CHAT) {
+  contains(DEFINES, MAGSHARE_USE_VOICE_CHAT) {
     include(voicechat/voicechat.pri)
   }
 }
 
-#!contains( DEFINES, BEEBEEP_DISABLE_VIDEO_CALL ) {
+#!contains( DEFINES, MAGSHARE_DISABLE_VIDEO_CALL ) {
 #  greaterThan( QT_MAJOR_VERSION, 4 ): {
 #    greaterThan( QT_MINOR_VERSION, 4 ): {
 #      message( Custom module added: videocall )
@@ -99,11 +99,11 @@ win32|unix {
 HEADERS += Interfaces.h
 
 RESOURCES += beebeep.qrc emojis.qrc
-!contains(DEFINES, BEEBEEP_FOR_RASPBERRY_PI) {
+!contains(DEFINES, MAGSHARE_FOR_RASPBERRY_PI) {
   RESOURCES += emojis2x_1.qrc emojis2x_2.qrc
 }
 
-win32: RC_FILE = beebeep.rc
+win32: RC_FILE = magshare.rc
 macx: ICON = magshare.icns
 macx: include(mdns/mdns.pri)
 

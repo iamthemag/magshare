@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIGROUPITEM_H
-#define BEEBEEP_GUIGROUPITEM_H
+#ifndef MAGSHARE_GUIGROUPITEM_H
+#define MAGSHARE_GUIGROUPITEM_H
 
 #include "BeeUtils.h"
 class Chat;
@@ -68,4 +68,4 @@ inline void GuiGroupItem::setObjectType( ObjectTypeId new_value  ) { setData( 0,
 inline int GuiGroupItem::objectType() const { return data( 0, ObjectId ).toInt(); }
 inline bool GuiGroupItem::isGroup() const { return objectType() == ObjectGroup; }
 
-#endif // BEEBEEP_GUIGROUPITEM_H
+#endif // MAGSHARE_GUIGROUPITEM_H

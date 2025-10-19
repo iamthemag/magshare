@@ -23,7 +23,7 @@
 
 #include "BeeApplication.h"
 #include "TickManager.h"
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
 #include "VoicePlayer.h"
 #endif
 #include <csignal>
@@ -70,7 +70,7 @@ BeeApplication::BeeApplication( int& argc, char** argv  )
   setObjectName( "BeeApplication" );
   mp_instance = this;
 
-  // when beebeep starts closed to tray last window is "ask password".
+  // when magshare starts closed to tray last window is "ask password".
   // After auth "ask password" is closed and then the app quit
   // set it to true in QMainWindow closeEvent
   setQuitOnLastWindowClosed( false );
@@ -147,7 +147,7 @@ void BeeApplication::setSettingsFilePath( const QString& settings_file_path )
       return;
     if( !mp_fsWatcher->removePath( m_settingsFilePath ) )
       qWarning() << "File system watcher cannot remove path" << qPrintable( m_settingsFilePath ) << "from its list";
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     else
       qDebug() << "File system watcher stops to check changes in file" << qPrintable( m_settingsFilePath );
 #endif
@@ -158,7 +158,7 @@ void BeeApplication::setSettingsFilePath( const QString& settings_file_path )
     if( mp_fsWatcher->addPath( settings_file_path ) )
     {
       m_settingsFilePath = settings_file_path;
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
       qDebug() << "File system watcher is checking changes in file" << qPrintable( m_settingsFilePath );
 #endif
       m_checkSettingsFilePath = true;
@@ -410,7 +410,7 @@ QString BeeApplication::localServerName() const
   if( account_name.isEmpty() )
     account_name = pe.value( "USER", "" );
   QString server_name = QString( "%1_%2_%3_%4" ).arg( organizationDomain(), organizationName(), applicationName(), account_name.isEmpty() ? QString( "k" ) : account_name );
-  return QString( "beebeep_%1" ).arg( QString::fromLatin1( QCryptographicHash::hash( server_name.toUtf8().toBase64(), QCryptographicHash::Md5 ).toHex() ) );
+  return QString( "magshare_%1" ).arg( QString::fromLatin1( QCryptographicHash::hash( server_name.toUtf8().toBase64(), QCryptographicHash::Md5 ).toHex() ) );
 }
 
 void BeeApplication::preventMultipleInstances()
@@ -422,7 +422,7 @@ void BeeApplication::preventMultipleInstances()
   mp_localServer->removeServer( server_name );
   mp_localServer->listen( server_name );
   QObject::connect( mp_localServer, SIGNAL( newConnection() ), this, SLOT( slotConnectionEstablished() ) );
-  qDebug() << "BeeBEEP starts with instance" << qPrintable( server_name );
+  qDebug() << "MagShare starts with instance" << qPrintable( server_name );
 }
 
 bool BeeApplication::otherInstanceExists()
@@ -444,19 +444,19 @@ void BeeApplication::addJob( QObject* obj )
 {
   obj->moveToThread( mp_jobThread );
   m_jobsInProgress++;
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << qPrintable( obj->objectName() ) << "moved to job thread." << m_jobsInProgress << "jobs in progress";
 #endif
 }
 
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
 void BeeApplication::removeJob( QObject* obj )
 #else
 void BeeApplication::removeJob( QObject* )
 #endif
 {
   m_jobsInProgress--;
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << qPrintable( obj->objectName() ) << "removed from job thread." << m_jobsInProgress << "jobs in progress";
 #endif
 }
@@ -505,7 +505,7 @@ void BeeApplication::ignoreEvent( const QString& log_text = "" )
 void BeeApplication::onFileChanged( const QString& file_path )
 {
   if( file_path == m_settingsFilePath && m_checkSettingsFilePath )
-    qWarning() << "Settings file changed: please edit the settings file only if BeeBEEP is closed or changes will be lost";
+    qWarning() << "Settings file changed: please edit the settings file only if MagShare is closed or changes will be lost";
 }
 
 void BeeApplication::onApplicationStateChanged( Qt::ApplicationState state )
@@ -519,7 +519,7 @@ void BeeApplication::onNetworkConfigurationAdded( const QNetworkConfiguration& n
 {
   if( net_conf.bearerType() == QNetworkConfiguration::BearerEthernet || net_conf.bearerType() == QNetworkConfiguration::BearerWLAN )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Network configuration is added:" << qPrintable( net_conf.name() ) << "-" << qPrintable( net_conf.identifier() ) << "-" << qPrintable( net_conf.bearerTypeName() );
 #endif
     onNetworkConfigurationChanged( net_conf );

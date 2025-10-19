@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_EMOTICONMANAGER_H
-#define BEEBEEP_EMOTICONMANAGER_H
+#ifndef MAGSHARE_EMOTICONMANAGER_H
+#define MAGSHARE_EMOTICONMANAGER_H
 
 #include "Emoticon.h"
 
@@ -105,4 +105,4 @@ inline const QList<Emoticon>& EmoticonManager::recentEmoticons() const { return 
 inline bool EmoticonManager::isOneCharEmoticon( const QChar& c ) const { return m_oneCharEmoticons.contains( c ); }
 inline void EmoticonManager::clearRecentEmoticons() { m_recentEmoticons.clear(); }
 
-#endif // BEEBEEP_EMOTICONMANAGER_H
+#endif // MAGSHARE_EMOTICONMANAGER_H

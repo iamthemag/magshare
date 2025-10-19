@@ -160,7 +160,7 @@ void GuiSavedChat::openSelectedTextAsUrl()
   QString selected_text = mp_teSavedChat->textCursor().selectedText();
   if( !selected_text.isEmpty() )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Try to open selected text as url:" << selected_text;
 #endif
     QUrl url = QUrl::fromUserInput( selected_text );

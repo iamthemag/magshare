@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUISHARENETWORK_H
-#define BEEBEEP_GUISHARENETWORK_H
+#ifndef MAGSHARE_GUISHARENETWORK_H
+#define MAGSHARE_GUISHARENETWORK_H
 
 #include "ui_GuiShareNetwork.h"
 #include "GuiFileInfoList.h"
@@ -87,4 +87,4 @@ private:
 
 };
 
-#endif // BEEBEEP_GUISHARENETWORK_H
+#endif // MAGSHARE_GUISHARENETWORK_H

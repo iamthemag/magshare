@@ -105,7 +105,7 @@ void GuiVoicePlayer::onPlaying( const QString& voice_file_path, VNumber chat_id 
     setPaused( false );
     if( !isVisible() )
       showPlayer();
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Voice file" << qPrintable( voice_file_path ) << "-> playing";
 #endif
   }
@@ -116,7 +116,7 @@ void GuiVoicePlayer::onPaused( const QString& voice_file_path, VNumber chat_id )
   if( m_chatId == chat_id && m_filePath == voice_file_path )
   {
     setPaused( true );
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Voice file" << qPrintable( voice_file_path ) << "-> paused";
 #endif
   }
@@ -129,7 +129,7 @@ void GuiVoicePlayer::onFinished( const QString& voice_file_path, VNumber chat_id
     setPaused( true );
     if( isVisible() )
       hidePlayer();
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Voice file" << qPrintable( voice_file_path ) << "-> play finished";
 #endif
   }
@@ -139,7 +139,7 @@ void GuiVoicePlayer::setFileDuration( const QString& voice_file_path, VNumber ch
 {
   if( m_chatId == chat_id && m_filePath == voice_file_path )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Voice file" << qPrintable( voice_file_path ) << "has duration" << file_duration << "ms";
 #endif
     mp_sliderPosition->setMinimum( 0 );
@@ -153,7 +153,7 @@ void GuiVoicePlayer::setFilePosition( const QString& voice_file_path, VNumber ch
 {
   if( m_chatId == chat_id && m_filePath == voice_file_path )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Voice file" << qPrintable( voice_file_path ) << "new position" << file_position << "ms";
 #endif
     qint64 slider_new_position = file_position > mp_sliderPosition->maximum() ? mp_sliderPosition->maximum() : file_position;

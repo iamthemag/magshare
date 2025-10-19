@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIEDITVCARD_H
-#define BEEBEEP_GUIEDITVCARD_H
+#ifndef MAGSHARE_GUIEDITVCARD_H
+#define MAGSHARE_GUIEDITVCARD_H
 
 #include "ui_GuiEditVCard.h"
 #include "User.h"
@@ -69,4 +69,4 @@ inline const VCard& GuiEditVCard::vCard() const { return m_vCard; }
 inline const QString& GuiEditVCard::userColor() const { return m_userColor; }
 inline bool GuiEditVCard::regenerateUserHash() const { return m_regenerateUserHash; }
 
-#endif // BEEBEEP_GUIEDITVCARD_H
+#endif // MAGSHARE_GUIEDITVCARD_H

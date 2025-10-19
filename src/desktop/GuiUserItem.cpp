@@ -235,7 +235,7 @@ void GuiUserItem::onTickEvent( int ticks )
   if( !isWorkgroup() && unreadMessages() > 0 )
   {
     if( ticks % 2 == 0 )
-      setIcon( 0, IconManager::instance().icon( "beebeep-message.png" ) );
+      setIcon( 0, IconManager::instance().icon( "magshare-message.png" ) );
     else
       setIcon( 0, m_defaultIcon );
   }

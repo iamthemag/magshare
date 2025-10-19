@@ -29,13 +29,13 @@
 #include "GuiChat.h"
 #include "GuiChatMessage.h"
 #include "GuiCreateTextFile.h"
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
 #include "GuiVoicePlayer.h"
 #endif
 #include "IconManager.h"
 #include "Settings.h"
 #include "ShortcutManager.h"
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
   #include "SpellChecker.h"
 #endif
 #include "UserManager.h"
@@ -48,7 +48,7 @@ GuiChat::GuiChat( QWidget *parent )
   setObjectName( "GuiChat" );
   setAcceptDrops( true );
 
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
   mp_guiVoicePlayer = new GuiVoicePlayer( mp_frameVoicePlayer );
   QGridLayout* voice_grid_layout = new QGridLayout( mp_frameVoicePlayer );
   voice_grid_layout->setSpacing( 0 );
@@ -77,7 +77,7 @@ GuiChat::GuiChat( QWidget *parent )
 
   mp_teMessage->setFocusPolicy( Qt::StrongFocus );
   mp_teMessage->setAcceptRichText( false );
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
   mp_teMessage->setCompleter( SpellChecker::instance().completer() );
 #endif
   mp_teMessage->setObjectName( "GuiMessageEdit" );
@@ -166,7 +166,7 @@ GuiChat::GuiChat( QWidget *parent )
 
   mp_pbSend->setIcon( IconManager::instance().icon( "send.png" ) );
 
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   mp_actShareDesktop = new QAction( IconManager::instance().icon( "desktop-share.png" ), tr( "Share your desktop" ), this );
   mp_actShareDesktop->setCheckable( true );
   mp_actShareDesktop->setEnabled( Settings::instance().enableShareDesktop() );
@@ -206,7 +206,7 @@ void GuiChat::setupToolBar( QToolBar* chat_bar )
   mp_actSendFile = chat_bar->addAction( IconManager::instance().icon( "send-file.png" ), tr( "Send file" ), this, SLOT( sendFile() ) );
   mp_actSendFolder = chat_bar->addAction( IconManager::instance().icon( "send-folder.png" ), tr( "Send folder" ), this, SLOT( sendFolder() ) );
   mp_actSendTextCode = chat_bar->addAction( IconManager::instance().icon( "send-code.png" ), tr( "Send code" ), this, SLOT( sendTextCode() ) );
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   /* Screenshot and share desktop removed from toolbar */
   // chat_bar->addAction( mp_actScreenshot );
   // chat_bar->addAction( mp_actShareDesktop );
@@ -249,7 +249,7 @@ void GuiChat::updateActions( const Chat& c, bool is_connected, int connected_use
   bool chat_is_empty = ChatManager::instance().isChatEmpty( c, true );
   bool can_send_files = false;
   UserList chat_members;
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   bool desktop_is_shared = false;
   QStringList share_desktop_users;
 #endif
@@ -262,7 +262,7 @@ void GuiChat::updateActions( const Chat& c, bool is_connected, int connected_use
         continue;
       if( u.isStatusConnected() )
         can_send_files = true;
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
       if( Settings::instance().enableShareDesktop() )
       {
         if( beeCore->shareDesktopIsActive( u.id() ) )
@@ -335,7 +335,7 @@ void GuiChat::updateActions( const Chat& c, bool is_connected, int connected_use
   else
     mp_teMessage->setPlaceholderText( mp_teMessage->toolTip() );
 
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   mp_actShareDesktop->setEnabled( Settings::instance().enableShareDesktop() && m_chatId != ID_DEFAULT_CHAT && local_user_is_member && is_connected && can_send_files );
   if( Settings::instance().enableShareDesktop() )
     mp_actShareDesktop->setChecked( desktop_is_shared );
@@ -721,7 +721,7 @@ bool GuiChat::appendChatMessage( const Chat& c, const ChatMessage& cm )
 
   if( !text_message.isEmpty() )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     QElapsedTimer time_to_insert;
     time_to_insert.start();
 #endif
@@ -731,7 +731,7 @@ bool GuiChat::appendChatMessage( const Chat& c, const ChatMessage& cm )
     cursor.movePosition( QTextCursor::End );
     cursor.insertHtml( text_message );
     mp_teChat->setUpdatesEnabled( updates_enabled );
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Elapsed time to insert HTML text in chat:" << time_to_insert.elapsed() << "ms";
 #endif
     ensureLastMessageVisible();
@@ -936,7 +936,7 @@ void GuiChat::checkAndSendUrls( const QMimeData* source )
 
   foreach( QUrl url, source->urls() )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Checking pasted url:" << qPrintable( url.toString() );
 #endif
     if( Bee::isLocalFile( url ) )
@@ -1144,7 +1144,7 @@ void GuiChat::updateSpellCheckerToolTip()
   else
     tool_tip = tr( "Spell checking is disabled" );
 
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
   if( !SpellChecker::instance().isValid() )
   {
     tool_tip.append( QString( " (%1)" ).arg( tr( "There is not a valid dictionary" ) ) );
@@ -1168,7 +1168,7 @@ void GuiChat::updateCompleterToolTip()
   else
     tool_tip = tr( "Word completer is disabled" );
 
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
   if( !SpellChecker::instance().isValid() )
   {
     tool_tip.append( QString( " (%1)" ).arg( tr( "There is not a valid dictionary" ) ) );
@@ -1185,7 +1185,7 @@ void GuiChat::updateCompleterToolTip()
 
 void GuiChat::onSpellCheckerActionClicked()
 {
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
   if( SpellChecker::instance().isValid() )
     Settings::instance().setUseSpellChecker( mp_actSpellChecker->isChecked() );
   else
@@ -1200,7 +1200,7 @@ void GuiChat::onSpellCheckerActionClicked()
 
 void GuiChat::onCompleterActionClicked()
 {
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
   if( SpellChecker::instance().isValid() )
     Settings::instance().setUseWordCompleter( mp_actCompleter->isChecked() );
   else
@@ -1303,7 +1303,7 @@ void GuiChat::openSelectedTextAsUrl()
   QString selected_text = mp_teChat->textCursor().selectedText();
   if( !selected_text.isEmpty() )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Try to open selected text as url:" << selected_text;
 #endif
     QUrl url = QUrl::fromUserInput( selected_text );
@@ -1366,7 +1366,7 @@ void GuiChat::clearSystemMessages()
   emit clearSystemMessagesRequestFromChat( m_chatId );
 }
 
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
 void GuiChat::shareDesktopToChat()
 {
   emit shareDesktopToChatRequest( m_chatId, mp_actShareDesktop->isChecked() );

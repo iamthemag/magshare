@@ -26,7 +26,7 @@
 #include "HistoryManager.h"
 #include "IconManager.h"
 #include "Settings.h"
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
   #include "SpellChecker.h"
   #include "SpellCheckerHighlighter.h"
 #endif
@@ -45,7 +45,7 @@ GuiMessageEdit::GuiMessageEdit( QWidget* parent )
   m_forceCRonEnterClicked = false;
   m_forceNoWritingAlert = false;
 
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
   mp_scHighlighter = new SpellCheckerHighlighter( this->document() );
 #endif
   mp_completer = 0;
@@ -248,7 +248,7 @@ void GuiMessageEdit::dropEvent( QDropEvent* e )
 
 void GuiMessageEdit::completerKeyPressEvent( QKeyEvent* e )
 {
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
 
   if( e->modifiers() != Qt::NoModifier ) // do not process the shortcut when we have a completer
     return;
@@ -440,7 +440,7 @@ void GuiMessageEdit::insertFromMimeData( const QMimeData* source )
 
 void GuiMessageEdit::rehighlightMessage()
 {
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
    mp_scHighlighter->rehighlight();
 #endif
 }

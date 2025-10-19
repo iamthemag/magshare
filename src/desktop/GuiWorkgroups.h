@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIWORKGROUPS_H
-#define BEEBEEP_GUIWORKGROUPS_H
+#ifndef MAGSHARE_GUIWORKGROUPS_H
+#define MAGSHARE_GUIWORKGROUPS_H
 
 #include "Config.h"
 #include "ui_GuiWorkgroups.h"
@@ -61,4 +61,4 @@ private:
 inline const QStringList& GuiWorkgroups::workgroups() const { return m_workgroups; }
 inline bool GuiWorkgroups::restartConnection() const { return m_restartConnection; }
 
-#endif // BEEBEEP_GUIWORKGROUPS_H
+#endif // MAGSHARE_GUIWORKGROUPS_H

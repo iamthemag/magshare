@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUISHAREBOXFILEINFOLIST_H
-#define BEEBEEP_GUISHAREBOXFILEINFOLIST_H
+#ifndef MAGSHARE_GUISHAREBOXFILEINFOLIST_H
+#define MAGSHARE_GUISHAREBOXFILEINFOLIST_H
 
 #include "Config.h"
 #include "GuiShareBoxFileInfoItem.h"
@@ -68,4 +68,4 @@ private:
 // Inline Functions
 inline bool GuiShareBoxFileInfoList::isEmpty() const { return topLevelItemCount() == 0; }
 
-#endif // BEEBEEP_GUISHAREBOXFILEINFOLIST_H
+#endif // MAGSHARE_GUISHAREBOXFILEINFOLIST_H

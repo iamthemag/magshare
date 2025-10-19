@@ -74,7 +74,7 @@ void GuiShortcut::loadShortcuts()
       item->setText( 1, ShortcutManager::instance().isGlobalShortcut( i ) ? tr( "Global" ) : tr( "Local" ) );
       item->setText( 2, ShortcutManager::instance().shortcutName( i ) );
       item->setData( 0, Qt::UserRole+1, i );
-#ifndef BEEBEEP_USE_QXT
+#ifndef MAGSHARE_USE_QXT
       if( ShortcutManager::instance().isGlobalShortcut( i ) )
         item->setDisabled( true );
 #endif

@@ -213,7 +213,7 @@ void GuiShareBox::setCurrentFolder( VNumber user_id, const QString& new_path )
       QString new_dir_to_watch = Bee::convertToNativeFolderSeparator( new_path.isEmpty() ? Settings::instance().shareBoxPath() : QString( "%1/%2" ).arg( Settings::instance().shareBoxPath(), new_path ) );
       mp_fsWatcher->removePath( old_dir_to_watch );
       mp_fsWatcher->addPath( new_dir_to_watch );
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
       qDebug() << "FileSystemWatcher is now checking path" << qPrintable( mp_fsWatcher->directories().join( ", " ) );
 #endif
     }
@@ -222,7 +222,7 @@ void GuiShareBox::setCurrentFolder( VNumber user_id, const QString& new_path )
       QStringList fsw_dirs = mp_fsWatcher->directories();
       if( !fsw_dirs.isEmpty() )
       {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
         qDebug() << "FileSystemWatcher does not check path" << qPrintable( fsw_dirs.join( ", " ) ) << "anymore";
 #endif
         mp_fsWatcher->removePaths( fsw_dirs );
@@ -331,7 +331,7 @@ void GuiShareBox::updateOutBox( const User& u, const QString& folder_path, const
 {
   if( m_userId != u.id() )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "GuiSharebox skips updates for not current user" << qPrintable( u.name() );
 #endif
     return;
@@ -346,7 +346,7 @@ void GuiShareBox::updateOutBox( const User& u, const QString& folder_path, const
 
   if( m_outCurrentFolder != folder_path )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "GuiSharebox skips updates from" << qPrintable( u.name() ) << "for not current folder" << qPrintable( folder_path );
 #endif
     return;
@@ -410,7 +410,7 @@ void GuiShareBox::onShareBoxSelected( int )
   VNumber current_user_id = selectedUserId();
   if( current_user_id > ID_LOCAL_USER )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "BeeBOX requests list for user" << current_user_id;
 #endif
     makeShareBoxRequest( current_user_id, current_user_id == m_userId ? m_outCurrentFolder : "", false );
@@ -425,7 +425,7 @@ void GuiShareBox::onShareBoxSelected( int )
 
 void GuiShareBox::onShareFolderUnavailable( const User& u, const QString& folder_path )
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << qPrintable( u.path() ) << "has not shared box folder" << qPrintable( folder_path );
 #endif
   if( u.isLocal() )
@@ -460,7 +460,7 @@ void GuiShareBox::makeShareBoxRequest( VNumber user_id, const QString& folder_pa
 
   if( Settings::instance().useShareBox() )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "BeeBOX ask for updating folder" << folder_path << "of user" << user_id;
 #endif
     GuiShareBoxFileInfoList* pfil = fileInfoList( user_id );
@@ -490,7 +490,7 @@ void GuiShareBox::updateUser( const User& u )
     {
       if( mp_comboUsers->currentIndex() == user_index )
       {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
         qDebug() << qPrintable( u.path() ) << "is offline and ShareBox will be disabled";
 #endif
         m_outCurrentFolder = "";
@@ -517,7 +517,7 @@ void GuiShareBox::dropInMyBox( const QString& share_path )
 
   foreach( FileInfo file_info, selected_list )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     QString from_path = file_info.shareFolder().isEmpty() ? file_info.name() : QString( "%1%2%3" ).arg( file_info.shareFolder() ).arg( QDir::separator() ).arg( file_info.name() );
     qDebug() << "Drop in MY BeeBOX the file" << file_info.name() << "->" << from_path;
 #endif
@@ -541,7 +541,7 @@ void GuiShareBox::dropInOutBox( const QString& share_path )
   foreach( FileInfo file_info, selected_list )
   {
     QString to_path = Bee::convertToNativeFolderSeparator( m_outCurrentFolder );
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Drop in OUT BeeBOX the file" << file_info.name() << "->" << to_path;
 #endif
     emit shareBoxUploadRequest( m_userId, file_info, to_path );
@@ -550,7 +550,7 @@ void GuiShareBox::dropInOutBox( const QString& share_path )
 
 void GuiShareBox::onFileUploadCompleted( VNumber user_id, const FileInfo& fi )
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "BeeBOX (upload completed) update list of the folder" << fi.shareFolder() << "and user" << user_id << "and current folder is" << m_outCurrentFolder << "of user" << m_userId;
 #endif
   if( m_userId == user_id && fi.shareFolder() == m_outCurrentFolder )
@@ -559,7 +559,7 @@ void GuiShareBox::onFileUploadCompleted( VNumber user_id, const FileInfo& fi )
 
 void GuiShareBox::onFileDownloadCompleted( VNumber user_id, const FileInfo& fi )
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "BeeBOX (download completed) update list of the folder" << fi.shareFolder() << "and user" << user_id << "and current folder is" << m_outCurrentFolder << "of user" << m_userId;
 #else
   Q_UNUSED( user_id );
@@ -641,7 +641,7 @@ void GuiShareBox::updateFolder( const QString& f )
 {
   if( Settings::instance().useShareBox() )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Folder" << qPrintable( f ) << "changed -> updating ShareBox";
 #else
     Q_UNUSED( f );

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUISYSTEMTRAY_H
-#define BEEBEEP_GUISYSTEMTRAY_H
+#ifndef MAGSHARE_GUISYSTEMTRAY_H
+#define MAGSHARE_GUISYSTEMTRAY_H
 
 #include "Config.h"
 class Chat;
@@ -68,4 +68,4 @@ inline VNumber GuiSystemTray::chatId() const { return m_chatId; }
 inline void GuiSystemTray::resetChatId() { m_chatId = ID_INVALID; }
 inline bool GuiSystemTray::iconStatusIsMessage() const { return m_iconStatus == GuiSystemTray::Message; }
 
-#endif // BEEBEEP_GUISYSTEMTRAY_H
+#endif // MAGSHARE_GUISYSTEMTRAY_H

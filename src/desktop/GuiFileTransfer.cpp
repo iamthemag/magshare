@@ -135,7 +135,7 @@ void GuiFileTransfer::setProgress( VNumber peer_id, const User& u, const FileInf
 
 void GuiFileTransfer::setMessage( VNumber peer_id, const User& u, const FileInfo& fi, const QString& msg, FileTransferPeer::TransferState ft_state )
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "Showing file transfer message" << msg << "with state" << ft_state;
 #endif
   GuiFileTransferItem* item = findItem( peer_id );
@@ -269,7 +269,7 @@ GuiFileTransferItem* GuiFileTransfer::findSelectedItem()
   QList<QTreeWidgetItem*> selected_items = selectedItems();
   if( selected_items.isEmpty() )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "GuiFileTransfer has not found a selected item";
 #endif
     return Q_NULLPTR;

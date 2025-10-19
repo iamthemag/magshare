@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUISHAREDESKTOP_H
-#define BEEBEEP_GUISHAREDESKTOP_H
+#ifndef MAGSHARE_GUISHAREDESKTOP_H
+#define MAGSHARE_GUISHAREDESKTOP_H
 
 #include "Config.h"
 #include "ui_GuiShareDesktop.h"
@@ -67,4 +67,4 @@ private:
 inline VNumber GuiShareDesktop::userId() const { return m_userId; }
 inline void GuiShareDesktop::resetLastImage() { m_lastImage = QImage(); }
 
-#endif // BEEBEEP_GUISHAREDESKTOP_H
+#endif // MAGSHARE_GUISHAREDESKTOP_H

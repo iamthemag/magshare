@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_APPLICATION_H
-#define BEEBEEP_APPLICATION_H
+#ifndef MAGSHARE_APPLICATION_H
+#define MAGSHARE_APPLICATION_H
 
 #include "Config.h"
 class TickManager;
@@ -161,4 +161,4 @@ inline bool BeeApplication::isInSleepMode() const { return m_isInSleepMode; }
 inline QFileSystemWatcher* BeeApplication::fsWatcher() const { return mp_fsWatcher; }
 inline void BeeApplication::setCheckSettingsFilePath( bool new_value ) { m_checkSettingsFilePath = new_value; }
 
-#endif // BEEBEEP_APPLICATION_H
+#endif // MAGSHARE_APPLICATION_H

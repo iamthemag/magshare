@@ -51,7 +51,7 @@ bool Avatar::create()
 {
   if( m_name.isEmpty() )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Unable to create avatar: name is empty";
 #endif
     return false;
@@ -62,7 +62,7 @@ bool Avatar::create()
 
   if( m_size.isNull() || m_size.isEmpty() )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Unable to create avatar: size is null or empty";
 #endif
     return false;
@@ -70,7 +70,7 @@ bool Avatar::create()
 
   if( m_size.width() < 17 || m_size.height() < 17 )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Unable to create avatar: size is to small" << m_size.width() << m_size.height();
 #endif
     return false;
@@ -121,7 +121,7 @@ bool Avatar::create()
     fm = QFontMetrics( f );
     if( f.pointSize() < 6 )
     {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
       qDebug() << "Unable to create avatar: font is too small for this size" << m_size.width() << m_size.height();
 #endif
       return false;

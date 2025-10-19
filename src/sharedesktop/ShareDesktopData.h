@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_SHAREDESKTOPDATA_H
-#define BEEBEEP_SHAREDESKTOPDATA_H
+#ifndef MAGSHARE_SHAREDESKTOPDATA_H
+#define MAGSHARE_SHAREDESKTOPDATA_H
 
 #include "Config.h"
 
@@ -67,4 +67,4 @@ inline unsigned int ShareDesktopData::diffColor() const { return m_diffColor; }
 
 
 
-#endif // BEEBEEP_SHAREDESKTOPDATA_H
+#endif // MAGSHARE_SHAREDESKTOPDATA_H

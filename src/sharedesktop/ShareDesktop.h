@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_SHAREDESKTOP_H
-#define BEEBEEP_SHAREDESKTOP_H
+#ifndef MAGSHARE_SHAREDESKTOP_H
+#define MAGSHARE_SHAREDESKTOP_H
 
 #include "ShareDesktopData.h"
 class Chat;
@@ -71,4 +71,4 @@ inline const QList<VNumber>& ShareDesktop::userIdList() const { return m_userIdL
 inline bool ShareDesktop::isActive() const { return m_timer.isActive(); }
 inline bool ShareDesktop::hasUserReadImage( VNumber user_id ) const { return m_userIdReadList.contains( user_id ); }
 
-#endif // BEEBEEP_SHAREDESKTOP_H
+#endif // MAGSHARE_SHAREDESKTOP_H

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_MDNSBROWSER_H
-#define BEEBEEP_MDNSBROWSER_H
+#ifndef MAGSHARE_MDNSBROWSER_H
+#define MAGSHARE_MDNSBROWSER_H
 
 #include "MDnsObject.h"
 
@@ -56,4 +56,4 @@ private:
 // Inline Functions
 inline bool MDnsBrowser::isActive() const { return m_isActive; }
 
-#endif // BEEBEEP_MDNSBROWSER_H
+#endif // MAGSHARE_MDNSBROWSER_H

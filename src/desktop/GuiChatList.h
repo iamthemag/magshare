@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUICHATLIST_H
-#define BEEBEEP_GUICHATLIST_H
+#ifndef MAGSHARE_GUICHATLIST_H
+#define MAGSHARE_GUICHATLIST_H
 
 #include "GuiChatItem.h"
 #include "ui_GuiChatList.h"
@@ -84,4 +84,4 @@ private:
 // Inline Functions
 inline void GuiChatList::setMainToolTip( const QString& new_value ) { mp_twChatList->setToolTip( new_value ); }
 
-#endif // BEEBEEP_GUICHATLIST_H
+#endif // MAGSHARE_GUICHATLIST_H

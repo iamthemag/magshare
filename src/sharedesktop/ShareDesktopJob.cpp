@@ -41,7 +41,7 @@ void ShareDesktopJob::processNewImage( const QImage& new_image )
   bool use_compression = true;
   int compression_level = 9;
 
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "Processing new share desktop image with type" << qPrintable( image_type ) << "and quality" << image_quality;
 #endif
   if( !new_image.isNull() )

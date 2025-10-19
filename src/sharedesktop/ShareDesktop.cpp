@@ -105,7 +105,7 @@ void ShareDesktop::stop()
     beeApp->removeJob( mp_job );
   mp_job->deleteLater();
   mp_job = 0;
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "ShareDesktop is stopped";
 #endif
 }
@@ -127,7 +127,7 @@ void ShareDesktop::onImageDataAvailable( const QByteArray& img_data, const QStri
 {
   if( !isActive() )
     return;
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "ShareDesktop has image data available with size" << img_data.size() << "and diff color" << diff_color;
 #endif
   m_lastImageData.setImageData( img_data );

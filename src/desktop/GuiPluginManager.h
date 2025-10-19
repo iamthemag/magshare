@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIPLUGINMANAGER_H
-#define BEEBEEP_GUIPLUGINMANAGER_H
+#ifndef MAGSHARE_GUIPLUGINMANAGER_H
+#define MAGSHARE_GUIPLUGINMANAGER_H
 
 #include "ui_GuiPluginManager.h"
 #include "Config.h"
@@ -64,4 +64,4 @@ inline bool GuiPluginManager::isChanged() const { return m_changed; }
 inline bool GuiPluginManager::isPluginEnabled( QTreeWidgetItem* item ) const { return item->data( 0, Qt::UserRole+2 ).toBool(); }
 inline void GuiPluginManager::setPluginEnabled( QTreeWidgetItem* item, bool enable ) { item->setData( 0, Qt::UserRole+2, enable ); }
 
-#endif // BEEBEEP_GUIPLUGINMANAGER_H
+#endif // MAGSHARE_GUIPLUGINMANAGER_H

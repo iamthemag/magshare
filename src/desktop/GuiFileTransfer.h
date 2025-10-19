@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIFILETRANSFER_H
-#define BEEBEEP_GUIFILETRANSFER_H
+#ifndef MAGSHARE_GUIFILETRANSFER_H
+#define MAGSHARE_GUIFILETRANSFER_H
 
 #include "GuiFileTransferItem.h"
 class User;
@@ -73,4 +73,4 @@ private:
 };
 
 
-#endif // BEEBEEP_GUIFILETRANSFER_H
+#endif // MAGSHARE_GUIFILETRANSFER_H

@@ -47,7 +47,7 @@ QStringList ShortcutManager::saveToStringList() const
 
 void ShortcutManager::loadFromStringList( const QStringList& sl )
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "Loading" << sl.size() << "shortcuts:" << qPrintable( sl.join( ", " ) );
 #endif
   int shortcut_type = Empty;
@@ -132,7 +132,7 @@ void ShortcutManager::setDefaultShortcuts()
   m_shortcutNames[ FindPreviousTextInChat ] = QObject::tr( "Find previous text in chat" );
   m_shortcuts[ FindPreviousTextInChat ] = QKeySequence( Qt::CTRL | Qt::SHIFT | Qt::Key_G );
 
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   for( int i = Empty; i < NumShortcut; i++ )
     qDebug() << "Default shortcut" << i << shortcutName( (ShortcutType)i ) << "with key sequence:" << qPrintable( m_shortcuts.at( i ).toString() );
 #endif

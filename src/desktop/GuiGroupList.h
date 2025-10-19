@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIGROUPLIST_H
-#define BEEBEEP_GUIGROUPLIST_H
+#ifndef MAGSHARE_GUIGROUPLIST_H
+#define MAGSHARE_GUIGROUPLIST_H
 
 #include "GuiGroupItem.h"
 #include "ui_GuiGroupList.h"
@@ -87,4 +87,4 @@ private:
 // Inline Functions
 inline void GuiGroupList::setMainToolTip( const QString& new_value ) { mp_twGroupList->setToolTip( new_value ); }
 
-#endif // BEEBEEP_GUIGROUPLIST_H
+#endif // MAGSHARE_GUIGROUPLIST_H

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_COLORMANAGER_H
-#define BEEBEEP_COLORMANAGER_H
+#ifndef MAGSHARE_COLORMANAGER_H
+#define MAGSHARE_COLORMANAGER_H
 
 #include "Config.h"
 
@@ -72,4 +72,4 @@ inline QColor ColorManager::randomQColor() { return QColor( randomQString() ); }
 inline QColor ColorManager::unselectedQColor() { return QColor( unselectedQString() ); }
 inline void ColorManager::clearSelectedColors() { m_unselectedColors = m_colors; }
 
-#endif // BEEBEEP_COLORMANAGER_H
+#endif // MAGSHARE_COLORMANAGER_H

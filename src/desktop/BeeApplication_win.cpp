@@ -72,7 +72,7 @@ bool BeeApplication::winEventFilter( MSG* event_message, long* event_result )
   {
     if( event_message->wParam == WTS_SESSION_LOCK )
     {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
       qDebug() << "Session change detected: desktop is locked";
 #endif
       if( !m_isDesktopLocked )
@@ -83,7 +83,7 @@ bool BeeApplication::winEventFilter( MSG* event_message, long* event_result )
     }
     else if( event_message->wParam == WTS_SESSION_UNLOCK )
     {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
       qDebug() << "Session change detected: desktop is now unlocked";
 #endif
       if( m_isDesktopLocked )
@@ -91,7 +91,7 @@ bool BeeApplication::winEventFilter( MSG* event_message, long* event_result )
     }
     else if( event_message->wParam == WTS_SESSION_LOGOFF )
     {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
       qDebug() << "Session change detected: logoff";
 #endif
       forceShutdown();

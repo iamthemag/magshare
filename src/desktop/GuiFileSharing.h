@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIFILESHARING_H
-#define BEEBEEP_GUIFILESHARING_H
+#ifndef MAGSHARE_GUIFILESHARING_H
+#define MAGSHARE_GUIFILESHARING_H
 
 #include "Config.h"
 #include "GuiShareNetwork.h"
@@ -103,4 +103,4 @@ private:
 
 };
 
-#endif // BEEBEEP_GUIFILESHARING_H
+#endif // MAGSHARE_GUIFILESHARING_H

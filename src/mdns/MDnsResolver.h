@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_MDNSRESOLVER_H
-#define BEEBEEP_MDNSRESOLVER_H
+#ifndef MAGSHARE_MDNSRESOLVER_H
+#define MAGSHARE_MDNSRESOLVER_H
 
 #include "MDnsObject.h"
 
@@ -65,4 +65,4 @@ private:
 inline void MDnsResolver::setServicePort( int new_value ) { m_servicePort = new_value; }
 inline void MDnsResolver::setLookUpHostId( int new_value ) { m_lookUpHostId = new_value; }
 
-#endif // BEEBEEP_MDNSRESOLVER_H
+#endif // MAGSHARE_MDNSRESOLVER_H

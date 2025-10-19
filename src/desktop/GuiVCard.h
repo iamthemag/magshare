@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIVCARD_H
-#define BEEBEEP_GUIVCARD_H
+#ifndef MAGSHARE_GUIVCARD_H
+#define MAGSHARE_GUIVCARD_H
 
 #include "ui_GuiVCard.h"
 #include "Config.h"
@@ -63,4 +63,4 @@ private:
 
 };
 
-#endif // BEEBEEP_GUIVCARD_H
+#endif // MAGSHARE_GUIVCARD_H

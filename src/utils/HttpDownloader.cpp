@@ -104,7 +104,7 @@ void HttpDownloader::onDownloadProgress( qint64 bytes_received, qint64 bytes_tot
 
   if( bytes_received > 0 )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     QString file_name = fileNameFromUrl( reply->url() );
     qDebug() << qPrintable( file_name ) << "-> downloading" << bytes_received << "of" << bytes_total << "bytes";
 #else

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUICREATEMESSAGE_H
-#define BEEBEEP_GUICREATEMESSAGE_H
+#ifndef MAGSHARE_GUICREATEMESSAGE_H
+#define MAGSHARE_GUICREATEMESSAGE_H
 
 #include "Config.h"
 #include "ui_GuiCreateMessage.h"
@@ -66,4 +66,4 @@ inline bool GuiCreateMessage::openChat() const { return mp_cbOpenChat->isEnabled
 inline bool GuiCreateMessage::messageIsImportant() const { return mp_cbFlagAsImportant->isEnabled() && mp_cbFlagAsImportant->isChecked(); }
 inline bool GuiCreateMessage::sendAsPrivate() const { return mp_cbSendPrivate->isEnabled() && mp_cbSendPrivate->isChecked(); }
 
-#endif // BEEBEEP_GUICREATEMESSAGE_H
+#endif // MAGSHARE_GUICREATEMESSAGE_H

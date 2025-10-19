@@ -31,7 +31,7 @@ AudioManager* AudioManager::mp_instance = Q_NULLPTR;
 
 AudioManager::AudioManager()
   : mp_sound( Q_NULLPTR )
-#if defined( BEEBEEP_USE_VOICE_CHAT )
+#if defined( MAGSHARE_USE_VOICE_CHAT )
    , m_defaultInputDeviceName(), m_defaultVoiceMessageEncoderSettings(), m_defaultVoiceMessageFileContainer()
    , m_voiceMessageCodecContainers(), m_voiceMessageCodecContainerExtensions()
 {
@@ -58,7 +58,7 @@ AudioManager::AudioManager()
 {}
 #endif
 
-#if defined( BEEBEEP_USE_VOICE_CHAT )
+#if defined( MAGSHARE_USE_VOICE_CHAT )
 void AudioManager::checkDefaultAudioDevice()
 {
   QAudioDeviceInfo input_device = QAudioDeviceInfo::defaultInputDevice();
@@ -211,7 +211,7 @@ QAudioEncoderSettings AudioManager::voiceMessageEncoderSettings() const
   return aes;
 }
 
-#endif // BEEBEEP_USE_VOICE_CHAT
+#endif // MAGSHARE_USE_VOICE_CHAT
 
 #if defined( Q_OS_OS2 )
   bool AudioManager::isAudioDeviceAvailable() { return true; }

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUINETWORK_H
-#define BEEBEEP_GUINETWORK_H
+#ifndef MAGSHARE_GUINETWORK_H
+#define MAGSHARE_GUINETWORK_H
 
 #include "Config.h"
 #include "ui_GuiNetwork.h"
@@ -51,4 +51,4 @@ private:
 // Inline Functions
 inline bool GuiNetwork::restartConnection() const { return m_restartConnection; }
 
-#endif // BEEBEEP_GUINETWORK_H
+#endif // MAGSHARE_GUINETWORK_H

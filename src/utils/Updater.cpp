@@ -60,7 +60,7 @@ void Updater::onDownloadCompleted( const QString& file_path )
     return;
   }
 
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << qPrintable( file_path ) << "download completed";
 #endif
 

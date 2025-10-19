@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////
 //
-// This file is part of BeeBEEP.
+// This file is part of MagShare.
 //
 // MagShare is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published
@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIVIDEOSETTINGS_H
-#define BEEBEEP_GUIVIDEOSETTINGS_H
+#ifndef MAGSHARE_GUIVIDEOSETTINGS_H
+#define MAGSHARE_GUIVIDEOSETTINGS_H
 
 #include "Config.h"
 #include "ui_GuiVideoSettings.h"
@@ -43,4 +43,4 @@ public slots:
 };
 
 
-#endif // BEEBEEP_GUIVIDEOSETTINGS_H
+#endif // MAGSHARE_GUIVIDEOSETTINGS_H

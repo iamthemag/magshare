@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////
 //
-// This file is part of BeeBEEP.
+// This file is part of MagShare.
 //
 // MagShare is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published
@@ -21,10 +21,10 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_VIDEOCALL_SERVER_H
-#define BEEBEEP_VIDEOCALL_SERVER_H
+#ifndef MAGSHARE_VIDEOCALL_SERVER_H
+#define MAGSHARE_VIDEOCALL_SERVER_H
 
 #include "Config.h"
 
 
-#endif // BEEBEEP_VIDEOCALL_SERVER_H
+#endif // MAGSHARE_VIDEOCALL_SERVER_H

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_SCREENSHOT_H
-#define BEEBEEP_SCREENSHOT_H
+#ifndef MAGSHARE_SCREENSHOT_H
+#define MAGSHARE_SCREENSHOT_H
 
 #include "Config.h"
 
@@ -62,4 +62,4 @@ inline bool Screenshot::isValid() const { return !m_pixmap.isNull(); }
 inline const QPixmap& Screenshot::toPixmap() const { return m_pixmap; }
 inline QImage Screenshot::toImage() const { return m_pixmap.toImage(); }
 
-#endif // BEEBEEP_SCREENSHOT_H
+#endif // MAGSHARE_SCREENSHOT_H

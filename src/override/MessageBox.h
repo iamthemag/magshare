@@ -21,12 +21,12 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_MESSAGEBOX_H
-#define BEEBEEP_MESSAGEBOX_H
+#ifndef MAGSHARE_MESSAGEBOX_H
+#define MAGSHARE_MESSAGEBOX_H
 
 class MessageBoxModeless
 {
 
 };
 
-#endif // BEEBEEP_MESSAGEBOX_H
+#endif // MAGSHARE_MESSAGEBOX_H

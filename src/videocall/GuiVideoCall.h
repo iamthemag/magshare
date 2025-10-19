@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////
 //
-// This file is part of BeeBEEP.
+// This file is part of MagShare.
 //
 // MagShare is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published
@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIVIDEOCALL_H
-#define BEEBEEP_GUIVIDEOCALL_H
+#ifndef MAGSHARE_GUIVIDEOCALL_H
+#define MAGSHARE_GUIVIDEOCALL_H
 
 #include "Config.h"
 
@@ -57,4 +57,4 @@ private:
 // Inline Functions
 inline bool GuiVideoCall::isVideoCallActive() const { return m_isVideoCallActive; }
 
-#endif // BEEBEEP_GUIVIDEOCALL_H
+#endif // MAGSHARE_GUIVIDEOCALL_H

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUISAVEDCHATITEM_H
-#define BEEBEEP_GUISAVEDCHATITEM_H
+#ifndef MAGSHARE_GUISAVEDCHATITEM_H
+#define MAGSHARE_GUISAVEDCHATITEM_H
 
 #include "Config.h"
 
@@ -47,4 +47,4 @@ public:
 inline void GuiSavedChatItem::setChatName( const QString& chat_name ) { setData( 0, ChatName, chat_name ); }
 inline QString GuiSavedChatItem::chatName() const { return data( 0, ChatName ).toString(); }
 
-#endif // BEEBEEP_GUISAVEDCHATITEM_H
+#endif // MAGSHARE_GUISAVEDCHATITEM_H

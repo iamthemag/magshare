@@ -49,7 +49,7 @@
 #include "GuiSavedChatList.h"
 #include "GuiScreenShot.h"
 #include "GuiNetwork.h"
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   #include "GuiShareDesktop.h"
   #include "ImageOptimizer.h"
 #endif
@@ -59,7 +59,7 @@
 #include "GuiUserList.h"
 #include "GuiMain.h"
 #include "GuiVCard.h"
-#ifdef BEEBEEP_USE_WEBENGINE
+#ifdef MAGSHARE_USE_WEBENGINE
   #include "GuiWebView.h"
 #endif
 #include "GuiWizard.h"
@@ -74,7 +74,7 @@
 #include "SpellChecker.h"
 #include "Updater.h"
 #include "UserManager.h"
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
   #include "VoicePlayer.h"
   #include "GuiRecordVoiceMessageSettings.h"
 #endif
@@ -159,14 +159,14 @@ GuiMain::GuiMain( QWidget *parent )
   connect( beeCore, SIGNAL( newSystemStatusMessage( const QString&, int ) ), this, SLOT( showMessage( const QString&, int ) ) );
   connect( beeCore, SIGNAL( newsAvailable( const QString& ) ), this, SLOT( onNewsAvailable( const QString& ) ) );
   connect( beeCore, SIGNAL( offlineMessageSentToUser( const User& ) ), this, SLOT( updateUser( const User& ) ) );
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   connect( beeCore, SIGNAL( shareDesktopImageAvailable( const User&, const QImage&, const QString&, QRgb ) ), this, SLOT( onShareDesktopImageAvailable( const User&, const QImage&, const QString&, QRgb ) ) );
   connect( beeCore, SIGNAL( shareDesktopUpdate( const User& ) ), this, SLOT( onShareDesktopUpdate( const User& ) ) );
 #endif
-#ifdef BEEBEEP_USE_MULTICAST_DNS
+#ifdef MAGSHARE_USE_MULTICAST_DNS
   connect( beeCore, SIGNAL( multicastDnsChanged() ), this, SLOT( showDefaultServerPortInMenu() ) );
 #endif
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
   connect( beeCore->voicePlayer(), SIGNAL( openWithExternalPlayer( const QUrl&, VNumber ) ), this, SLOT( openUrlFromChat( const QUrl&, VNumber ) ) );
 #endif
 
@@ -212,7 +212,7 @@ void GuiMain::initShortcuts()
   mp_scMinimizeAllChats = new QShortcut( this );
   mp_scMinimizeAllChats->setContext( Qt::ApplicationShortcut );
   connect( mp_scMinimizeAllChats, SIGNAL( activated() ), this, SLOT( minimizeAllChats() ) );
-#ifdef BEEBEEP_USE_QXT
+#ifdef MAGSHARE_USE_QXT
   mp_scShowAllChats = new QxtGlobalShortcut( this );
   connect( mp_scShowAllChats, SIGNAL( activated() ), this, SLOT( showAllChats() ) );
   mp_scSendHelpMessage = new QxtGlobalShortcut( this );
@@ -237,7 +237,7 @@ void GuiMain::setupChatConnections( GuiChat* gui_chat )
   connect( gui_chat, SIGNAL( chatToClear( VNumber ) ), this, SLOT( clearChat( VNumber ) ) );
   connect( gui_chat, SIGNAL( clearSystemMessagesRequestFromChat( VNumber ) ), this, SLOT( clearSystemMessagesInChat( VNumber ) ) );
   connect( gui_chat, SIGNAL( showChatMenuRequest() ), this, SLOT( showChatSettingsMenu() ) );
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   connect( gui_chat, SIGNAL( shareDesktopToChatRequest( VNumber, bool ) ), this, SLOT( onShareDesktopRequestFromChat( VNumber, bool ) ) );
   connect( gui_chat, SIGNAL( screenshotToChatRequest( VNumber ) ), this, SLOT( sendScreenshotToChat( VNumber ) ) );
 #endif
@@ -436,12 +436,12 @@ void GuiMain::closeEvent( QCloseEvent* e )
   if( mp_networkTest )
     mp_networkTest->close();
 
-#ifdef BEEBEEP_USE_WEBENGINE
+#ifdef MAGSHARE_USE_WEBENGINE
   if( mp_webView )
     mp_webView->close();
 #endif
 
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
   if( !beeCore->voicePlayer()->isStopped() )
     beeCore->voicePlayer()->stop();
 #endif
@@ -486,7 +486,7 @@ void GuiMain::closeEvent( QCloseEvent* e )
 
 void GuiMain::showNextChat()
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "Show next chat in list with unread messages";
 #endif
   Chat c = ChatManager::instance().firstChatWithUnreadMessages();
@@ -512,7 +512,7 @@ void GuiMain::forceShutdown()
 
 void GuiMain::onWakeUpRequest()
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "Main window wakes up from sleep";
 #endif
   initGuiItems();
@@ -520,7 +520,7 @@ void GuiMain::onWakeUpRequest()
 
 void GuiMain::onSleepRequest()
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "Main window goes to sleep";
 #endif
   if( beeCore->isConnected() )
@@ -531,7 +531,7 @@ void GuiMain::onCoreConnected()
 {
   m_coreIsConnecting = false;
   initGuiItems();
-#ifdef BEEBEEP_USE_WEBENGINE
+#ifdef MAGSHARE_USE_WEBENGINE
   QTimer::singleShot( 0, mp_webView, SLOT( loadNews() ) );
 #endif
 }
@@ -623,7 +623,7 @@ void GuiMain::disconnectFromNetwork()
   if( mp_tabMain->currentWidget() != mp_home )
     mp_tabMain->setCurrentWidget( mp_home );
 
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   foreach( GuiShareDesktop* gsd, m_desktops )
     gsd->close();
 #endif
@@ -639,7 +639,7 @@ void GuiMain::stopCore()
   if( mp_tabMain->currentWidget() != mp_home )
     mp_tabMain->setCurrentWidget( mp_home );
 
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   foreach( GuiShareDesktop* gsd, m_desktops )
     gsd->close();
 #endif
@@ -658,7 +658,7 @@ void GuiMain::restartCore()
   if( isFileTransferInProgress() )
     return;
 
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   foreach( GuiShareDesktop* gsd, m_desktops )
     gsd->close();
 #endif
@@ -726,7 +726,7 @@ void GuiMain::checkViewActions()
   }
   mp_actEnableFileSharing->setEnabled( Settings::instance().enableFileTransfer() && !Settings::instance().disableFileSharing() );
 
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
   // Voice message menu disabled in UI
   // mp_menuVoiceMessage->setEnabled( Settings::instance().enableFileTransfer() );
 #endif
@@ -760,7 +760,7 @@ void GuiMain::showAbout()
 #else
   QMessageBox::about( this, Settings::instance().programName(),
 #endif
-                      QString( "<b>%1</b> - Messenger for connected Communities<br><br>%2<br>%3 %4 %5<br><br>Fork of: beebeep.net<br><br>%6 %7<br>%8<br>" )
+                      QString( "<b>%1</b> - Messenger for connected Communities<br><br>%2<br>%3 %4 %5<br><br>Fork of: magshare.net<br><br>%6 %7<br>%8<br>" )
                         .arg( Settings::instance().programName() )
                         .arg( Settings::instance().isDevelopmentVersion() ? tr( "Development version") : tr( "Version" ) )
                         .arg( Settings::instance().version( true, true, true ) )
@@ -775,8 +775,8 @@ void GuiMain::showAbout()
 void GuiMain::showLicense()
 {
   QString license_txt = QLatin1String(
-  "<b>MagShare</b> is a fork of BeeBEEP (beebeep.net) <br><br>"
-  "Original BeeBEEP Copyright (C) 2010-2023 Marco Mastroddi <br>"
+  "<b>MagShare</b> is a fork of MagShare (magshare.net) <br><br>"
+  "Original MagShare Copyright (C) 2010-2023 Marco Mastroddi <br>"
   "MagShare modifications (C) 2023-2025 Abdul Gafoor Mohammed <br><br>"
   "MagShare is free software: you can redistribute it and/or modify "
   "it under the terms of the GNU General Public License as published "
@@ -786,7 +786,7 @@ void GuiMain::showLicense()
   "but WITHOUT ANY WARRANTY; without even the implied warranty "
   "of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. <br><br>"
   "See the GNU General Public License for more details. <br><br>"
-  "<br>Thanks to Marco Mastroddi and the BeeBEEP project for the excellent foundation." );
+  "<br>Thanks to Marco Mastroddi and the MagShare project for the excellent foundation." );
 #ifdef Q_OS_MACOS
   QMessageBox::about( Q_NULLPTR, Settings::instance().programName(), license_txt );
 #else
@@ -852,7 +852,7 @@ void GuiMain::createActions()
   mp_actHelpRequest = new QAction( IconManager::instance().icon( "help.png" ), tr( "Ask for help" ), this );
   connect( mp_actHelpRequest, SIGNAL( triggered() ), this, SLOT( sendHelpMessage() ) );
 
-#ifdef BEEBEEP_USE_WEBENGINE
+#ifdef MAGSHARE_USE_WEBENGINE
   mp_actWebView = new QAction( IconManager::instance().icon( "network.png" ), tr( "News" ), this );
   connect( mp_actWebView, SIGNAL( triggered() ), this, SLOT( showWebView() ) );
   mp_actWebView->setDisabled( true );
@@ -884,7 +884,7 @@ void GuiMain::createMenus()
   mp_menuMain->addAction( IconManager::instance().icon( "network-test.png" ), tr( "Test your network" )+QString("..."), this, SLOT( showNetworkTest() ) );
   mp_menuMain->addSeparator();
   mp_menuMain->addAction( mp_actViewLog );
-#ifdef BEEBEEP_USE_WEBENGINE
+#ifdef MAGSHARE_USE_WEBENGINE
   mp_menuMain->addSeparator();
   mp_menuMain->addAction( mp_actWebView );
 #endif
@@ -1001,7 +1001,7 @@ void GuiMain::createMenus()
   mp_actMulticastGroupAddress = mp_menuNetworkStatus->addAction( IconManager::instance().icon( "multicast-group.png" ), QString( "multicast" ) );
   mp_actPortListener = mp_menuNetworkStatus->addAction( IconManager::instance().icon( "default-chat-online.png" ), QString( "tcp1" ) );
   mp_actPortFileTransfer = mp_menuNetworkStatus->addAction( IconManager::instance().icon( "network-scan.png" ), QString( "tcp2" ) );
-#ifdef BEEBEEP_USE_MULTICAST_DNS
+#ifdef MAGSHARE_USE_MULTICAST_DNS
   mp_actMulticastDns = mp_menuNetworkStatus->addAction( IconManager::instance().icon( "mdns.png" ), QString( "mdns" ) );
 #endif
   mp_menuNetworkStatus->addSeparator();
@@ -1105,7 +1105,7 @@ void GuiMain::createMenus()
   act->setCheckable( true );
   act->setChecked( Settings::instance().useHiResEmoticons() );
   act->setData( 105 );
-#if defined( BEEBEEP_FOR_RASPBERRY_PI ) || defined( Q_OS_OS2 )
+#if defined( MAGSHARE_FOR_RASPBERRY_PI ) || defined( Q_OS_OS2 )
   act->setEnabled( false );
 #endif
   act = mp_menuChatSettings->addAction( tr( "Use font emoticons" ), this, SLOT( settingsChanged() ) );
@@ -1254,7 +1254,7 @@ void GuiMain::createMenus()
   mp_menuFileTransferSettings->addSeparator();
   mp_actSelectDownloadFolder = mp_menuFileTransferSettings->addAction( IconManager::instance().icon( "download-folder.png" ), tr( "Select download folder" ) + QString( "..." ), this, SLOT( selectDownloadDirectory() ) );
 
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
   // Voice message menu removed from UI but logic kept intact
   /*
   mp_menuVoiceMessage = new QMenu( tr( "Voice message" ), this );
@@ -1338,7 +1338,7 @@ void GuiMain::createMenus()
   mp_menuNotificationSettings->addAction( IconManager::instance().icon( "play.png" ), tr( "Play beep" ), this, SLOT( testBeepFile() ) );
 
 // Desktop sharing menu completely removed
-// #ifdef BEEBEEP_USE_SHAREDESKTOP - Desktop sharing feature disabled from UI
+// #ifdef MAGSHARE_USE_SHAREDESKTOP - Desktop sharing feature disabled from UI
 
   mp_menuSettings->addSeparator();
   act = mp_menuSettings->addAction( tr( "Always stay on top" ), this, SLOT( settingsChanged() ) );
@@ -1477,7 +1477,7 @@ void GuiMain::createMenus()
   mp_menuInfo->addAction( IconManager::instance().icon( "update.png" ), tr( "Check for new version..." ), this, SLOT( checkNewVersion() ) );
   mp_menuInfo->addSeparator();
   mp_menuInfo->addAction( IconManager::instance().icon( "star.png" ), tr( "Information about %1..." ).arg( "Abdul Gafoor" ), this, SLOT( openDeveloperWebSite() ) );
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   mp_menuInfo->addSeparator();
   act = mp_menuInfo->addAction( tr( "Add +1 user to anonymous usage statistics" ), this, SLOT( settingsChanged() ) );
   act->setCheckable( true );
@@ -1582,7 +1582,7 @@ void GuiMain::createMainWidgets()
   mp_tabMain->setTabToolTip( tab_index, tr( "Saved chats" ) );
   mp_savedChatList->setMainToolTip( QString( "%1\n(%2)" ).arg( mp_tabMain->tabToolTip( tab_index ), tooltip_right_button ) );
 
-#ifdef BEEBEEP_USE_WEBENGINE
+#ifdef MAGSHARE_USE_WEBENGINE
   mp_webView = new GuiWebView();
   connect( mp_webView, SIGNAL( newsLoadFinished( bool ) ), this, SLOT( onNewsLoad( bool ) ) );
 #endif
@@ -1626,7 +1626,7 @@ void GuiMain::settingsChanged( QAction* act )
   int settings_data_id = act->data().toInt();
   bool ok = false;
 
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   if( act->isCheckable() )
     qDebug() << "Settings changed for action id" << settings_data_id << "to" << static_cast<int>(act->isChecked());
 #endif
@@ -1942,7 +1942,7 @@ void GuiMain::settingsChanged( QAction* act )
     Settings::instance().setUserRecognitionMethod( Settings::RecognizeByNickname );
     showRestartConnectionAlertMessage();
     break;
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   case 60:
     {
       Settings::instance().setEnableShareDesktop( act->isChecked() );
@@ -2347,7 +2347,7 @@ void GuiMain::setMaxQueuedDownloadsInAction( QAction* act )
 
 void GuiMain::sendMessage( VNumber chat_id, const QString& msg, bool is_source_code )
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   int num_messages = beeCore->sendChatMessage( chat_id, msg, false, false, is_source_code );
   qDebug() << num_messages << "messages sent";
 #else
@@ -2524,7 +2524,7 @@ void GuiMain::searchUsers()
   if( !beeCore->isConnected() )
     return;
 
-#ifdef BEEBEEP_USE_MULTICAST_DNS
+#ifdef MAGSHARE_USE_MULTICAST_DNS
   if( Settings::instance().useMulticastDns() )
     beeCore->startDnsMulticasting();
   else
@@ -3137,7 +3137,7 @@ void GuiMain::trayIconClicked( QSystemTrayIcon::ActivationReason ar )
 
   if( ar == QSystemTrayIcon::Context )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "TrayIcon is activated with context click and menu is showed";
 #endif
     return;
@@ -3147,14 +3147,14 @@ void GuiMain::trayIconClicked( QSystemTrayIcon::ActivationReason ar )
   {
     if( !isActiveWindow() || isMinimized() )
     {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
       qDebug() << "TrayIcon is activated with trigger click and main window will be showed";
 #endif
       QTimer::singleShot( 0, this, SLOT( raiseOnTop() ) );
     }
     else
     {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
       qDebug() << "TrayIcon is activated with trigger click and menu will be showed";
 #endif
       mp_menuTrayIcon->popup( QCursor::pos() );
@@ -3162,7 +3162,7 @@ void GuiMain::trayIconClicked( QSystemTrayIcon::ActivationReason ar )
   }
   else
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "TrayIcon is activated with unknown click";
 #endif
     if( !mp_menuTrayIcon->isVisible() )
@@ -3203,7 +3203,7 @@ void GuiMain::openUrl( const QUrl& file_url )
 
 void GuiMain::openUrlFromChat( const QUrl& file_url, VNumber chat_id )
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "Opening url (not encoded):" << qPrintable( file_url.toString() );
 #endif
 
@@ -3243,7 +3243,7 @@ void GuiMain::openUrlFromChat( const QUrl& file_url, VNumber chat_id )
   {
     QUrl adj_file_url = file_url;
     adj_file_url.setScheme( QLatin1String( "file" ) );
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
     if( Settings::instance().useVoicePlayer() )
     {
       GuiFloatingChat* fl_chat = floatingChat( chat_id );
@@ -3740,7 +3740,7 @@ void GuiMain::onUserChanged( const User& u )
       mp_tabMain->setCurrentWidget( mp_userList );
     }
   }
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   foreach( GuiShareDesktop* gsd, m_desktops )
     gsd->onUserChanged( u );
 #endif
@@ -3755,7 +3755,7 @@ void GuiMain::onUserRemoved( const User& u )
 
 void GuiMain::onChatChanged( const Chat& c )
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   showMessage( tr( "%1 updated" ).arg( c.name() ), 2000 );
 #endif
   mp_userList->updateChat( c );
@@ -4020,7 +4020,7 @@ void GuiMain::showDefaultServerPortInMenu()
   QString broadcast_port = tr( "offline" );
   QString listener_port = tr( "offline" );
   QString file_transfer_port = tr( "offline" );
-#ifdef BEEBEEP_USE_MULTICAST_DNS
+#ifdef MAGSHARE_USE_MULTICAST_DNS
   QString multicast_dns = tr( "inactive" );
 #endif
   QString multicast_group = tr( "none" );
@@ -4059,7 +4059,7 @@ void GuiMain::showDefaultServerPortInMenu()
         mp_networkTest->updateSettings( file_transfer_port );
     }
 
-#ifdef BEEBEEP_USE_MULTICAST_DNS
+#ifdef MAGSHARE_USE_MULTICAST_DNS
     if( beeCore->dnsMulticastingIsActive() )
     {
 
@@ -4081,7 +4081,7 @@ void GuiMain::showDefaultServerPortInMenu()
     mp_actMulticastGroupAddress->setEnabled( false );
     mp_actPortListener->setEnabled( false );
     mp_actPortFileTransfer->setEnabled( false );
-#ifdef BEEBEEP_USE_MULTICAST_DNS
+#ifdef MAGSHARE_USE_MULTICAST_DNS
     mp_actMulticastDns->setEnabled( false );
 #endif
     mp_actEncryptedConnectionByDefault->setEnabled( false );
@@ -4093,7 +4093,7 @@ void GuiMain::showDefaultServerPortInMenu()
   mp_actMulticastGroupAddress->setText( QString( "multicast: %1" ).arg( multicast_group ) );
   mp_actPortListener->setText( QString( "tcp1: %1 (%2)" ).arg( listener_port ).arg( tr( "chat messages" ) ) );
   mp_actPortFileTransfer->setText( QString( "tcp2: %1 (%2)" ).arg( file_transfer_port ).arg( tr( "file transfer" ) ) );
-#ifdef BEEBEEP_USE_MULTICAST_DNS
+#ifdef MAGSHARE_USE_MULTICAST_DNS
   mp_actMulticastDns->setText( QString( "mdns: %1" ).arg( multicast_dns ) );
 #endif
   if( Settings::instance().disableConnectionSocketEncryption() )
@@ -4123,7 +4123,7 @@ void GuiMain::sendBroadcastMessage()
 {
   mp_actBroadcast->setDisabled( true );
   beeCore->sendBroadcastMessage();
-#ifdef BEEBEEP_USE_MULTICAST_DNS
+#ifdef MAGSHARE_USE_MULTICAST_DNS
   beeCore->sendDnsMulticastingMessage();
 #endif
   QTimer::singleShot( 61000, this, SLOT( enableBroadcastAction() ) );
@@ -4251,11 +4251,11 @@ void GuiMain::removeFloatingChatFromList( VNumber chat_id )
 
   m_floatingChats.removeOne( fl_chat );
   fl_chat->deleteLater();
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "Floating chat" << chat_id << "closed and deleted";
 #endif
 
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   onShareDesktopRequestFromChat( chat_id, false );
 #endif
 }
@@ -4278,7 +4278,7 @@ GuiFloatingChat* GuiMain::createFloatingChat( const Chat& c )
     connect( fl_chat, SIGNAL( showVCardRequest( VNumber ) ), this, SLOT( showVCard( VNumber ) ) );
     connect( fl_chat, SIGNAL( updateChatFontRequest() ), this, SLOT( updateChatFont() ) );
     connect( fl_chat, SIGNAL( updateChatColorsRequest() ), this, SLOT( updateChatColors() ) );
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
     connect( fl_chat, SIGNAL( sendVoiceMessageRequest( VNumber, const QString&, qint64 ) ), this, SLOT( sendVoiceMessageToChat( VNumber, const QString&, qint64 ) ) );
 #endif
 
@@ -4425,7 +4425,7 @@ void GuiMain::updateShortcuts()
   else
     mp_scMinimizeAllChats->setEnabled( false );
 
-#ifdef BEEBEEP_USE_QXT
+#ifdef MAGSHARE_USE_QXT
   ks = ShortcutManager::instance().shortcut( ShortcutManager::ShowAllChats );
   if( !ks.isEmpty() && Settings::instance().useCustomShortcuts() )
   {
@@ -4547,7 +4547,7 @@ void GuiMain::selectDictionatyPath()
     return;
 
   Settings::instance().setDictionaryPath( dictionary_path );
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
   if( SpellChecker::instance().setDictionary( dictionary_path ) )
     QMessageBox::information( this, Settings::instance().programName(), tr( "Dictionary selected: %1" ).arg( dictionary_path ) );
   else
@@ -4611,7 +4611,7 @@ void GuiMain::onTickEvent( int ticks )
   foreach( GuiFloatingChat* fl_chat, m_floatingChats )
     fl_chat->onTickEvent( ticks );
 
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   foreach( GuiShareDesktop* gsd, m_desktops )
     gsd->onTickEvent( ticks );
 #endif
@@ -4719,7 +4719,7 @@ void GuiMain::resetGeometryAndState()
 #ifdef Q_OS_WIN
   move( beeApp->primaryScreen()->availableGeometry().width() - frameGeometry().width(),
         beeApp->primaryScreen()->availableGeometry().height() - frameGeometry().height() );
-#elif defined BEEBEEP_FOR_RASPBERRY_PI
+#elif defined MAGSHARE_FOR_RASPBERRY_PI
   move( beeApp->primaryScreen()->availableGeometry().width() - frameGeometry().width(), 70 );
 #elif defined Q_OS_MACOS
   move( beeApp->primaryScreen()->availableGeometry().width() - frameGeometry().width(), 0 );
@@ -5098,7 +5098,7 @@ void GuiMain::showRestartApplicationAlertMessage()
 
 void GuiMain::onNewsAvailable( const QString& news )
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "News from the website available:" << qPrintable( news );
 #endif
   mp_home->setNews( news );
@@ -5179,7 +5179,7 @@ void GuiMain::onApplicationFocusChanged( QWidget* old, QWidget* now )
 {
   if( old == Q_NULLPTR && isAncestorOf( now )  )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Main window has grabbed focus";
 #endif
     m_prevActivatedState = true;
@@ -5188,7 +5188,7 @@ void GuiMain::onApplicationFocusChanged( QWidget* old, QWidget* now )
 
   if( isAncestorOf( old ) && now == Q_NULLPTR )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Main window has lost focus";
 #endif
     m_prevActivatedState = false;
@@ -5199,7 +5199,7 @@ void GuiMain::onApplicationFocusChanged( QWidget* old, QWidget* now )
   if( current_state != m_prevActivatedState )
   {
     m_prevActivatedState = current_state;
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     if( current_state )
       qDebug() << "Main window has grabbed focus (active)";
     else
@@ -5208,7 +5208,7 @@ void GuiMain::onApplicationFocusChanged( QWidget* old, QWidget* now )
   }
 }
 
-#ifdef BEEBEEP_USE_WEBENGINE
+#ifdef MAGSHARE_USE_WEBENGINE
 void GuiMain::showWebView()
 {
   mp_webView->show();
@@ -5220,7 +5220,7 @@ void GuiMain::onNewsLoad( bool ok )
 }
 #endif
 
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
 void GuiMain::onShareDesktopImageAvailable( const User& u, const QImage& img, const QString& image_type, QRgb diff_color )
 {
   foreach( GuiShareDesktop* gsd, m_desktops )
@@ -5259,7 +5259,7 @@ void GuiMain::onShareDesktopImageAvailable( const User& u, const QImage& img, co
 
 void GuiMain::onShareDesktopCloseEvent( VNumber user_id )
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "You close the desktop shared viewer for user" << user_id;
 #endif
   beeCore->refuseToViewShareDesktop( ID_LOCAL_USER, user_id );
@@ -5272,7 +5272,7 @@ void GuiMain::onShareDesktopDeleteRequest( VNumber user_id )
   {
     if( (*it)->userId() == user_id )
     {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
       qDebug() << "Delete GuiShareDesktop for user" << user_id;
 #endif
       (*it)->disconnect();
@@ -5627,7 +5627,7 @@ void GuiMain::loadStyle()
   updateEmoticons();
 }
 
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
 void GuiMain::sendVoiceMessageToChat( VNumber chat_id, const QString& file_path, qint64 message_duration )
 {
   beeCore->sendVoiceMessageToChat( chat_id, file_path, message_duration );

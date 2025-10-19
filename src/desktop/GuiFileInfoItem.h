@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIFILEINFOITEM_H
-#define BEEBEEP_GUIFILEINFOITEM_H
+#ifndef MAGSHARE_GUIFILEINFOITEM_H
+#define MAGSHARE_GUIFILEINFOITEM_H
 
 #include "Config.h"
 class FileInfo;
@@ -79,4 +79,4 @@ inline const QString& GuiFileInfoItem::folder() const { return m_folder; }
 inline const QString& GuiFileInfoItem::filePath() const { return m_filePath; }
 inline void GuiFileInfoItem::setFilePath( const QString& new_value ) { m_filePath = new_value; }
 
-#endif // BEEBEEP_GUIFILEINFOITEM_H
+#endif // MAGSHARE_GUIFILEINFOITEM_H

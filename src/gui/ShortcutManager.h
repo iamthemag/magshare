@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_SHORTCUTMANAGER_H
-#define BEEBEEP_SHORTCUTMANAGER_H
+#ifndef MAGSHARE_SHORTCUTMANAGER_H
+#define MAGSHARE_SHORTCUTMANAGER_H
 
 #include "Config.h"
 
@@ -82,4 +82,4 @@ inline QString ShortcutManager::shortcutKey( int st ) const { return shortcutKey
 inline const QString& ShortcutManager::shortcutName( int st ) const { return st > 0 && st < NumShortcut ? m_shortcutNames.at( st ) : m_shortcutNames.at( Empty ); }
 inline bool ShortcutManager::isGlobalShortcut( int st ) const { return st == ShowAllChats || st == SendHelpMessage || st == SelectFirstChat; }
 
-#endif // BEEBEEP_SHORTCUTMANAGER_H
+#endif // MAGSHARE_SHORTCUTMANAGER_H

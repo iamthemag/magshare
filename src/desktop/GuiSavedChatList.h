@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUISAVEDCHATLIST_H
-#define BEEBEEP_GUISAVEDCHATLIST_H
+#ifndef MAGSHARE_GUISAVEDCHATLIST_H
+#define MAGSHARE_GUISAVEDCHATLIST_H
 
 #include "GuiSavedChatItem.h"
 #include "ui_GuiSavedChatList.h"
@@ -69,4 +69,4 @@ private:
 // Inline Functions
 inline void GuiSavedChatList::setMainToolTip( const QString& new_value ) { mp_twSavedChatList->setToolTip( new_value ); }
 
-#endif // BEEBEEP_GUISAVEDCHATLIST_H
+#endif // MAGSHARE_GUISAVEDCHATLIST_H

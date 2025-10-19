@@ -228,7 +228,7 @@ void GuiEmoticons::emoticonClicked()
   Emoticon e = emoticon_code.isEmpty() ? Emoticon() : EmoticonManager::instance().emoticonSelected( emoticon_code );
   if( e.isValid() )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Emoticon clicked is" << qPrintable( e.textToMatch() ) << e.name();
 #endif
     if( currentIndex() != m_favoriteTabIndex && currentIndex() != m_recentTabIndex )

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIWEBVIEW_H
-#define BEEBEEP_GUIWEBVIEW_H
+#ifndef MAGSHARE_GUIWEBVIEW_H
+#define MAGSHARE_GUIWEBVIEW_H
 
 #include "Config.h"
 #include "ui_GuiWebView.h"
@@ -47,4 +47,4 @@ private:
 };
 
 
-#endif // BEEBEEP_GUIWEBVIEW_H
+#endif // MAGSHARE_GUIWEBVIEW_H

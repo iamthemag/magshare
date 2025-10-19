@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUICREATEGROUP_H
-#define BEEBEEP_GUICREATEGROUP_H
+#ifndef MAGSHARE_GUICREATEGROUP_H
+#define MAGSHARE_GUICREATEGROUP_H
 
 #include "ui_GuiCreateGroup.h"
 #include "Group.h"
@@ -56,4 +56,4 @@ private:
 inline const Group& GuiCreateGroup::group() const { return m_group; }
 inline bool GuiCreateGroup::leaveGroup() const { return m_leaveGroup; }
 
-#endif // BEEBEEP_GUICREATEGROUP_H
+#endif // MAGSHARE_GUICREATEGROUP_H

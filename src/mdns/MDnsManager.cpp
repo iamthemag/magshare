@@ -45,7 +45,7 @@ bool MDnsManager::start( const QString& service_base_name, const QString& servic
 {
   if( isActive() )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << qPrintable( objectName() ) << "is already active";
 #endif
     return false;
@@ -68,7 +68,7 @@ bool MDnsManager::stop()
 {
   if( !isActive() )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << qPrintable( objectName() ) << "is already closed";
 #endif
     return false;
@@ -108,7 +108,7 @@ void MDnsManager::addMDnsRecord( const MDnsRecord& mdns_record )
   if( m_mdnsRecords.contains( mdns_record ) )
     return;
 
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << qPrintable( objectName() ) << "adds new dns record" << mdns_record.name();
 #endif
   m_mdnsRecords.append( mdns_record );
@@ -116,14 +116,14 @@ void MDnsManager::addMDnsRecord( const MDnsRecord& mdns_record )
   MDnsResolver* resolver = new MDnsResolver( this );
   connect( resolver, SIGNAL( resolved( const QHostInfo&, int ) ), this, SLOT( serviceResolved( const QHostInfo&, int ) ) );
   resolver->resolve( mdns_record );
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << qPrintable( objectName() ) << "is now searching for" << mdns_record.name();
 #endif
 }
 
 void MDnsManager::removeMDnsRecord( const MDnsRecord& mdns_record )
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << qPrintable( objectName() ) << "removes dns record" << mdns_record.name();
 #endif
   m_mdnsRecords.removeOne( mdns_record );
@@ -133,7 +133,7 @@ void MDnsManager::addNetworkAddress( const NetworkAddress& na )
 {
   if( !m_isActive )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << qPrintable( objectName() ) << "is not active and skips the user found in" << qPrintable( na.toString() );
 #endif
     return;
@@ -141,7 +141,7 @@ void MDnsManager::addNetworkAddress( const NetworkAddress& na )
 
   if( na.isIPv6Address() && !Settings::instance().useIPv6() )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << qPrintable( objectName() ) << "skips user record with IPV6 address" << qPrintable( na.toString() );
 #endif
     return;
@@ -149,13 +149,13 @@ void MDnsManager::addNetworkAddress( const NetworkAddress& na )
 
   if( m_networkAddresses.contains( na ) )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << qPrintable( objectName() ) << "already contains user record" << qPrintable( na.toString() );
 #endif
     return;
   }
 
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << qPrintable( objectName() ) << "adds new user record" << qPrintable( na.toString() );
 #endif
   m_networkAddresses.append( na );
@@ -175,7 +175,7 @@ void MDnsManager::serviceResolved( const QHostInfo& host_info, int host_port )
 
   foreach( QHostAddress ha, host_addresses )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << qPrintable( objectName() ) << "has resolved host" << host_info.hostName() << "with this address" << ha.toString();
 #endif
     NetworkAddress na( ha, host_port );

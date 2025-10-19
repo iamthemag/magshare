@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIREFUSEDCHAT_H
-#define BEEBEEP_GUIREFUSEDCHAT_H
+#ifndef MAGSHARE_GUIREFUSEDCHAT_H
+#define MAGSHARE_GUIREFUSEDCHAT_H
 
 #include "ui_GuiRefusedChat.h"
 #include "ChatRecord.h"
@@ -54,4 +54,4 @@ private:
 
 };
 
-#endif // BEEBEEP_GUIREFUSEDCHAT_H
+#endif // MAGSHARE_GUIREFUSEDCHAT_H

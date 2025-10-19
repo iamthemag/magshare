@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUICHATMESSAGE_H
-#define BEEBEEP_GUICHATMESSAGE_H
+#ifndef MAGSHARE_GUICHATMESSAGE_H
+#define MAGSHARE_GUICHATMESSAGE_H
 
 #include "Config.h"
 class Chat;
@@ -45,4 +45,4 @@ public:
 
 };
 
-#endif // BEEBEEP_GUICHATMESSAGE_H
+#endif // MAGSHARE_GUICHATMESSAGE_H

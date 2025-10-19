@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_DOWNLOADER_H
-#define BEEBEEP_DOWNLOADER_H
+#ifndef MAGSHARE_DOWNLOADER_H
+#define MAGSHARE_DOWNLOADER_H
 
 #include "Config.h"
 class QSslError;
@@ -72,4 +72,4 @@ inline void HttpDownloader::addUrl( const QUrl& new_value ) { m_queuedUrls.appen
 inline const QStringList& HttpDownloader::downloadedFilePaths() const { return m_downloadedFilePaths; }
 inline void HttpDownloader::setOverwriteExistingFiles( bool new_value ) { m_overwriteExistingFiles = new_value; }
 
-#endif // BEEBEEP_DOWNLOADER_H
+#endif // MAGSHARE_DOWNLOADER_H

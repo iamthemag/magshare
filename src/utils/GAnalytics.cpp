@@ -29,7 +29,7 @@
 GAnalytics::GAnalytics( QObject* parent )
  : QObject( parent )
 {
-  setObjectName( "BeeBEEP Analytics" );
+  setObjectName( "MagShare Analytics" );
   mp_manager = new QNetworkAccessManager( this );
   connect( mp_manager, SIGNAL( finished( QNetworkReply* ) ), this, SLOT( onReplyFinished( QNetworkReply* ) ) );
 }
@@ -41,7 +41,7 @@ void GAnalytics::doPost()
   QNetworkProxy np = Settings::instance().systemNetworkProxy( npq );
   if( np.type() != QNetworkProxy::NoProxy )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << qPrintable( objectName() ) << "uses network proxy" << qPrintable( np.hostName() ) << ":" << np.port();
 #endif
     mp_manager->setProxy( np );
@@ -66,7 +66,7 @@ void GAnalytics::doPost()
   query.addQueryItem( "t", "event" );
   query.addQueryItem( "ec", Settings::instance().programName() );
   query.addQueryItem( "ea", "usage" );
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   query.addQueryItem( "el", QString( "%1-%2" ).arg( "zz_test" )
                                               .arg( Settings::instance().version( false, false, false ) ) );
 #else
@@ -78,7 +78,7 @@ void GAnalytics::doPost()
   query.addQueryItem( "ev", QString::number( days_used ) );
 
   QByteArray query_data = query.query().toLatin1();
-  qDebug() << "Posting anonymous data to BeeBEEP statistics:" << query_data;
+  qDebug() << "Posting anonymous data to MagShare statistics:" << query_data;
   QNetworkReply* reply = mp_manager->post( req, query_data );
 #ifndef QT_NO_SSL
   connect( reply, SIGNAL( sslErrors( const QList<QSslError>& ) ), this, SLOT( onSslErrors( const QList<QSslError>& ) ) );
@@ -87,7 +87,7 @@ void GAnalytics::doPost()
 
 void GAnalytics::onReplyFinished( QNetworkReply *reply )
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   if( reply->error() != QNetworkReply::NoError )
     qWarning() << qPrintable( objectName() ) << "has error:" << reply->errorString();
   else

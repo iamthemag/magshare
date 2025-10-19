@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIWIZARD_H
-#define BEEBEEP_GUIWIZARD_H
+#ifndef MAGSHARE_GUIWIZARD_H
+#define MAGSHARE_GUIWIZARD_H
 
 #include "Config.h"
 #include "ui_GuiWizard.h"
@@ -49,4 +49,4 @@ private:
 // Inline Functions
 inline const QString& GuiWizard::userName() const { return m_userName; }
 
-#endif // BEEBEEP_GUIWIZARD_H
+#endif // MAGSHARE_GUIWIZARD_H

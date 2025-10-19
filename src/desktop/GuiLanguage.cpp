@@ -111,7 +111,7 @@ void GuiLanguage::selectLanguage()
 
   if( folder_selected.isEmpty() )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "The language folder is empty. Change it to resource folder";
 #endif
     folder_selected = Settings::instance().resourceFolder();

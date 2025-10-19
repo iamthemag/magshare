@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUILOG_H
-#define BEEBEEP_GUILOG_H
+#ifndef MAGSHARE_GUILOG_H
+#define MAGSHARE_GUILOG_H
 
 #include "Config.h"
 
@@ -64,4 +64,4 @@ private:
 
 };
 
-#endif // BEEBEEP_GUILOG_H
+#endif // MAGSHARE_GUILOG_H

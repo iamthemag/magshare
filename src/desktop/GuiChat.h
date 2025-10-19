@@ -21,15 +21,15 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUICHAT_H
-#define BEEBEEP_GUICHAT_H
+#ifndef MAGSHARE_GUICHAT_H
+#define MAGSHARE_GUICHAT_H
 
 
 #include "ui_GuiChat.h"
 #include "UserList.h"
 class Chat;
 class ChatMessage;
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
 #include "GuiVoicePlayer.h"
 #endif
 class Emoticon;
@@ -62,7 +62,7 @@ public:
 
   void onTickEvent( int );
 
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
   GuiVoicePlayer* guiVoicePlayer();
 #endif
 
@@ -87,11 +87,11 @@ signals:
   void updateChatColorsRequest();
   void showStatusMessageRequest( const QString&, int );
   void openSavedChatRequest( VNumber );
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   void shareDesktopToChatRequest( VNumber, bool );
   void screenshotToChatRequest( VNumber );
 #endif
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
   void showVoiceMessageDialogRequest();
 #endif
 
@@ -146,7 +146,7 @@ private slots:
   void clearSystemMessages();
   void sendTextCode();
   void copyUrlToClipboard();
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   void shareDesktopToChat();
   void sendScreenshotToChat();
   void sendScreenshotToChat_Private();
@@ -180,7 +180,7 @@ private:
   QAction* mp_actSendTextCode;
   QAction* mp_actSaveAs;
   QAction* mp_actRestoreDefaultFont;
-#ifdef BEEBEEP_USE_SHAREDESKTOP
+#ifdef MAGSHARE_USE_SHAREDESKTOP
   QAction* mp_actShareDesktop;
   QAction* mp_actScreenshot;
 #endif
@@ -198,7 +198,7 @@ private:
   QShortcut* mp_scViewEmoticons;
   QString m_lastTextFound;
 
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
   GuiVoicePlayer* mp_guiVoicePlayer;
 #endif
 
@@ -208,8 +208,8 @@ private:
 // Inline Functions
 inline VNumber GuiChat::chatId() const { return m_chatId; }
 inline QSplitter* GuiChat::chatSplitter() const { return mp_splitter; }
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
 inline GuiVoicePlayer* GuiChat::guiVoicePlayer() { return mp_guiVoicePlayer; }
 #endif
 
-#endif // BEEBEEP_GUICHAT_H
+#endif // MAGSHARE_GUICHAT_H

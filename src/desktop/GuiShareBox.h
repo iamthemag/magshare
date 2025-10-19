@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUISHAREBOX_H
-#define BEEBEEP_GUISHAREBOX_H
+#ifndef MAGSHARE_GUISHAREBOX_H
+#define MAGSHARE_GUISHAREBOX_H
 
 #include "ui_GuiShareBox.h"
 #include "GuiShareBoxFileInfoList.h"
@@ -102,4 +102,4 @@ inline const QString& GuiShareBox::currentFolder( VNumber user_id ) const { retu
 inline GuiShareBoxFileInfoList* GuiShareBox::fileInfoList( VNumber user_id ) const { return user_id == ID_LOCAL_USER ? mp_myBox : mp_outBox; }
 inline QLabel* GuiShareBox::currentFolderLabel( VNumber user_id ) const { return user_id == ID_LOCAL_USER ? mp_lMyBox : mp_lOutBox; }
 
-#endif // BEEBEEP_GUISHAREBOX_H
+#endif // MAGSHARE_GUISHAREBOX_H

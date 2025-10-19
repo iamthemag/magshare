@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIFLOATINGCHAT_H
-#define BEEBEEP_GUIFLOATINGCHAT_H
+#ifndef MAGSHARE_GUIFLOATINGCHAT_H
+#define MAGSHARE_GUIFLOATINGCHAT_H
 
 #include "GuiChat.h"
 class GuiEmoticons;
@@ -67,7 +67,7 @@ signals:
   void showVCardRequest( VNumber );
   void updateChatColorsRequest();
   void updateChatFontRequest();
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
   void sendVoiceMessageRequest( VNumber, const QString&, qint64 );
 #endif
 
@@ -84,7 +84,7 @@ private slots:
   void toggleVisibilityPresetMessagesPanel();
   void onGroupMemberActionTriggered();
   void showGroupMenu();
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
   void showRecordMessageDialog();
 #endif
 
@@ -112,4 +112,4 @@ inline bool GuiFloatingChat::chatIsVisible() const { return m_chatIsVisible; }
 inline void GuiFloatingChat::setChatToolbarVisible( bool new_value ) { mp_barChat->setVisible( new_value ); }
 inline void GuiFloatingChat::setSaveGeometryDisabled( bool new_value ) { mp_actSaveWindowGeometry->setDisabled( new_value ); }
 
-#endif // BEEBEEP_GUIFLOATINGCHAT_H
+#endif // MAGSHARE_GUIFLOATINGCHAT_H

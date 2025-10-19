@@ -214,7 +214,7 @@ void GuiFileInfoList::addItemToFileInfoList( GuiFileInfoItem* fi_item )
   FileInfo fi = m_isLocal ? FileShare::instance().localFileInfo( fi_item->fileInfoId() ) : FileShare::instance().networkFileInfo( fi_item->userId(), fi_item->fileInfoId() );
   if( !fi.isValid() )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qWarning() << "Unable to add an invalid file info in list:" << fi_item->text( GuiFileInfoItem::ColumnFile );
 #endif
     return;

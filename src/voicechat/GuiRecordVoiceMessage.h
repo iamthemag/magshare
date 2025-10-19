@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIRECORDVOICEMESSAGE_H
-#define BEEBEEP_GUIRECORDVOICEMESSAGE_H
+#ifndef MAGSHARE_GUIRECORDVOICEMESSAGE_H
+#define MAGSHARE_GUIRECORDVOICEMESSAGE_H
 
 #include "ui_GuiRecordVoiceMessage.h"
 #include "Config.h"
@@ -74,4 +74,4 @@ private:
 inline const QString& GuiRecordVoiceMessage::filePath() const { return m_filePath; }
 inline qint64 GuiRecordVoiceMessage::duration() const { return m_fileAccepted ? qMax( qint64( 1000 ), m_duration ) : -1; }
 
-#endif // BEEBEEP_GUIRECORDVOICEMESSAGE_H
+#endif // MAGSHARE_GUIRECORDVOICEMESSAGE_H

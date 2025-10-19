@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIUSERLIST_H
-#define BEEBEEP_GUIUSERLIST_H
+#ifndef MAGSHARE_GUIUSERLIST_H
+#define MAGSHARE_GUIUSERLIST_H
 
 #include "GuiUserItem.h"
 #include "ui_GuiUserList.h"
@@ -99,4 +99,4 @@ private:
 inline void GuiUserList::setMainToolTip( const QString& new_value ) { mp_twUsers->setToolTip( new_value ); }
 inline QString GuiUserList::mainToolTip() const { return mp_twUsers->toolTip(); }
 
-#endif // BEEBEEP_GUIUSERLIST_H
+#endif // MAGSHARE_GUIUSERLIST_H

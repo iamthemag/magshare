@@ -44,7 +44,7 @@ bool MDnsBrowser::browseForService( const QString& service_type )
     return false;
   }
 
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << qPrintable( objectName() ) << "starts to browse for the service:" << service_type;
 #endif
 

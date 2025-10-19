@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_IMAGEOPTIMIZER_H
-#define BEEBEEP_IMAGEOPTIMIZER_H
+#ifndef MAGSHARE_IMAGEOPTIMIZER_H
+#define MAGSHARE_IMAGEOPTIMIZER_H
 
 #include "Config.h"
 
@@ -72,4 +72,4 @@ private:
 // Inline Functions
 inline const QStringList& ImageOptimizer::imageTypes() const { return m_imageTypes; }
 
-#endif // BEEBEEP_IMAGEOPTIMIZER_H
+#endif // MAGSHARE_IMAGEOPTIMIZER_H

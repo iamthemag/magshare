@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_ECDH_H
-#define BEEBEEP_ECDH_H
+#ifndef MAGSHARE_ECDH_H
+#define MAGSHARE_ECDH_H
 
 #include "Config.h"
 
@@ -61,7 +61,7 @@
 #define ECDH_CURVE_NIST_B571  9
 #define ECDH_CURVE_NIST_K571 10
 
-/* Curve selected (must be the same for all BeeBEEP in your network) */
+/* Curve selected (must be the same for all MagShare in your network) */
 #define ECDH_CURVE ECDH_CURVE_NIST_K163
 
 #if defined(ECDH_CURVE) && (ECDH_CURVE != 0)
@@ -111,4 +111,4 @@ namespace ECDH  {
   bool generateSharedKey( const quint8* private_key, const quint8* others_pub, quint8* output );
 }
 
-#endif // BEEBEEP_ECDH_H
+#endif // MAGSHARE_ECDH_H

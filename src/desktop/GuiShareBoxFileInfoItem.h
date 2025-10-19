@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUISHAREBOXFILEINFOITEM_H
-#define BEEBEEP_GUISHAREBOXFILEINFOITEM_H
+#ifndef MAGSHARE_GUISHAREBOXFILEINFOITEM_H
+#define MAGSHARE_GUISHAREBOXFILEINFOITEM_H
 
 #include "Config.h"
 #include "FileInfo.h"
@@ -56,4 +56,4 @@ inline bool GuiShareBoxFileInfoItem::isFolder() const { return m_fileInfo.isFold
 inline bool GuiShareBoxFileInfoItem::isFile() const { return !m_fileInfo.isFolder(); }
 inline const FileInfo& GuiShareBoxFileInfoItem::fileInfo() const { return m_fileInfo; }
 
-#endif // BEEBEEP_GUISHAREBOXFILEINFOITEM_H
+#endif // MAGSHARE_GUISHAREBOXFILEINFOITEM_H

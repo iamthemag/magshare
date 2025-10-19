@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIFILETRANSFERITEM_H
-#define BEEBEEP_GUIFILETRANSFERITEM_H
+#ifndef MAGSHARE_GUIFILETRANSFERITEM_H
+#define MAGSHARE_GUIFILETRANSFERITEM_H
 
 #include "FileTransferPeer.h"
 class User;
@@ -72,4 +72,4 @@ inline VNumber GuiFileTransferItem::userId() const { return m_userId; }
 inline const FileInfo& GuiFileTransferItem::fileInfo() const { return m_fileInfo; }
 inline FileTransferPeer::TransferState GuiFileTransferItem::transferState() const { return m_transferState; }
 inline bool GuiFileTransferItem::isStopped() const { return m_transferState < FileTransferPeer::Starting || m_transferState >= FileTransferPeer::Completed; }
-#endif // BEEBEEP_GUIFILETRANSFERITEM_H
+#endif // MAGSHARE_GUIFILETRANSFERITEM_H

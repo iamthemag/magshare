@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIRECORDVOICEMESSAGESETTINGS_H
-#define BEEBEEP_GUIRECORDVOICEMESSAGESETTINGS_H
+#ifndef MAGSHARE_GUIRECORDVOICEMESSAGESETTINGS_H
+#define MAGSHARE_GUIRECORDVOICEMESSAGESETTINGS_H
 
 #include "ui_GuiRecordVoiceMessageSettings.h"
 #include "Config.h"
@@ -57,4 +57,4 @@ private:
 
 };
 
-#endif // BEEBEEP_GUIRECORDVOICEMESSAGESETTINGS_H
+#endif // MAGSHARE_GUIRECORDVOICEMESSAGESETTINGS_H

@@ -28,7 +28,7 @@
 #include "GuiFloatingChat.h"
 #include "GuiEmoticons.h"
 #include "GuiPresetMessageList.h"
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
   #include "GuiRecordVoiceMessage.h"
   #include "VoicePlayer.h"
 #endif
@@ -109,7 +109,7 @@ GuiFloatingChat::GuiFloatingChat( QWidget *parent )
   connect( mp_chat, SIGNAL( updateChatFontRequest() ), this, SIGNAL( updateChatFontRequest() ) );
   connect( mp_chat, SIGNAL( updateChatColorsRequest() ), this, SIGNAL( updateChatColorsRequest() ) );
   connect( mp_chat, SIGNAL( showStatusMessageRequest( const QString&, int ) ), this, SLOT( showStatusMessage(const QString&, int ) ) );
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
   connect( mp_chat, SIGNAL( showVoiceMessageDialogRequest() ), this, SLOT( showRecordMessageDialog() ) );
 #endif
   connect( qApp, SIGNAL( focusChanged( QWidget*, QWidget* ) ), this, SLOT( onApplicationFocusChanged( QWidget*, QWidget* ) ) );
@@ -282,7 +282,7 @@ void GuiFloatingChat::updateUser( const User& u )
 
 void GuiFloatingChat::closeEvent( QCloseEvent* e )
 {
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
   if( beeCore->voicePlayer()->chatId() == mp_chat->chatId() && beeCore->voicePlayer()->isPlaying() )
     beeCore->voicePlayer()->stop();
 #endif
@@ -344,7 +344,7 @@ void GuiFloatingChat::setFocusInChat()
   QWidget* w = QApplication::activeWindow();
   if( !w )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qWarning() << "Unable to set focus in chat: application has not the focus";
 #endif
     return;
@@ -358,7 +358,7 @@ void GuiFloatingChat::onApplicationFocusChanged( QWidget* old, QWidget* now )
 {
   if( old == Q_NULLPTR && isAncestorOf( now )  )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Floating chat" << mp_chat->chatId() << "has grab focus";
 #endif
     m_chatIsVisible = true;
@@ -372,7 +372,7 @@ void GuiFloatingChat::onApplicationFocusChanged( QWidget* old, QWidget* now )
 
   if( isAncestorOf( old ) && now == Q_NULLPTR )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Floating chat" << mp_chat->chatId() << "has lost focus";
 #endif
     m_chatIsVisible = false;
@@ -387,7 +387,7 @@ void GuiFloatingChat::onApplicationFocusChanged( QWidget* old, QWidget* now )
     m_prevActivatedState = current_state;
     if( current_state )
     {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
       qDebug() << "Floating chat" << mp_chat->chatId() << "has grab focus (active)";
 #endif
       m_chatIsVisible = true;
@@ -398,7 +398,7 @@ void GuiFloatingChat::onApplicationFocusChanged( QWidget* old, QWidget* now )
     }
     else
     {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
       qDebug() << "Floating chat" << mp_chat->chatId() << "has lost focus (inactive)";
 #endif
       m_chatIsVisible = false;
@@ -445,7 +445,7 @@ void GuiFloatingChat::keyPressEvent( QKeyEvent* e )
 void GuiFloatingChat::setMainIcon( bool with_message )
 {
   if( with_message )
-    setWindowIcon( IconManager::instance().icon( "beebeep-message.png" ) );
+    setWindowIcon( IconManager::instance().icon( "magshare-message.png" ) );
   else
     setWindowIcon( m_mainWindowIcon );
 }
@@ -524,7 +524,7 @@ void GuiFloatingChat::loadSavedMessages()
   QTimer::singleShot( 0, mp_chat, SLOT( loadSavedMessages() ) );
 }
 
-#ifdef BEEBEEP_USE_VOICE_CHAT
+#ifdef MAGSHARE_USE_VOICE_CHAT
 void GuiFloatingChat::showRecordMessageDialog()
 {
   if( Settings::instance().disableVoiceMessages() )

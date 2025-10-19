@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_AUDIOMANAGER_H
-#define BEEBEEP_AUDIOMANAGER_H
+#ifndef MAGSHARE_AUDIOMANAGER_H
+#define MAGSHARE_AUDIOMANAGER_H
 
 #include "Config.h"
 class FileInfo;
@@ -40,7 +40,7 @@ public:
   void clearBeep();
   void playBuzz();
 
-#if defined( BEEBEEP_USE_VOICE_CHAT )
+#if defined( MAGSHARE_USE_VOICE_CHAT )
   void checkDefaultAudioDevice();
   QString voiceInputDeviceName() const;
 
@@ -71,7 +71,7 @@ public:
 
 protected:
   AudioManager();
-#if defined( BEEBEEP_USE_VOICE_CHAT )
+#if defined( MAGSHARE_USE_VOICE_CHAT )
   void checkAudioDevice( const QAudioDeviceInfo& input_device, QAudioEncoderSettings* audio_settings, QString* file_container );
   QString defaultVoiceMessageContainerFilePrefix() const;
   QString defaultVoiceMessageContainerFileSuffix() const;
@@ -86,7 +86,7 @@ private:
 #else
   QSoundEffect* mp_sound;
 #endif
-#if defined( BEEBEEP_USE_VOICE_CHAT )
+#if defined( MAGSHARE_USE_VOICE_CHAT )
   QString m_defaultInputDeviceName;
   QAudioEncoderSettings m_defaultVoiceMessageEncoderSettings;
   QString m_defaultVoiceMessageFileContainer;
@@ -97,7 +97,7 @@ private:
 
 
 // Inline Functions
-#if defined( BEEBEEP_USE_VOICE_CHAT )
+#if defined( MAGSHARE_USE_VOICE_CHAT )
 inline const QString& AudioManager::defaultInputDeviceName() const { return m_defaultInputDeviceName; }
 inline const QAudioEncoderSettings& AudioManager::defaultVoiceMessageEncoderSettings() const { return m_defaultVoiceMessageEncoderSettings; }
 inline const QString& AudioManager::defaultVoiceMessageFileContainer() const { return m_defaultVoiceMessageFileContainer; }
@@ -105,4 +105,4 @@ inline QString AudioManager::findBestVoiceMessageContainer( const QString& codec
 inline QString AudioManager::voiceMessageContainerExtension( const QString& container ) const { return m_voiceMessageCodecContainerExtensions.value( container, QString() ); }
 #endif
 
-#endif // BEEBEEP_AUDIOMANAGER_H
+#endif // MAGSHARE_AUDIOMANAGER_H

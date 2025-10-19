@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_VOICEPLAYER_H
-#define BEEBEEP_VOICEPLAYER_H
+#ifndef MAGSHARE_VOICEPLAYER_H
+#define MAGSHARE_VOICEPLAYER_H
 
 #include "Config.h"
 
@@ -80,4 +80,4 @@ inline bool VoicePlayer::canPlay() const { return mp_voicePlayer; }
 inline bool VoicePlayer::isPlaying() const { return mp_voicePlayer && mp_voicePlayer->state() == QMediaPlayer::PlayingState; }
 inline bool VoicePlayer::isPaused() const { return mp_voicePlayer && mp_voicePlayer->state() == QMediaPlayer::PausedState; }
 inline bool VoicePlayer::isStopped() const { return mp_voicePlayer && mp_voicePlayer->state() == QMediaPlayer::StoppedState; }
-#endif // BEEBEEP_VOICEPLAYER_H
+#endif // MAGSHARE_VOICEPLAYER_H

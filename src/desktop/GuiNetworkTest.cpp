@@ -81,7 +81,7 @@ void GuiNetworkTest::startTest()
 
   if( !beeCore->isConnected() )
   {
-    QMessageBox::warning( this, Settings::instance().programName(), tr( "It is not possible to perform the test if you are not connected to the BeeBEEP network." ), tr( "Ok" ) );
+    QMessageBox::warning( this, Settings::instance().programName(), tr( "It is not possible to perform the test if you are not connected to the MagShare network." ), tr( "Ok" ) );
     return;
   }
 
@@ -182,7 +182,7 @@ void GuiNetworkTest::clearReport()
 
 void GuiNetworkTest::closePendingConnections()
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "GuiNetworkTest closing" << m_connections.size() << "pending connections";
 #endif
   foreach( ConnectionSocket* cs, m_connections )

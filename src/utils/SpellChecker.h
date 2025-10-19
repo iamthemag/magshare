@@ -21,10 +21,10 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_SPELLCHECKER_H
-#define BEEBEEP_SPELLCHECKER_H
+#ifndef MAGSHARE_SPELLCHECKER_H
+#define MAGSHARE_SPELLCHECKER_H
 
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
 
 #include "Config.h"
 class Hunspell;
@@ -90,5 +90,5 @@ inline bool SpellChecker::isValid() const { return mp_hunspell != 0; }
 inline QCompleter* SpellChecker::completer() const { return mp_completer; }
 inline const QString& SpellChecker::completerPrefix() const { return m_completerPrefix; }
 
-#endif // BEEBEEP_USE_HUNSPELL
-#endif // BEEBEEP_SPELLCHECKER_H
+#endif // MAGSHARE_USE_HUNSPELL
+#endif // MAGSHARE_SPELLCHECKER_H

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_ICONMANAGER_H
-#define BEEBEEP_ICONMANAGER_H
+#ifndef MAGSHARE_ICONMANAGER_H
+#define MAGSHARE_ICONMANAGER_H
 
 #include "Config.h"
 
@@ -84,4 +84,4 @@ inline const QString& IconManager::sourcePath() const { return m_sourcePath; }
 inline QString IconManager::toHtml( const QString& icon_name, const QString& icon_alt, int icon_width, int icon_height ) { return QString( "<img src='%1' width=%2 height=%3 border=0 alt=' %4 ' />" ).arg( iconPath( icon_name ) ).arg( icon_width > 0 ? icon_width : 16 ).arg( icon_height > 0 ? icon_height : 16 ).arg( icon_alt ); }
 inline bool IconManager::hasDefaultIcons() const { return m_sourcePath.isEmpty(); }
 
-#endif // BEEBEEP_ICONMANAGER_H
+#endif // MAGSHARE_ICONMANAGER_H

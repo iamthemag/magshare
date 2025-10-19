@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_MDNSMANAGER_H
-#define BEEBEEP_MDNSMANAGER_H
+#ifndef MAGSHARE_MDNSMANAGER_H
+#define MAGSHARE_MDNSMANAGER_H
 
 #include "NetworkAddress.h"
 #include "MDnsRecord.h"
@@ -73,4 +73,4 @@ private:
 inline const QList<NetworkAddress>& MDnsManager::networkAddresses() const { return m_networkAddresses; }
 inline bool MDnsManager::isActive() const { return m_isActive; }
 
-#endif // BEEBEEP_MDNSMANAGER_H
+#endif // MAGSHARE_MDNSMANAGER_H

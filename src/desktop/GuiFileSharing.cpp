@@ -309,7 +309,7 @@ void GuiFileSharing::onFileTransferProgress( VNumber peer_id, const User& u, con
 {
   if( fi.size() == 0 )
   {
-  #ifdef BEEBEEP_DEBUG
+  #ifdef MAGSHARE_DEBUG
     qWarning() << "GuiFileSharing::onFileTransferProgress try to show progress divided by 0:" << qPrintable( fi.path() );
   #endif
     return;

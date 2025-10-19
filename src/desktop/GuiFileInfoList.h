@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIFILEINFOLIST_H
-#define BEEBEEP_GUIFILEINFOLIST_H
+#ifndef MAGSHARE_GUIFILEINFOLIST_H
+#define MAGSHARE_GUIFILEINFOLIST_H
 
 #include "Config.h"
 #include "GuiFileInfoItem.h"
@@ -76,4 +76,4 @@ inline void GuiFileInfoList::setUpdatesEnabled( bool new_value ) { mp_tree->setU
 inline const QList<SharedFileInfo>& GuiFileInfoList::selectedFileInfoList() const { return m_selectedFileInfoList; }
 inline bool GuiFileInfoList::isEmpty() const { return mp_tree->topLevelItemCount() == 0; }
 
-#endif // BEEBEEP_GUIFILEINFOLIST_H
+#endif // MAGSHARE_GUIFILEINFOLIST_H

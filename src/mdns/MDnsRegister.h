@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_MDNSREGISTER_H
-#define BEEBEEP_MDNSREGISTER_H
+#ifndef MAGSHARE_MDNSREGISTER_H
+#define MAGSHARE_MDNSREGISTER_H
 
 #include "MDnsObject.h"
 
@@ -61,4 +61,4 @@ inline int MDnsRegister::servicePort() const { return m_servicePort; }
 inline void MDnsRegister::setServiceRegistered( bool new_value ) { m_serviceIsRegistered = new_value; }
 inline bool MDnsRegister::serviceIsRegistered() const { return m_serviceIsRegistered; }
 
-#endif // BEEBEEP_MDNSREGISTER_H
+#endif // MAGSHARE_MDNSREGISTER_H

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUILANGUAGE_H
-#define BEEBEEP_GUILANGUAGE_H
+#ifndef MAGSHARE_GUILANGUAGE_H
+#define MAGSHARE_GUILANGUAGE_H
 
 #include "Config.h"
 #include "ui_GuiLanguage.h"
@@ -55,4 +55,4 @@ private:
 inline const QString& GuiLanguage::languageSelected() const { return m_languageSelected; }
 inline const QString& GuiLanguage::folderSelected() const { return m_folderSelected; }
 
-#endif // BEEBEEP_GUILANGUAGE_H
+#endif // MAGSHARE_GUILANGUAGE_H

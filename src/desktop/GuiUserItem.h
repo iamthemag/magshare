@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIUSERITEM_H
-#define BEEBEEP_GUIUSERITEM_H
+#ifndef MAGSHARE_GUIUSERITEM_H
+#define MAGSHARE_GUIUSERITEM_H
 
 #include "BeeUtils.h"
 class User;
@@ -87,4 +87,4 @@ inline void GuiUserItem::setParentWorkgroup( const QString& new_value ) { m_pare
 inline const QString& GuiUserItem::parentWorkgroup() const { return m_parentWorkgroup; }
 inline QString GuiUserItem::workgroup() const { return isWorkgroup() ? data( 0, UserName ).toString() : ""; }
 
-#endif // BEEBEEP_GUIUSERITEM_H
+#endif // MAGSHARE_GUIUSERITEM_H

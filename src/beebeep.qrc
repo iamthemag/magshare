@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/beebeep.png</file>
+        <file>images/magshare.png</file>
         <file>images/magshare.png</file>
         <file>emoticons/smile.png</file>
         <file>emoticons/cool.png</file>
@@ -77,7 +77,7 @@
         <file>images/file-image.png</file>
         <file>images/file-document.png</file>
         <file>images/star.png</file>
-        <file>images/beebeep-message.png</file>
+        <file>images/magshare-message.png</file>
         <file>images/magshare-message.png</file>
         <file>images/file-beep.png</file>
         <file>images/play.png</file>
@@ -168,11 +168,11 @@
         <file>images/reset-window.png</file>
         <file>images/message-create.png</file>
         <file>images/unsent-message.png</file>
-        <file>images/beebeep-tray.png</file>
+        <file>images/magshare-tray.png</file>
         <file>images/magshare-tray.png</file>
         <file>images/network-test.png</file>
         <file>images/file-compressed.png</file>
-        <file>images/beebeep-message-tray.png</file>
+        <file>images/magshare-message-tray.png</file>
         <file>images/magshare-message-tray.png</file>
         <file>images/interface.png</file>
         <file>images/colors.png</file>

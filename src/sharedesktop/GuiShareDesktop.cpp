@@ -33,7 +33,7 @@ GuiShareDesktop::GuiShareDesktop( QWidget *parent )
 {
   setupUi( this );
   setObjectName( "GuiShareDesktop" );
-  setWindowIcon( QIcon( ":/images/beebeep.png" ) );
+  setWindowIcon( QIcon( ":/images/magshare.png" ) );
 
   m_lastUpdate = QDateTime::currentDateTime();
   m_toDelete = false;

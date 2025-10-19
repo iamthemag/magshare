@@ -21,12 +21,12 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIMESSAGEEDIT_H
-#define BEEBEEP_GUIMESSAGEEDIT_H
+#ifndef MAGSHARE_GUIMESSAGEEDIT_H
+#define MAGSHARE_GUIMESSAGEEDIT_H
 
 #include "Config.h"
 #include "Emoticon.h"
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
   class SpellCheckerHighlighter;
 #endif
 
@@ -88,7 +88,7 @@ private:
   QString m_currentMessage;
   bool m_messageChanged;
 
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
   SpellCheckerHighlighter* mp_scHighlighter;
 #endif
 
@@ -107,4 +107,4 @@ inline void GuiMessageEdit::addActionToContextMenu( QAction* act ) { m_actionsTo
 inline void GuiMessageEdit::setForceCRonEnterClicked( bool new_value ) { m_forceCRonEnterClicked = new_value; }
 inline void GuiMessageEdit::setForceNoWritingAlert( bool new_value ) { m_forceNoWritingAlert = new_value; }
 
-#endif // BEEBEEP_GUIMESSAGEEDIT_H
+#endif // MAGSHARE_GUIMESSAGEEDIT_H

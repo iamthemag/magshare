@@ -90,7 +90,7 @@ void GuiRecordVoiceMessage::checkAndSetFilePath()
   QString output_file_path = Bee::convertToNativeFolderSeparator( output_url.toLocalFile() );
   if( output_file_path != m_filePath )
   {
-  #ifdef BEEBEEP_DEBUG
+  #ifdef MAGSHARE_DEBUG
     qDebug() << "QAudioRecorder old file path:" << qPrintable( m_filePath );
     qDebug() << "QAudioRecorder new file path:" << qPrintable( output_file_path );
   #endif

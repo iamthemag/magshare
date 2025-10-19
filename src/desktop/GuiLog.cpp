@@ -149,7 +149,7 @@ void GuiLog::saveLogAs()
   QTextStream log_stream( &log_file );
   log_stream.setCodec( "UTF-8" );
 
-  QString log_txt = QString( "BeeBEEP log saved in %1" ).arg( QDateTime::currentDateTime().toString( "dd.MM.yyyy-hh:mm:ss.zzz" ) );
+  QString log_txt = QString( "MagShare log saved in %1" ).arg( QDateTime::currentDateTime().toString( "dd.MM.yyyy-hh:mm:ss.zzz" ) );
   log_txt += QLatin1String( "\n" );
   log_txt += mp_teLog->toPlainText();
   log_txt += QLatin1String( "\n*END*\n" );

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIAUDIOLEVEL_H
-#define BEEBEEP_GUIAUDIOLEVEL_H
+#ifndef MAGSHARE_GUIAUDIOLEVEL_H
+#define MAGSHARE_GUIAUDIOLEVEL_H
 
 #include "Config.h"
 
@@ -43,4 +43,4 @@ private:
 };
 
 
-#endif // BEEBEEP_GUIAUDIOLEVEL_H
+#endif // MAGSHARE_GUIAUDIOLEVEL_H

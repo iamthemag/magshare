@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_PREVIEWFILEDIALOG_H
-#define BEEBEEP_PREVIEWFILEDIALOG_H
+#ifndef MAGSHARE_PREVIEWFILEDIALOG_H
+#define MAGSHARE_PREVIEWFILEDIALOG_H
 
 #include "Config.h"
 
@@ -48,4 +48,4 @@ protected:
 
 };
 
-#endif // BEEBEEP_PREVIEWFILEDIALOG_H
+#endif // MAGSHARE_PREVIEWFILEDIALOG_H

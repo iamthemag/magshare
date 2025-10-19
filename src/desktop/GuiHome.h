@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIHOME_H
-#define BEEBEEP_GUIHOME_H
+#ifndef MAGSHARE_GUIHOME_H
+#define MAGSHARE_GUIHOME_H
 
 #include "Config.h"
 #include "ui_GuiHome.h"
@@ -73,4 +73,4 @@ private:
 inline void GuiHome::setMainToolTip( const QString& new_value ) { mp_teSystem->setToolTip( new_value ); }
 inline QString GuiHome::mainToolTip() const { return mp_teSystem->toolTip(); }
 
-#endif // BEEBEEP_GUIHOME_H
+#endif // MAGSHARE_GUIHOME_H

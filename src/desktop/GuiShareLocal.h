@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUISHARELOCAL_H
-#define BEEBEEP_GUISHARELOCAL_H
+#ifndef MAGSHARE_GUISHARELOCAL_H
+#define MAGSHARE_GUISHARELOCAL_H
 
 #include "ui_GuiShareLocal.h"
 #include "Config.h"
@@ -79,4 +79,4 @@ private:
 };
 
 
-#endif // BEEBEEP_GUISHARELOCAL_H
+#endif // MAGSHARE_GUISHARELOCAL_H

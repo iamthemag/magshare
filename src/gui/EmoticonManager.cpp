@@ -31,7 +31,7 @@ EmoticonManager::EmoticonManager()
    m_maxTextSize( 2 ), m_favoriteEmoticons(), m_recentEmoticons(),
    m_recentEmoticonsCount( 48 )
 {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   //createEmojiFiles();
 #endif
 
@@ -39,7 +39,7 @@ EmoticonManager::EmoticonManager()
   addEmojis();
   m_uniqueKeys = m_emoticons.uniqueKeys();
 
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   QString s_debug = "";
   std::sort( m_uniqueKeys.begin(), m_uniqueKeys.end() );
   foreach( QChar c, m_uniqueKeys )
@@ -491,7 +491,7 @@ void EmoticonManager::createEmojiFiles()
     sort_order++;
 
     emoji_list.append( Emoticon( emoji_key, emoji_file, Emoticon::Unknown, sort_order ) );
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "Load Emoji: char" << qPrintable( emoji_key ) << "and file" << emoji_file;
 #endif
   }

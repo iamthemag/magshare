@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIVOICEPLAYER_H
-#define BEEBEEP_GUIVOICEPLAYER_H
+#ifndef MAGSHARE_GUIVOICEPLAYER_H
+#define MAGSHARE_GUIVOICEPLAYER_H
 
 #include "Config.h"
 #include "ui_GuiVoicePlayer.h"
@@ -62,4 +62,4 @@ private:
 };
 
 
-#endif // BEEBEEP_GUIVOICEPLAYER_H
+#endif // MAGSHARE_GUIVOICEPLAYER_H

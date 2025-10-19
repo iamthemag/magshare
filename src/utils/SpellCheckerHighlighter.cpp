@@ -23,7 +23,7 @@
 
 #include "SpellCheckerHighlighter.h"
 #include "Settings.h"
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
   #include "SpellChecker.h"
 #endif
 
@@ -56,7 +56,7 @@ void SpellCheckerHighlighter::highlightBlock( const QString& txt )
   if( !Settings::instance().useSpellChecker() )
     return;
 
-#ifdef BEEBEEP_USE_HUNSPELL
+#ifdef MAGSHARE_USE_HUNSPELL
 
   QStringList words;
   QString word = "";
@@ -87,5 +87,5 @@ void SpellCheckerHighlighter::highlightBlock( const QString& txt )
 
   Q_UNUSED( txt );
 
-#endif // BEEBEEP_USE_HUNSPELL
+#endif // MAGSHARE_USE_HUNSPELL
 }

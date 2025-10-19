@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUISHORTCUT_H
-#define BEEBEEP_GUISHORTCUT_H
+#ifndef MAGSHARE_GUISHORTCUT_H
+#define MAGSHARE_GUISHORTCUT_H
 
 #include "Config.h"
 #include "ui_GuiShortcut.h"
@@ -44,4 +44,4 @@ private slots:
 
 };
 
-#endif // BEEBEEP_GUISHORTCUT_H
+#endif // MAGSHARE_GUISHORTCUT_H

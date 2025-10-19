@@ -167,7 +167,7 @@ void GuiScreenShot::captureScreen()
   }
   m_screenShot.setDevicePixelRatio( device_pixel_ratio );
 
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << "Screenshot width" << m_screenShot.width() << "height" << m_screenShot.height() << "and ratio" << device_pixel_ratio;
 #endif
 

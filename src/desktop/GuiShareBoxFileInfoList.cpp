@@ -124,7 +124,7 @@ void GuiShareBoxFileInfoList::mousePressEvent( QMouseEvent* event )
 {
   if( event->button() == Qt::LeftButton )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "BeeBOX mouse press event: store start point";
 #endif
     m_dragStartPoint = event->pos();
@@ -158,7 +158,7 @@ bool GuiShareBoxFileInfoList::performDrag()
   QStringList sl_path;
   foreach( FileInfo fi, selected_list )
   {
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
     qDebug() << "BeeBOX performs DRAG of the file:" << fi.name();
 #endif
     sl_path << fi.name();
@@ -212,7 +212,7 @@ void GuiShareBoxFileInfoList::dropEvent( QDropEvent* event )
     if( event->mimeData()->hasText() )
     {
 
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
       QString s = event->mimeData()->text().simplified();
       qDebug() << "BeeBOX performs DROP of the path:" << s;
 #endif

@@ -1,7 +1,7 @@
 
 INCLUDEPATH += $$PWD
 
-win32|macx|unix:!android: DEFINES += BEEBEEP_USE_MULTICAST_DNS
+win32|macx|unix:!android: DEFINES += MAGSHARE_USE_MULTICAST_DNS
 win32|macx|unix:!android: HEADERS += mdns/MDnsBrowser.h mdns/MDnsManager.h mdns/MDnsObject.h mdns/MDnsRecord.h mdns/MDnsRegister.h mdns/MDnsResolver.h
 win32|macx|unix:!android: SOURCES += mdns/MDnsBrowser.cpp mdns/MDnsManager.cpp mdns/MDnsObject.cpp mdns/MDnsRecord.cpp mdns/MDnsRegister.cpp mdns/MDnsResolver.cpp
 win32: QMAKE_LFLAGS += /NODEFAULTLIB:libcmt

@@ -223,7 +223,7 @@ void GuiShareNetwork::loadShares( const User& u )
   mp_comboUsers->blockSignals( false );
 
   QString status_msg = tr( "%1 has shared %2 files (%3)" ).arg( u.name() ).arg( file_shared ).arg( Bee::bytesToString( share_size ) );
-#ifdef BEEBEEP_DEBUG
+#ifdef MAGSHARE_DEBUG
   qDebug() << qPrintable( status_msg );
 #endif
   showStatus( status_msg );

@@ -165,7 +165,7 @@ void GuiVCard::setVCard( const User& u, VNumber chat_id, bool core_is_connected 
   if( !user_version.isEmpty() )
   {
     mp_lStatus->setText( QString( " (%1) " ).arg( user_version ) );
-    mp_lStatus->setToolTip( tr( "BeeBEEP version" ) );
+    mp_lStatus->setToolTip( tr( "MagShare version" ) );
   }
   else
   {

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_SHAREDESKTOPJOB_H
-#define BEEBEEP_SHAREDESKTOPJOB_H
+#ifndef MAGSHARE_SHAREDESKTOPJOB_H
+#define MAGSHARE_SHAREDESKTOPJOB_H
 
 #include "Config.h"
 
@@ -46,4 +46,4 @@ private:
 };
 
 
-#endif // BEEBEEP_SHAREDESKTOPJOB_H
+#endif // MAGSHARE_SHAREDESKTOPJOB_H

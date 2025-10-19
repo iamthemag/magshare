@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GANALYTICS_H
-#define BEEBEEP_GANALYTICS_H
+#ifndef MAGSHARE_GANALYTICS_H
+#define MAGSHARE_GANALYTICS_H
 
 #include "Config.h"
 
@@ -49,4 +49,4 @@ private:
 
 };
 
-#endif // BEEBEEP_DOWNLOADER_H
+#endif // MAGSHARE_DOWNLOADER_H

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUIICONPROVIDER_H
-#define BEEBEEP_GUIICONPROVIDER_H
+#ifndef MAGSHARE_GUIICONPROVIDER_H
+#define MAGSHARE_GUIICONPROVIDER_H
 
 #include "Config.h"
 class FileInfo;
@@ -67,4 +67,4 @@ private:
 // Inline Functions
 inline int GuiIconProvider::cacheSize() const { return m_cache.size(); }
 
-#endif // BEEBEEP_GUIICONPROVIDER_H
+#endif // MAGSHARE_GUIICONPROVIDER_H

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_AVATAR_H
-#define BEEBEEP_AVATAR_H
+#ifndef MAGSHARE_AVATAR_H
+#define MAGSHARE_AVATAR_H
 
 #include "Config.h"
 
@@ -65,4 +65,4 @@ inline void Avatar::setSize( const QSize& new_value ) { m_size = new_value; }
 inline const QSize& Avatar::size() const { return m_size; }
 inline const QPixmap& Avatar::pixmap() const { return m_pixmap; }
 
-#endif // BEEBEEP_AVATAR_H
+#endif // MAGSHARE_AVATAR_H

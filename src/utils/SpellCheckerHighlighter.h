@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_SPELLCHECKERHIGHLIGHTER_H
-#define BEEBEEP_SPELLCHECKERHIGHLIGHTER_H
+#ifndef MAGSHARE_SPELLCHECKERHIGHLIGHTER_H
+#define MAGSHARE_SPELLCHECKERHIGHLIGHTER_H
 
 #include "Config.h"
 
@@ -41,4 +41,4 @@ private:
 
 };
 
-#endif // BEEBEEP_SPELLCHECKERHIGHLIGHTER_H
+#endif // MAGSHARE_SPELLCHECKERHIGHLIGHTER_H

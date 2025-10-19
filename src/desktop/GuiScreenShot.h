@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BEEBEEP_GUISCREENSHOT_H
-#define BEEBEEP_GUISCREENSHOT_H
+#ifndef MAGSHARE_GUISCREENSHOT_H
+#define MAGSHARE_GUISCREENSHOT_H
 
 #include "Config.h"
 
@@ -71,4 +71,4 @@ private:
 // Inline Functions
 inline const QPixmap& GuiScreenShot::screenShot() const { return m_screenShot; }
 
-#endif // BEEBEEP_GUISCREENSHOT_H
+#endif // MAGSHARE_GUISCREENSHOT_H

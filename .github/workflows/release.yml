@@ -73,109 +73,8 @@ jobs:
             magshare_1.1.2_amd64.deb
             test/magshare
 
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v3
-        with:
-          version: '5.15.2'
-          host: 'windows'
-          target: 'desktop'
-          arch: 'win64_msvc2019_64'
-
-      - name: Setup MSVC
-        uses: ilammy/msvc-dev-cmd@v1
-
-      - name: Build application
-        run: |
-          qmake magshare-desktop.pro
-          nmake release
-        shell: cmd
-
-      - name: Deploy Qt dependencies
-        run: |
-          windeployqt.exe --release --dir test test\magshare.exe
-        shell: cmd
-
-      - name: Install NSIS
-        run: choco install nsis -y
-        shell: powershell
-
-      - name: Create Windows installer with modern UI
-        shell: powershell
-        run: |
-          Copy-Item src\magshare.ico magshare.ico
-          Set-Content -Path LICENSE.txt -Value "MagShare License"
-
-          @"
-!define APPNAME "MagShare"
-!define COMPANYNAME "MagShareSW"
-!define DESCRIPTION "Secure LAN Messenger and File Sharing"
-!define VERSION "1.1.2"
-
-!define MUI_ICON "magshare.ico"
-!define MUI_UNICON "magshare.ico"
-!define MUI_FINISHPAGE_RUN "$INSTDIR\magshare.exe"
-!define MUI_FINISHPAGE_RUN_TEXT "Run MagShare"
-
-!include "MUI2.nsh"
-
-Name "${APPNAME}"
-OutFile "MagShare-${VERSION}-Setup.exe"
-InstallDir "$PROGRAMFILES64\${APPNAME}"
-RequestExecutionLevel admin
-
-!insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "LICENSE.txt"
-!insertmacro MUI_PAGE_DIRECTORY
-!insertmacro MUI_PAGE_INSTFILES
-!insertmacro MUI_PAGE_FINISH
-
-!insertmacro MUI_UNPAGE_CONFIRM
-!insertmacro MUI_UNPAGE_INSTFILES
-
-!insertmacro MUI_LANGUAGE "English"
-
-Section "Install"
-  SetOutPath "$INSTDIR"
-  File /r "test\*"
-
-  CreateDirectory "$SMPROGRAMS\${APPNAME}"
-  CreateShortCut "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk" "$INSTDIR\magshare.exe" "" "$INSTDIR\magshare.exe"
-  CreateShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\magshare.exe" "" "$INSTDIR\magshare.exe"
-
-  WriteUninstaller "$INSTDIR\uninstall.exe"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME}"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString" "$INSTDIR\uninstall.exe"
-SectionEnd
-
-Section "Uninstall"
-  Delete "$INSTDIR\magshare.exe"
-  Delete "$INSTDIR\uninstall.exe"
-  Delete "$INSTDIR\magshare.ico"
-  RMDir /r "$INSTDIR"
-  Delete "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk"
-  RMDir "$SMPROGRAMS\${APPNAME}"
-  Delete "$DESKTOP\${APPNAME}.lnk"
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
-SectionEnd
-"@ | Out-File -Encoding ASCII installer.nsi
-
-          makensis.exe installer.nsi
-
-      - name: Upload Windows artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: magshare-windows
-          path: |
-            MagShare-1.1.2-Setup.exe
-            test/magshare.exe
-
   create-release:
-    needs: [build-linux, build-windows]
+    needs: [build-linux]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
     steps:
@@ -189,7 +88,6 @@ SectionEnd
           tag_name: ${{ github.ref_name }}
           files: |
             magshare-linux/magshare_1.1.2_amd64.deb
-            magshare-windows/MagShare-1.1.2-Setup.exe
           draft: false
           prerelease: false
         env:

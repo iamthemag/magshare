@@ -56,7 +56,7 @@ jobs:
           Priority: optional
           Architecture: amd64
           Depends: libqt5core5a, libqt5gui5, libqt5widgets5, libqt5network5, libqt5multimedia5
-          Maintainer: MagShare Team <team@magshare.net>
+          Maintainer: MagShare Team <abdulgafoormohmd@gmail.com>
           Description: Secure LAN Messenger and File Sharing
            MagShare is a secure peer-to-peer messenger and file sharing application
            designed for local area networks.
@@ -105,66 +105,66 @@ jobs:
         shell: powershell
 
       - name: Create Windows installer with modern UI
+        shell: powershell
         run: |
-          cp src/magshare.ico magshare.ico
-          echo "MagShare License" > LICENSE.txt
+          Copy-Item src\magshare.ico magshare.ico
+          Set-Content -Path LICENSE.txt -Value "MagShare License"
 
-          cat > installer.nsi << 'EOF'
-          !define APPNAME "MagShare"
-          !define COMPANYNAME "MagShareSW"
-          !define DESCRIPTION "Secure LAN Messenger and File Sharing"
-          !define VERSION "1.1.2"
+          @"
+!define APPNAME "MagShare"
+!define COMPANYNAME "MagShareSW"
+!define DESCRIPTION "Secure LAN Messenger and File Sharing"
+!define VERSION "1.1.2"
 
-          !define MUI_ICON "magshare.ico"
-          !define MUI_UNICON "magshare.ico"
-          !define MUI_FINISHPAGE_RUN "$INSTDIR\magshare.exe"
-          !define MUI_FINISHPAGE_RUN_TEXT "Run MagShare"
+!define MUI_ICON "magshare.ico"
+!define MUI_UNICON "magshare.ico"
+!define MUI_FINISHPAGE_RUN "$INSTDIR\magshare.exe"
+!define MUI_FINISHPAGE_RUN_TEXT "Run MagShare"
 
-          !include "MUI2.nsh"
+!include "MUI2.nsh"
 
-          Name "${APPNAME}"
-          OutFile "MagShare-${VERSION}-Setup.exe"
-          InstallDir "$PROGRAMFILES64\${APPNAME}"
-          RequestExecutionLevel admin
+Name "${APPNAME}"
+OutFile "MagShare-${VERSION}-Setup.exe"
+InstallDir "$PROGRAMFILES64\${APPNAME}"
+RequestExecutionLevel admin
 
-          !insertmacro MUI_PAGE_WELCOME
-          !insertmacro MUI_PAGE_LICENSE "LICENSE.txt"
-          !insertmacro MUI_PAGE_DIRECTORY
-          !insertmacro MUI_PAGE_INSTFILES
-          !insertmacro MUI_PAGE_FINISH
+!insertmacro MUI_PAGE_WELCOME
+!insertmacro MUI_PAGE_LICENSE "LICENSE.txt"
+!insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_INSTFILES
+!insertmacro MUI_PAGE_FINISH
 
-          !insertmacro MUI_UNPAGE_CONFIRM
-          !insertmacro MUI_UNPAGE_INSTFILES
+!insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_INSTFILES
 
-          !insertmacro MUI_LANGUAGE "English"
+!insertmacro MUI_LANGUAGE "English"
 
-          Section "Install"
-            SetOutPath "$INSTDIR"
-            File /r "test\*"
+Section "Install"
+  SetOutPath "$INSTDIR"
+  File /r "test\*"
 
-            CreateDirectory "$SMPROGRAMS\${APPNAME}"
-            CreateShortCut "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk" "$INSTDIR\magshare.exe" "" "$INSTDIR\magshare.exe"
-            CreateShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\magshare.exe" "" "$INSTDIR\magshare.exe"
+  CreateDirectory "$SMPROGRAMS\${APPNAME}"
+  CreateShortCut "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk" "$INSTDIR\magshare.exe" "" "$INSTDIR\magshare.exe"
+  CreateShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\magshare.exe" "" "$INSTDIR\magshare.exe"
 
-            WriteUninstaller "$INSTDIR\uninstall.exe"
-            WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME}"
-            WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString" "$INSTDIR\uninstall.exe"
-          SectionEnd
+  WriteUninstaller "$INSTDIR\uninstall.exe"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME}"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString" "$INSTDIR\uninstall.exe"
+SectionEnd
 
-          Section "Uninstall"
-            Delete "$INSTDIR\magshare.exe"
-            Delete "$INSTDIR\uninstall.exe"
-            Delete "$INSTDIR\magshare.ico"
-            RMDir /r "$INSTDIR"
-            Delete "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk"
-            RMDir "$SMPROGRAMS\${APPNAME}"
-            Delete "$DESKTOP\${APPNAME}.lnk"
-            DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
-          SectionEnd
-          EOF
+Section "Uninstall"
+  Delete "$INSTDIR\magshare.exe"
+  Delete "$INSTDIR\uninstall.exe"
+  Delete "$INSTDIR\magshare.ico"
+  RMDir /r "$INSTDIR"
+  Delete "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk"
+  RMDir "$SMPROGRAMS\${APPNAME}"
+  Delete "$DESKTOP\${APPNAME}.lnk"
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
+SectionEnd
+"@ | Out-File -Encoding ASCII installer.nsi
 
-          makensis installer.nsi
-        shell: bash
+          makensis.exe installer.nsi
 
       - name: Upload Windows artifacts
         uses: actions/upload-artifact@v4

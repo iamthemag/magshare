@@ -38,7 +38,7 @@ jobs:
           chmod +x debian/magshare/usr/bin/magshare
 
           # Copy icon
-          cp src/magshare.png debian/magshare/usr/share/pixmaps/magshare.png
+          cp src/images/magshare.png debian/magshare/usr/share/pixmaps/magshare.png
 
           # Create .desktop entry
           cat > debian/magshare/usr/share/applications/magshare.desktop << EOF

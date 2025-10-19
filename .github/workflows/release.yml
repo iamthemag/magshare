@@ -1,316 +1,275 @@
-name: Release Build
+name: Build MagShare
 
 on:
   push:
     tags:
-      - 'v*'  # Trigger on version tags like v1.1.0
+      - 'v*'
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
-  create-release:
-    runs-on: ubuntu-latest
-    outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-      tag_name: ${{ steps.get_tag.outputs.tag }}
-      version: ${{ steps.get_version.outputs.version }}
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Get tag
-      id: get_tag
-      run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-
-    - name: Get version (remove v prefix)
-      id: get_version
-      run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
-
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ steps.get_tag.outputs.tag }}
-        release_name: MagShare ${{ steps.get_version.outputs.version }}
-        body: |
-          ## What's Changed
-          
-          - Check the [commit history](https://github.com/iamthemag/magshare/compare/${{ steps.get_tag.outputs.tag }}...main) for detailed changes
-          
-          ## Download
-          
-          - **Linux**: Download the `.deb` package
-          - **Windows**: Download the `.exe` installer  
-          - **macOS**: Download the `.dmg` disk image
-          
-          ## Installation
-          
-          - **Linux**: `sudo dpkg -i magshare_*.deb` or use your package manager
-          - **Windows**: Run the `.exe` installer as administrator
-          - **macOS**: Open the `.dmg` and drag MagShare to Applications
-          
-          ---
-          
-          This release includes automatic update checking. Click **Help → Check for new version** to check for updates.
-        draft: false
-        prerelease: false
-
   build-linux:
-    needs: create-release
-    runs-on: ubuntu-20.04  # Use older Ubuntu for better compatibility
+    runs-on: ubuntu-22.04
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Install Qt and build dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y qt5-default qtmultimedia5-dev qttools5-dev-tools \
-          build-essential debhelper fakeroot dpkg-dev
+      - name: Install Qt and dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qtbase5-dev qttools5-dev-tools qtmultimedia5-dev \
+            libqt5x11extras5-dev libxcb1-dev libxcb-screensaver0-dev libx11-dev \
+            build-essential debhelper devscripts fakeroot
 
-    - name: Update version in code
-      run: |
-        VERSION="${{ needs.create-release.outputs.version }}"
-        sed -i "s/const char BEEBEEP_VERSION\[\] = \"[^\"]*\";/const char BEEBEEP_VERSION[] = \"$VERSION\";/" src/core/Version.h
+      - name: Build application
+        run: |
+          qmake magshare-desktop.pro
+          make -j$(nproc)
 
-    - name: Build
-      run: |
-        qmake magshare-desktop.pro
-        make -j$(nproc)
+      - name: Create .deb package
+        run: |
+          mkdir -p debian/magshare/usr/bin
+          mkdir -p debian/magshare/usr/share/applications
+          mkdir -p debian/magshare/usr/share/pixmaps
+          mkdir -p debian/magshare/DEBIAN
 
-    - name: Create .deb package
-      run: |
-        VERSION="${{ needs.create-release.outputs.version }}"
-        mkdir -p debian/magshare/usr/bin
-        mkdir -p debian/magshare/usr/share/magshare
-        mkdir -p debian/magshare/usr/share/applications
-        mkdir -p debian/magshare/usr/share/metainfo
-        mkdir -p debian/magshare/DEBIAN
-        
-        # Copy files
-        cp test/magshare debian/magshare/usr/bin/
-        cp locale/*.qm debian/magshare/usr/share/magshare/ 2>/dev/null || true
-        cp src/images/magshare.png debian/magshare/usr/share/magshare/
-        cp misc/beep.wav debian/magshare/usr/share/magshare/
-        cp scripts/debian_amd64/magshare.desktop debian/magshare/usr/share/applications/
-        cp scripts/debian_amd64/magshare.appdata.xml debian/magshare/usr/share/metainfo/
-        
-        # Create control file
-        cat > debian/magshare/DEBIAN/control << EOF
-        Package: magshare
-        Version: $VERSION
-        Architecture: amd64
-        Maintainer: MagShare Team <support@magshare.net>
-        Depends: libc6 (>= 2.31), libqt5core5a (>= 5.12), libqt5gui5 (>= 5.12), libqt5widgets5 (>= 5.12), libqt5network5 (>= 5.12), libqt5multimedia5 (>= 5.12)
-        Section: net
-        Priority: optional
-        Homepage: https://github.com/iamthemag/magshare
-        Description: Secure and Private Instant Messaging over LAN
-         MagShare is a secure peer-to-peer messaging application for local networks.
-         Features include encrypted messaging, file transfer, group chats, and no
-         internet connection required.
-        EOF
-        
-        # Set permissions and build package
-        chmod 755 debian/magshare/usr/bin/magshare
-        chmod -R 755 debian/magshare/DEBIAN
-        dpkg-deb --build debian/magshare
-        mv debian/magshare.deb magshare_${VERSION}_amd64.deb
+          cp test/magshare debian/magshare/usr/bin/
+          chmod +x debian/magshare/usr/bin/magshare
 
-    - name: Upload Linux .deb
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ needs.create-release.outputs.upload_url }}
-        asset_path: ./magshare_${{ needs.create-release.outputs.version }}_amd64.deb
-        asset_name: magshare_${{ needs.create-release.outputs.version }}_amd64.deb
-        asset_content_type: application/vnd.debian.binary-package
+          cat > debian/magshare/usr/share/applications/magshare.desktop << EOF
+          [Desktop Entry]
+          Version=1.0
+          Type=Application
+          Name=MagShare
+          Comment=Secure LAN Messenger and File Sharing
+          Exec=magshare
+          Icon=magshare
+          Terminal=false
+          Categories=Network;InstantMessaging;
+          EOF
+
+          if [ -f "src/beebeep.qrc" ]; then
+            cp debian/magshare/usr/share/pixmaps/magshare.png || true
+          fi
+
+          cat > debian/magshare/DEBIAN/control << EOF
+          Package: magshare
+          Version: 1.1.2
+          Section: net
+          Priority: optional
+          Architecture: amd64
+          Depends: libqt5core5a, libqt5gui5, libqt5widgets5, libqt5network5, libqt5multimedia5
+          Maintainer: MagShare Team <team@magshare.net>
+          Description: Secure LAN Messenger and File Sharing
+           MagShare is a secure peer-to-peer messenger and file sharing application
+           designed for local area networks.
+          EOF
+
+          dpkg-deb --build debian/magshare
+          mv debian/magshare.deb magshare_1.1.2_amd64.deb
+
+      - name: Upload Linux artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: magshare-linux
+          path: |
+            magshare_1.1.2_amd64.deb
+            test/magshare
 
   build-windows:
-    needs: create-release
     runs-on: windows-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v3
-      with:
-        version: '5.15.2'
-        arch: 'win64_msvc2019_64'
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '5.15.2'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_msvc2019_64'
 
-    - name: Set up MSVC
-      uses: microsoft/setup-msbuild@v1.3
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
 
-    - name: Update version in code
-      shell: bash
-      run: |
-        VERSION="${{ needs.create-release.outputs.version }}"
-        sed -i "s/const char BEEBEEP_VERSION\[\] = \"[^\"]*\";/const char BEEBEEP_VERSION[] = \"$VERSION\";/" src/core/Version.h
+      - name: Build application
+        run: |
+          qmake magshare-desktop.pro
+          nmake release
+        shell: cmd
 
-    - name: Build
-      shell: cmd
-      run: |
-        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-        qmake magshare-desktop.pro
-        nmake
+      - name: Create Windows installer
+        run: |
+          choco install nsis -y
+          echo "C:\Program Files (x86)\NSIS" >> $GITHUB_PATH
 
-    - name: Create installer
-      shell: bash
-      run: |
-        VERSION="${{ needs.create-release.outputs.version }}"
-        
-        # Create installer directory structure
-        mkdir -p installer/magshare
-        cp release/magshare.exe installer/magshare/
-        cp -r locale/*.qm installer/magshare/ 2>/dev/null || true
-        cp src/images/magshare.png installer/magshare/
-        cp misc/beep.wav installer/magshare/
-        
-        # Deploy Qt libraries
-        windeployqt installer/magshare/magshare.exe
-        
-        # Create simple installer script (could be enhanced with NSIS)
-        cat > installer/install.bat << 'EOF'
-        @echo off
-        echo Installing MagShare...
-        if not exist "%ProgramFiles%\MagShare" mkdir "%ProgramFiles%\MagShare"
-        xcopy /E /Y "magshare\*" "%ProgramFiles%\MagShare\"
-        echo.
-        echo Installation complete!
-        echo You can now run MagShare from Start Menu or:
-        echo "%ProgramFiles%\MagShare\magshare.exe"
-        pause
-        EOF
-        
-        # Create self-extracting archive (simple approach)
-        powershell Compress-Archive -Path installer/* -DestinationPath magshare_${VERSION}_windows_x64.zip
-        mv magshare_${VERSION}_windows_x64.zip magshare_${VERSION}_windows_x64.exe
+          cat > installer.nsi << 'EOF'
+          !define APPNAME "MagShare"
+          !define COMPANYNAME "MagShareSW"
+          !define DESCRIPTION "Secure LAN Messenger and File Sharing"
+          !define VERSIONMAJOR 1
+          !define VERSIONMINOR 1
+          !define VERSIONBUILD 1
 
-    - name: Upload Windows .exe
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ needs.create-release.outputs.upload_url }}
-        asset_path: ./magshare_${{ needs.create-release.outputs.version }}_windows_x64.exe
-        asset_name: magshare_${{ needs.create-release.outputs.version }}_windows_x64.exe
-        asset_content_type: application/octet-stream
+          RequestExecutionLevel admin
+          InstallDir "$PROGRAMFILES64\${APPNAME}"
+          Name "${APPNAME}"
+          outFile "MagShare-1.1.2-Setup.exe"
+          page directory
+          page instfiles
+
+          section "install"
+              setOutPath $INSTDIR
+              file "test\magshare.exe"
+              writeUninstaller "$INSTDIR\uninstall.exe"
+              createDirectory "$SMPROGRAMS\${APPNAME}"
+              createShortCut "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk" "$INSTDIR\magshare.exe"
+              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME}"
+              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString" "$INSTDIR\uninstall.exe"
+          sectionEnd
+
+          section "uninstall"
+              delete "$INSTDIR\magshare.exe"
+              delete "$INSTDIR\uninstall.exe"
+              rmDir "$INSTDIR"
+              delete "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk"
+              rmDir "$SMPROGRAMS\${APPNAME}"
+              DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
+          sectionEnd
+          EOF
+
+          "C:\Program Files (x86)\NSIS\makensis.exe" installer.nsi || makensis installer.nsi
+        shell: bash
+
+      - name: Upload Windows artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: magshare-windows
+          path: |
+            MagShare-1.1.2-Setup.exe
+            test/magshare.exe
 
   build-macos:
-    needs: create-release
     runs-on: macos-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v3
-      with:
-        version: '5.15.2'
-        arch: 'clang_64'
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '5.15.2'
+          host: 'mac'
+          target: 'desktop'
 
-    - name: Update version in code
-      run: |
-        VERSION="${{ needs.create-release.outputs.version }}"
-        sed -i '' "s/const char BEEBEEP_VERSION\[\] = \"[^\"]*\";/const char BEEBEEP_VERSION[] = \"$VERSION\";/" src/core/Version.h
+      - name: Build application
+        run: |
+          qmake magshare-desktop.pro
+          make -j$(sysctl -n hw.ncpu)
 
-    - name: Build
-      run: |
-        qmake magshare-desktop.pro
-        make -j$(sysctl -n hw.ncpu)
+      - name: Create .app bundle
+        run: |
+          mkdir -p MagShare.app/Contents/MacOS
+          mkdir -p MagShare.app/Contents/Resources
+          cp test/magshare MagShare.app/Contents/MacOS/
 
-    - name: Create .dmg
-      run: |
-        VERSION="${{ needs.create-release.outputs.version }}"
-        
-        # Create app bundle structure
-        mkdir -p MagShare.app/Contents/MacOS
-        mkdir -p MagShare.app/Contents/Resources
-        
-        # Copy executable
-        cp test/magshare MagShare.app/Contents/MacOS/
-        
-        # Copy resources
-        cp src/images/magshare.png MagShare.app/Contents/Resources/
-        cp misc/beep.wav MagShare.app/Contents/Resources/
-        cp -r locale/*.qm MagShare.app/Contents/Resources/ 2>/dev/null || true
-        
-        # Create Info.plist
-        cat > MagShare.app/Contents/Info.plist << EOF
-        <?xml version="1.0" encoding="UTF-8"?>
-        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-        <plist version="1.0">
-        <dict>
-            <key>CFBundleExecutable</key>
-            <string>magshare</string>
-            <key>CFBundleIconFile</key>
-            <string>magshare.png</string>
-            <key>CFBundleIdentifier</key>
-            <string>net.magshare.MagShare</string>
-            <key>CFBundleName</key>
-            <string>MagShare</string>
-            <key>CFBundlePackageType</key>
-            <string>APPL</string>
-            <key>CFBundleVersion</key>
-            <string>$VERSION</string>
-            <key>CFBundleShortVersionString</key>
-            <string>$VERSION</string>
-        </dict>
-        </plist>
-        EOF
-        
-        # Deploy Qt libraries
-        macdeployqt MagShare.app
-        
-        # Create DMG
-        hdiutil create -volname "MagShare $VERSION" -srcfolder MagShare.app -ov -format UDZO magshare_${VERSION}_macos.dmg
+          if [ -f "src/magshare.icns" ]; then
+            cp src/magshare.icns MagShare.app/Contents/Resources/
+          elif [ -f "src/beebeep.icns" ]; then
+            cp src/beebeep.icns MagShare.app/Contents/Resources/magshare.icns
+          fi
 
-    - name: Upload macOS .dmg
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ needs.create-release.outputs.upload_url }}
-        asset_path: ./magshare_${{ needs.create-release.outputs.version }}_macos.dmg
-        asset_name: magshare_${{ needs.create-release.outputs.version }}_macos.dmg
-        asset_content_type: application/octet-stream
+          cat > MagShare.app/Contents/Info.plist << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>CFBundleDevelopmentRegion</key>
+              <string>English</string>
+              <key>CFBundleExecutable</key>
+              <string>magshare</string>
+              <key>CFBundleIconFile</key>
+              <string>magshare</string>
+              <key>CFBundleIdentifier</key>
+              <string>net.magshare.MagShare</string>
+              <key>CFBundleInfoDictionaryVersion</key>
+              <string>6.0</string>
+              <key>CFBundleName</key>
+              <string>MagShare</string>
+              <key>CFBundlePackageType</key>
+              <string>APPL</string>
+              <key>CFBundleShortVersionString</key>
+              <string>1.1.2</string>
+              <key>CFBundleVersion</key>
+              <string>1.1.2</string>
+              <key>NSHighResolutionCapable</key>
+              <true/>
+          </dict>
+          </plist>
+          EOF
 
-  create-version-file:
-    needs: [create-release, build-linux, build-windows, build-macos]
+      - name: Deploy Qt dependencies
+        run: |
+          macdeployqt MagShare.app
+
+      - name: Create .dmg
+        run: |
+          brew install create-dmg
+
+          if [ -f "MagShare.app/Contents/Resources/magshare.icns" ]; then
+            create-dmg \
+              --volname "MagShare" \
+              --volicon "MagShare.app/Contents/Resources/magshare.icns" \
+              --window-pos 200 120 \
+              --window-size 600 300 \
+              --icon-size 100 \
+              --icon "MagShare.app" 175 120 \
+              --hide-extension "MagShare.app" \
+              --app-drop-link 425 120 \
+              "MagShare-1.1.2.dmg" \
+              "MagShare.app"
+          else
+            create-dmg \
+              --volname "MagShare" \
+              --window-pos 200 120 \
+              --window-size 600 300 \
+              --icon-size 100 \
+              --icon "MagShare.app" 175 120 \
+              --hide-extension "MagShare.app" \
+              --app-drop-link 425 120 \
+              "MagShare-1.1.2.dmg" \
+              "MagShare.app"
+          fi
+
+      - name: Upload macOS artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: magshare-macos
+          path: |
+            MagShare-1.1.2.dmg
+            MagShare.app
+
+  create-release:
+    needs: [build-linux, build-windows, build-macos]
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
 
-    - name: Create VERSION.json
-      run: |
-        VERSION="${{ needs.create-release.outputs.version }}"
-        TAG="${{ needs.create-release.outputs.tag_name }}"
-        
-        cat > VERSION.json << EOF
-        {
-          "version": "$VERSION",
-          "tag": "$TAG",
-          "release_date": "$(date -u +%Y-%m-%d)",
-          "downloads": {
-            "linux": "https://github.com/iamthemag/magshare/releases/download/$TAG/magshare_${VERSION}_amd64.deb",
-            "windows": "https://github.com/iamthemag/magshare/releases/download/$TAG/magshare_${VERSION}_windows_x64.exe",
-            "macos": "https://github.com/iamthemag/magshare/releases/download/$TAG/magshare_${VERSION}_macos.dmg"
-          },
-          "release_notes": "Check the release page for detailed changes: https://github.com/iamthemag/magshare/releases/tag/$TAG",
-          "minimum_version": "1.0.0",
-          "update_required": false
-        }
-        EOF
+      - name: Debug: list all downloaded files
+        run: ls -R
 
-    - name: Upload VERSION.json
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ needs.create-release.outputs.upload_url }}
-        asset_path: ./VERSION.json
-        asset_name: VERSION.json
-        asset_content_type: application/json
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            magshare-linux/magshare_1.1.2_amd64.deb
+            magshare-windows/MagShare-1.1.2-Setup.exe
+            magshare-macos/MagShare-1.1.2.dmg
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

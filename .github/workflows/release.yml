@@ -35,7 +35,7 @@ jobs:
 
           cp test/magshare debian/magshare/usr/bin/
           chmod +x debian/magshare/usr/bin/magshare
-          cp src/magshare.png debian/magshare/usr/share/pixmaps/magshare.png
+          cp src/images/magshare.png debian/magshare/usr/share/pixmaps/magshare.png
 
           cat > debian/magshare/usr/share/applications/magshare.desktop << EOF
           [Desktop Entry]

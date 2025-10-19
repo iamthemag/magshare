@@ -137,6 +137,7 @@ private slots:
   void removeSavedChat( const QString& );
   void linkSavedChat( const QString& );
   void checkNewVersion();
+  void onVersionCheckCompleted();
   void openWebSite();
   void openDownloadPluginPage();
   void openDonationPage();
@@ -243,6 +244,7 @@ protected:
   void restoreGeometryAndState();
   void resetGeometryAndState();
   void setMinimumWidthForStyle();
+  int compareVersions( const QString&, const QString& );
 
 private:
   void setupChatConnections( GuiChat* );

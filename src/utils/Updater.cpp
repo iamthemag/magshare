@@ -24,6 +24,8 @@
 #include "HttpDownloader.h"
 #include "Settings.h"
 #include "Updater.h"
+#include <QJsonDocument>
+#include <QJsonObject>
 
 
 Updater::Updater( QObject *parent )
@@ -62,16 +64,32 @@ void Updater::onDownloadCompleted( const QString& file_path )
   qDebug() << qPrintable( file_path ) << "download completed";
 #endif
 
-  QSettings sets( file_path, QSettings::IniFormat );
-  if( !sets.allKeys().isEmpty() )
+  QFile jsonFile( file_path );
+  if( jsonFile.open( QIODevice::ReadOnly ) )
   {
-    sets.beginGroup( Settings::instance().operatingSystem( false ) );
-    m_versionAvailable = sets.value( "CurrentVersion", "" ).toString();
-    m_downloadUrl = sets.value( "DownloadUrl", "" ).toString();
-    sets.endGroup();
-    sets.beginGroup( "Info" );
-    m_news = sets.value( "News", "" ).toString();
-    sets.endGroup();
+    QJsonParseError parseError;
+    QJsonDocument doc = QJsonDocument::fromJson( jsonFile.readAll(), &parseError );
+    jsonFile.close();
+    
+    if( parseError.error == QJsonParseError::NoError && doc.isObject() )
+    {
+      QJsonObject obj = doc.object();
+      m_versionAvailable = obj["version"].toString();
+      m_news = obj["release_notes"].toString();
+      
+      // Get download URL for current OS
+      QString os = Settings::instance().operatingSystem( false ).toLower();
+      QJsonObject downloads = obj["downloads"].toObject();
+      if( downloads.contains( os ) )
+      {
+        m_downloadUrl = downloads[os].toString();
+      }
+      else
+      {
+        // Fallback - use the release page URL
+        m_downloadUrl = QString( "https://github.com/iamthemag/magshare/releases/tag/%1" ).arg( obj["tag"].toString() );
+      }
+    }
   }
 
   if( m_versionAvailable.isEmpty() )

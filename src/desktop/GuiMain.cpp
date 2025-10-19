@@ -72,6 +72,7 @@
 #include "Settings.h"
 #include "ShortcutManager.h"
 #include "SpellChecker.h"
+#include "Updater.h"
 #include "UserManager.h"
 #ifdef BEEBEEP_USE_VOICE_CHAT
   #include "VoicePlayer.h"
@@ -1474,9 +1475,6 @@ void GuiMain::createMenus()
   mp_menuInfo->addSeparator();
   mp_menuInfo->addAction( IconManager::instance().icon( "magshare.png" ), tr( "Open %1 official website..." ).arg( Settings::instance().programName() ), this, SLOT( openWebSite() ) );
   mp_menuInfo->addAction( IconManager::instance().icon( "update.png" ), tr( "Check for new version..." ), this, SLOT( checkNewVersion() ) );
-  mp_menuInfo->addSeparator();
-  mp_menuInfo->addAction( IconManager::instance().icon( "info.png" ), tr( "Help online..." ), this, SLOT( openHelpPage() ) );
-  mp_menuInfo->addAction( IconManager::instance().icon( "tip.png" ), tr( "Show tips..." ), this, SLOT( showTipOfTheDay() ) );
   mp_menuInfo->addSeparator();
   mp_menuInfo->addAction( IconManager::instance().icon( "star.png" ), tr( "Information about %1..." ).arg( "Abdul Gafoor" ), this, SLOT( openDeveloperWebSite() ) );
 #ifdef BEEBEEP_DEBUG
@@ -3544,8 +3542,98 @@ bool GuiMain::openWebUrl( const QString& web_url )
 
 void GuiMain::checkNewVersion()
 {
-  QString url_and_arguments = Settings::instance().checkVersionWebSite();
-  openWebUrl( url_and_arguments );
+  // Show a status message while checking
+  showMessage( tr( "Checking for new version..." ), 0 );
+  
+  Updater* updater = new Updater( this );
+  connect( updater, SIGNAL( jobCompleted() ), this, SLOT( onVersionCheckCompleted() ) );
+  connect( updater, SIGNAL( jobCompleted() ), updater, SLOT( deleteLater() ) );
+  
+  // Store updater reference for later use
+  setProperty( "currentUpdater", QVariant::fromValue( updater ) );
+  
+  updater->checkForNewVersion();
+}
+
+void GuiMain::onVersionCheckCompleted()
+{
+  Updater* updater = property( "currentUpdater" ).value<Updater*>();
+  if( !updater )
+  {
+    showMessage( tr( "Version check failed" ), 3000 );
+    return;
+  }
+  
+  QString currentVersion = Settings::instance().version( false, false, false );
+  QString availableVersion = updater->versionAvailable();
+  
+  showMessage( "", 0 ); // Clear status message
+  
+  if( availableVersion.isEmpty() )
+  {
+    QMessageBox::information( this, Settings::instance().programName(),
+                             tr( "Unable to check for new version.\nPlease check your internet connection and try again." ),
+                             tr( "Ok" ) );
+    return;
+  }
+  
+  // Simple version comparison (assumes semantic versioning like 1.2.3)
+  if( compareVersions( availableVersion, currentVersion ) > 0 )
+  {
+    QString downloadUrl = updater->downloadUrl();
+    QString releaseNotes = updater->news();
+    
+    QString message = tr( "A new version of %1 is available!\n\nCurrent version: %2\nLatest version: %3\n\nWould you like to download it now?" )
+                     .arg( Settings::instance().programName() )
+                     .arg( currentVersion )
+                     .arg( availableVersion );
+    
+    if( !releaseNotes.isEmpty() )
+    {
+      message += "\n\n" + tr( "Release notes: %1" ).arg( releaseNotes );
+    }
+    
+    int result = QMessageBox::question( this, tr( "Update Available" ), message,
+                                       tr( "Download" ), tr( "Later" ), QString(), 0, 1 );
+    
+    if( result == 0 && !downloadUrl.isEmpty() )
+    {
+      if( !openWebUrl( downloadUrl ) )
+      {
+        QMessageBox::information( this, Settings::instance().programName(),
+                                 tr( "Unable to open download page.\nPlease visit the project website manually." ),
+                                 tr( "Ok" ) );
+      }
+    }
+  }
+  else
+  {
+    QMessageBox::information( this, Settings::instance().programName(),
+                             tr( "You are running the latest version (%1)." ).arg( currentVersion ),
+                             tr( "Ok" ) );
+  }
+}
+
+// Helper function to compare version strings (e.g., "1.2.3")
+int GuiMain::compareVersions( const QString& version1, const QString& version2 )
+{
+  QStringList v1Parts = version1.split( '.' );
+  QStringList v2Parts = version2.split( '.' );
+  
+  // Ensure both have at least 3 parts (major.minor.patch)
+  while( v1Parts.size() < 3 ) v1Parts.append( "0" );
+  while( v2Parts.size() < 3 ) v2Parts.append( "0" );
+  
+  for( int i = 0; i < 3; i++ )
+  {
+    int v1 = v1Parts.at( i ).toInt();
+    int v2 = v2Parts.at( i ).toInt();
+    
+    if( v1 > v2 ) return 1;
+    if( v1 < v2 ) return -1;
+  }
+  
+  return 0; // Equal
 }
 
 void GuiMain::openWebSite()

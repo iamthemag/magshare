@@ -149,7 +149,7 @@ void HttpDownloader::onReplyFinished( QNetworkReply *reply )
     if( file_path.isEmpty() )
     {
       if( url == QUrl( Settings::instance().lastVersionUrl() ) )
-        file_path = filePathFromFileName( "beebeep_last_versions.txt" );
+        file_path = filePathFromFileName( "VERSION.json" );
       else
         file_path = filePathFromUrl( url );
     }

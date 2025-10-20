@@ -1,11 +1,11 @@
 {
-  "version": "1.2.1",
-  "tag": "v1.2.1",
+  "version": "1.1.1",
+  "tag": "v1.1.1",
   "release_date": "2025-01-12",
   "downloads": {
-    "linux": "https://github.com/iamthemag/magshare/releases/download/v1.2.1/magshare_1.2.1_amd64.deb",
-    "windows": "https://github.com/iamthemag/magshare/releases/download/v1.2.1/magshare_1.2.1_windows_x64.exe",
-    "macos": "https://github.com/iamthemag/magshare/releases/download/v1.2.1/magshare_1.2.1_macos.dmg"
+    "linux": "https://github.com/iamthemag/magshare/releases/download/v1.1.1/magshare_1.1.1_amd64.deb",
+    "windows": "https://github.com/iamthemag/magshare/releases/download/v1.1.1/magshare_1.1.1_windows_x64.exe",
+    "macos": "https://github.com/iamthemag/magshare/releases/download/v1.1.1/magshare_1.1.1_macos.dmg"
   },
   "release_notes": "Check the release page for detailed changes: https://github.com/iamthemag/magshare/releases/tag/v1.1.0",
   "minimum_version": "1.0.0",

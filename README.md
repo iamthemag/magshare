@@ -1,6 +1,36 @@
+
+<h1 align="center">
+  <br>
+  <a href="http://github.com/iamthemag/magshare">
+    <img src="https://raw.githubusercontent.com/iamthemag/magshare/main/MagShare-logo.png" alt="MagShare" width="250">
+  </a>
+  <br>
+</h1>
+
+<p align="center">
+  <img src="https://visitor-badge.laobi.icu/badge?page_id=iamthemag.magshare" alt="Visitors" />
+  <img src="https://img.shields.io/github/stars/iamthemag/magshare" alt="GitHub Stars" />
+  <img src="https://img.shields.io/github/forks/iamthemag/magshare" alt="GitHub Forks" />
+  <img src="https://img.shields.io/github/issues/iamthemag/magshare" alt="Issues" />
+  <img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="GNU GPLv3" />
+  <img src="https://img.shields.io/github/v/release/iamthemag/magshare" alt="Latest Release" />
+  <img src="https://img.shields.io/github/contributors/iamthemag/magshare" alt="Contributors" />
+</p>
+
+<p align="center">
+  <a href="#about-magshare">About MagShare</a> •
+  <a href="#key-features">Key Features</a> •
+  <a href="#whats-different-from-beebeep">What's Different</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#contributing">Contributing</a> •
+  <a href="#license">License</a>
+</p>
+
 # MagShare - Messenger for Connected Communities
 
 **MagShare** is a secure, serverless instant messaging application for offices and organizations that prioritize privacy and security.
+
+---
 
 ## About MagShare
 
@@ -16,29 +46,37 @@ MagShare is a fork of the excellent [BeeBEEP](https://beebeep.net) project by Ma
 - **Network Discovery**: Automatic user discovery on local networks
 - **Privacy Focused**: All communication stays within your local network
 
+---
+
 ## What's Different from BeeBEEP
 
 MagShare builds upon BeeBEEP with these enhancements:
+
 - Refreshed branding and modern UI improvements  
-- Updated version numbering (1.x series)
-- Enhanced documentation and support materials
+- Updated version numbering (1.x series)  
+- Enhanced documentation and support materials  
 - Focused on community-driven development
+
+---
 
 ## Installation
 
 ### Building from Source
 
 #### Prerequisites
-- Qt 5.15.0 or later
-- C++ compiler with C++11 support
+
+- Qt 5.15.0 or later  
+- C++ compiler with C++11 support  
 - CMake or QMake
 
 #### Build Steps
+
 ```bash
 git clone https://github.com/iamthemag/magshare.git
 cd magshare
 qmake -o Makefile magshare-desktop.pro
 make
+
 ```
 
 The compiled executable will be available in the `test/` directory as `magshare`.

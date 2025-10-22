@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MagShare News - Latest updates, releases and announcements">
+    <title>News - MagShare</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .news-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+        .news-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .news-header h1 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        .news-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        .news-article {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        .news-article:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        .news-article h2 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+        .news-meta {
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .news-tag {
+            display: inline-block;
+            background: var(--light-bg);
+            color: var(--primary-color);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .news-article p {
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .news-article ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .news-article li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        .news-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .news-link:hover {
+            text-decoration: underline;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="magshare.png" alt="MagShare Logo" class="logo">
+                <span class="brand-name">MagShare</span>
+            </div>
+            
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#download">Download</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="help.html">Help</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="https://github.com/iamthemag/magshare" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="news-content">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        
+        <div class="news-header">
+            <h1>MagShare News</h1>
+            <p>Stay updated with the latest releases, features, and announcements</p>
+        </div>
+
+        <article class="news-article">
+            <h2>🎉 MagShare Fork Announcement</h2>
+            <div class="news-meta">
+                <span>📅 January 2025</span>
+                <span class="news-tag">Announcement</span>
+            </div>
+            <p>We're excited to announce MagShare, a fork of the excellent BeeBEEP project! MagShare continues the mission of providing secure, serverless messaging for local area networks.</p>
+            <p><strong>Why MagShare?</strong></p>
+            <ul>
+                <li>Continued development and maintenance of the BeeBEEP codebase</li>
+                <li>Modern UI improvements and updated dependencies</li>
+                <li>Enhanced cross-platform compatibility</li>
+                <li>Community-driven development approach</li>
+                <li>Regular security updates and bug fixes</li>
+            </ul>
+            <p>We extend our heartfelt gratitude to Marco Mastroddi and the BeeBEEP community for creating such a robust foundation. MagShare builds upon this legacy while ensuring the project remains active and well-maintained.</p>
+            <p><a href="https://github.com/iamthemag/magshare" class="news-link" target="_blank">View on GitHub →</a></p>
+        </article>
+
+        <article class="news-article">
+            <h2>🔐 Security First</h2>
+            <div class="news-meta">
+                <span>📅 January 2025</span>
+                <span class="news-tag">Security</span>
+            </div>
+            <p>MagShare inherits BeeBEEP's robust security architecture with end-to-end encryption at its core:</p>
+            <ul>
+                <li><strong>AES-256 Encryption:</strong> Military-grade encryption for all messages</li>
+                <li><strong>Zero Server Architecture:</strong> Direct peer-to-peer communication means no third-party can intercept your messages</li>
+                <li><strong>Random Key Generation:</strong> Unique encryption keys for each connection</li>
+                <li><strong>Local Network Only:</strong> Messages never leave your trusted network</li>
+            </ul>
+            <p>Your privacy and security are our top priorities. All communication happens directly between users without any central server that could be compromised.</p>
+        </article>
+
+        <article class="news-article">
+            <h2>🌟 Key Features</h2>
+            <div class="news-meta">
+                <span>📅 January 2025</span>
+                <span class="news-tag">Features</span>
+            </div>
+            <p>MagShare comes packed with features designed for modern workplace communication:</p>
+            <ul>
+                <li><strong>Automatic Network Discovery:</strong> Find colleagues instantly on your LAN</li>
+                <li><strong>Group Chats:</strong> Collaborate with multiple team members simultaneously</li>
+                <li><strong>File Sharing:</strong> Share files of any size with pause/resume support</li>
+                <li><strong>Cross-Platform:</strong> Works seamlessly on Windows, macOS, and Linux</li>
+                <li><strong>Offline Messaging:</strong> Messages are delivered when recipients come online</li>
+                <li><strong>Customizable:</strong> Themes, emoticons, and plugins support</li>
+            </ul>
+            <p><a href="index.html#features" class="news-link">Explore all features →</a></p>
+        </article>
+
+        <article class="news-article">
+            <h2>🚀 Getting Started</h2>
+            <div class="news-meta">
+                <span>📅 January 2025</span>
+                <span class="news-tag">Guide</span>
+            </div>
+            <p>Ready to try MagShare? Getting started is easy:</p>
+            <ol>
+                <li>Download the appropriate version for your operating system</li>
+                <li>Install and launch MagShare</li>
+                <li>Set your display name and status</li>
+                <li>MagShare will automatically discover other users on your network</li>
+                <li>Start chatting securely!</li>
+            </ol>
+            <p>Check out our comprehensive <a href="help.html" class="news-link">help guide</a> for detailed installation instructions and troubleshooting tips.</p>
+            <p><a href="index.html#download" class="news-link">Download MagShare →</a></p>
+        </article>
+
+        <article class="news-article">
+            <h2>💡 Use Cases</h2>
+            <div class="news-meta">
+                <span>📅 January 2025</span>
+                <span class="news-tag">Information</span>
+            </div>
+            <p>MagShare is perfect for various scenarios:</p>
+            <ul>
+                <li><strong>Office Communication:</strong> Secure internal messaging for companies that value privacy</li>
+                <li><strong>Educational Institutions:</strong> Classroom and campus-wide communication without external dependencies</li>
+                <li><strong>Event Coordination:</strong> Conference and event staff communication without internet access</li>
+                <li><strong>Healthcare:</strong> HIPAA-compliant communication within medical facilities</li>
+                <li><strong>Remote Teams on VPN:</strong> Secure messaging for distributed teams using VPN connections</li>
+                <li><strong>Government Organizations:</strong> Air-gapped network communication for sensitive environments</li>
+            </ul>
+            <p>If your organization needs secure, private messaging without relying on external servers, MagShare is the perfect solution.</p>
+        </article>
+
+        <article class="news-article">
+            <h2>🤝 Contributing</h2>
+            <div class="news-meta">
+                <span>📅 January 2025</span>
+                <span class="news-tag">Community</span>
+            </div>
+            <p>MagShare is open source and welcomes contributions from the community!</p>
+            <ul>
+                <li><strong>Report Bugs:</strong> Found an issue? <a href="https://github.com/iamthemag/magshare/issues" class="news-link" target="_blank">Let us know</a></li>
+                <li><strong>Suggest Features:</strong> Have an idea for improvement? Share it on GitHub</li>
+                <li><strong>Submit Pull Requests:</strong> Code contributions are always welcome</li>
+                <li><strong>Improve Documentation:</strong> Help others by enhancing our docs</li>
+                <li><strong>Spread the Word:</strong> Tell others about MagShare</li>
+            </ul>
+            <p>Licensed under GPL v3.0, MagShare is free and open for everyone to use, modify, and distribute.</p>
+            <p><a href="https://github.com/iamthemag/magshare" class="news-link" target="_blank">Contribute on GitHub →</a></p>
+        </article>
+
+        <article class="news-article">
+            <h2>📬 Stay Connected</h2>
+            <div class="news-meta">
+                <span>📅 January 2025</span>
+                <span class="news-tag">Community</span>
+            </div>
+            <p>Keep up with MagShare development:</p>
+            <ul>
+                <li><strong>GitHub:</strong> <a href="https://github.com/iamthemag/magshare" class="news-link" target="_blank">Star the repository</a> to get notified about releases</li>
+                <li><strong>Issues:</strong> <a href="https://github.com/iamthemag/magshare/issues" class="news-link" target="_blank">Track ongoing development</a></li>
+                <li><strong>Releases:</strong> <a href="https://github.com/iamthemag/magshare/releases" class="news-link" target="_blank">View all releases</a></li>
+            </ul>
+            <p>We're committed to keeping MagShare secure, stable, and actively maintained for years to come!</p>
+        </article>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>MagShare</h4>
+                    <p>Secure messenger for connected communities</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="https://github.com/iamthemag/magshare" target="_blank">GitHub</a></li>
+                        <li><a href="https://github.com/iamthemag/magshare/issues" target="_blank">Report Issues</a></li>
+                        <li><a href="https://github.com/iamthemag/magshare/blob/main/LICENSE" target="_blank">License</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Acknowledgments</h4>
+                    <ul>
+                        <li><a href="https://beebeep.net" target="_blank">BeeBEEP Project</a></li>
+                        <li>Marco Mastroddi - Original Creator</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Abdul Gafoor Mohammed. Licensed under GPL v3.0</p>
+                <p>Original BeeBEEP &copy; 2010-2023 Marco Mastroddi</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MagShare Help - Installation and usage guide for MagShare secure messenger">
+    <title>Help - MagShare</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .help-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+        .help-section {
+            margin-bottom: 3rem;
+        }
+        .help-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+        .help-section h3 {
+            color: var(--secondary-color);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        .help-section p, .help-section li {
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .help-section ul, .help-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .help-section code {
+            background: var(--light-bg);
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .help-section pre {
+            background: var(--light-bg);
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        .help-section pre code {
+            background: none;
+            padding: 0;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="magshare.png" alt="MagShare Logo" class="logo">
+                <span class="brand-name">MagShare</span>
+            </div>
+            
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#download">Download</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="help.html">Help</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="https://github.com/iamthemag/magshare" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="help-content">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        
+        <h1>MagShare Help Guide</h1>
+
+        <div class="help-section">
+            <h2>Getting Started</h2>
+            <p>MagShare is a secure, serverless messenger designed for local area networks. This guide will help you install and use MagShare effectively.</p>
+        </div>
+
+        <div class="help-section">
+            <h2>Installation</h2>
+            
+            <h3>Windows</h3>
+            <ol>
+                <li>Download the latest <code>.exe</code> installer from the <a href="index.html#download">download page</a></li>
+                <li>Run the installer and follow the on-screen instructions</li>
+                <li>Launch MagShare from the Start menu or desktop shortcut</li>
+            </ol>
+
+            <h3>Linux (Debian/Ubuntu)</h3>
+            <ol>
+                <li>Download the <code>.deb</code> package from the <a href="index.html#download">download page</a></li>
+                <li>Install using the command:</li>
+            </ol>
+            <pre><code>sudo dpkg -i magshare_*.deb
+sudo apt-get install -f  # Install dependencies if needed</code></pre>
+            <ol start="3">
+                <li>Launch MagShare from your applications menu or run <code>magshare</code> in terminal</li>
+            </ol>
+
+            <h3>macOS</h3>
+            <ol>
+                <li>Download the <code>.dmg</code> file from the <a href="index.html#download">download page</a></li>
+                <li>Open the DMG file and drag MagShare to your Applications folder</li>
+                <li>Launch MagShare from Applications</li>
+                <li>If prompted about security, go to System Preferences → Security & Privacy and allow MagShare to run</li>
+            </ol>
+        </div>
+
+        <div class="help-section">
+            <h2>First Time Setup</h2>
+            <ol>
+                <li><strong>Set Your Display Name:</strong> Choose a name that will be visible to other users on your network</li>
+                <li><strong>Configure Your Status:</strong> Set your availability status (Available, Away, Busy, etc.)</li>
+                <li><strong>Network Discovery:</strong> MagShare will automatically discover other users on your local network</li>
+                <li><strong>Firewall Settings:</strong> Make sure your firewall allows MagShare to communicate on your local network</li>
+            </ol>
+        </div>
+
+        <div class="help-section">
+            <h2>Core Features</h2>
+            
+            <h3>Starting a Chat</h3>
+            <ul>
+                <li>Select a user from the user list</li>
+                <li>Double-click their name or right-click and select "Chat"</li>
+                <li>Type your message in the input field and press Enter</li>
+            </ul>
+
+            <h3>Group Chats</h3>
+            <ul>
+                <li>Click the "Create Group" button or use the menu option</li>
+                <li>Select multiple users to add to the group</li>
+                <li>Give your group a name</li>
+                <li>All group members will be notified and can participate in the conversation</li>
+            </ul>
+
+            <h3>File Sharing</h3>
+            <ul>
+                <li>Drag and drop files into any chat window, or</li>
+                <li>Click the attachment icon and select files to share</li>
+                <li>Files are transferred directly between users (peer-to-peer)</li>
+                <li>You can pause and resume file transfers</li>
+                <li>Large files are supported</li>
+            </ul>
+
+            <h3>Encryption</h3>
+            <ul>
+                <li>All messages are encrypted with AES-256 encryption by default</li>
+                <li>Encryption keys are unique for each connection</li>
+                <li>No configuration needed - it's automatic</li>
+            </ul>
+        </div>
+
+        <div class="help-section">
+            <h2>Settings & Configuration</h2>
+            
+            <h3>Network Settings</h3>
+            <ul>
+                <li><strong>Port Configuration:</strong> Default port is 6257. Change if needed in Settings → Network</li>
+                <li><strong>Broadcast Settings:</strong> Configure network broadcast settings if users aren't appearing</li>
+                <li><strong>Connection Mode:</strong> Choose between LAN and Internet mode (if VPN is configured)</li>
+            </ul>
+
+            <h3>Appearance</h3>
+            <ul>
+                <li>Change themes and color schemes</li>
+                <li>Adjust font sizes for better readability</li>
+                <li>Customize notification sounds</li>
+            </ul>
+
+            <h3>Privacy</h3>
+            <ul>
+                <li>Enable/disable message history</li>
+                <li>Configure message retention period</li>
+                <li>Set up blocked users list</li>
+            </ul>
+        </div>
+
+        <div class="help-section">
+            <h2>Troubleshooting</h2>
+            
+            <h3>Can't See Other Users</h3>
+            <ul>
+                <li>Ensure all users are on the same network</li>
+                <li>Check firewall settings and allow MagShare through</li>
+                <li>Verify that the network allows broadcast/multicast traffic</li>
+                <li>Try manually adding users by IP address</li>
+            </ul>
+
+            <h3>File Transfer Issues</h3>
+            <ul>
+                <li>Check available disk space on receiving end</li>
+                <li>Ensure both users have stable network connection</li>
+                <li>Try smaller files first to test connectivity</li>
+                <li>Check firewall isn't blocking file transfers</li>
+            </ul>
+
+            <h3>Connection Problems</h3>
+            <ul>
+                <li>Restart MagShare on both ends</li>
+                <li>Check network connectivity</li>
+                <li>Verify port 6257 (or your custom port) is not blocked</li>
+                <li>Try disabling VPN temporarily to test</li>
+            </ul>
+        </div>
+
+        <div class="help-section">
+            <h2>Keyboard Shortcuts</h2>
+            <ul>
+                <li><strong>Ctrl/Cmd + N:</strong> New chat</li>
+                <li><strong>Ctrl/Cmd + G:</strong> Create group</li>
+                <li><strong>Ctrl/Cmd + F:</strong> Find/Search</li>
+                <li><strong>Ctrl/Cmd + W:</strong> Close chat</li>
+                <li><strong>Ctrl/Cmd + Q:</strong> Quit application</li>
+                <li><strong>Ctrl/Cmd + ,:</strong> Open settings</li>
+            </ul>
+        </div>
+
+        <div class="help-section">
+            <h2>Need More Help?</h2>
+            <p>If you need additional assistance:</p>
+            <ul>
+                <li>Visit our <a href="https://github.com/iamthemag/magshare" target="_blank">GitHub repository</a> for documentation</li>
+                <li>Check <a href="https://github.com/iamthemag/magshare/issues" target="_blank">existing issues</a> or report a new one</li>
+                <li>Join our community discussions</li>
+                <li>Review the <a href="https://beebeep.net" target="_blank">original BeeBEEP documentation</a> (most features are compatible)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>MagShare</h4>
+                    <p>Secure messenger for connected communities</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="https://github.com/iamthemag/magshare" target="_blank">GitHub</a></li>
+                        <li><a href="https://github.com/iamthemag/magshare/issues" target="_blank">Report Issues</a></li>
+                        <li><a href="https://github.com/iamthemag/magshare/blob/main/LICENSE" target="_blank">License</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Acknowledgments</h4>
+                    <ul>
+                        <li><a href="https://beebeep.net" target="_blank">BeeBEEP Project</a></li>
+                        <li>Marco Mastroddi - Original Creator</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Abdul Gafoor Mohammed. Licensed under GPL v3.0</p>
+                <p>Original BeeBEEP &copy; 2010-2023 Marco Mastroddi</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

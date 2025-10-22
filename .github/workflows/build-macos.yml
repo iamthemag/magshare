@@ -1,0 +1,251 @@
+name: Build macOS - MagShare
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+env:
+  BUILD_TYPE: Release
+  PROJECT_NAME: MagShare
+  QT_VERSION: '5.15.2'
+
+jobs:
+  validate-tag:
+    name: Validate Release Tag
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      is_release: ${{ steps.version.outputs.is_release }}
+    
+    steps:
+      - name: Extract version from tag
+        id: version
+        run: |
+          if [[ $GITHUB_REF == refs/tags/v* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "is_release=true" >> $GITHUB_OUTPUT
+            echo "Release version: $VERSION"
+          else
+            VERSION="dev-build"
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "is_release=false" >> $GITHUB_OUTPUT
+          fi
+
+  build-macos:
+    name: Build macOS Release
+    runs-on: macos-12
+    needs: validate-tag
+    
+    permissions:
+      contents: write
+      packages: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: 'mac'
+          target: 'desktop'
+          modules: 'qtmultimedia'
+          cache: true
+
+      - name: Build project
+        run: |
+          qmake magshare-desktop.pro CONFIG+=release
+          make -j$(sysctl -n hw.ncpu)
+          echo "Build completed for version ${{ needs.validate-tag.outputs.version }}"
+
+      - name: Create app bundle
+        run: |
+          mkdir -p MagShare.app/Contents/MacOS
+          mkdir -p MagShare.app/Contents/Resources
+          
+          # Find and copy the executable
+          find . -name "magshare" -type f -perm +111 | head -1 | xargs -I {} cp {} MagShare.app/Contents/MacOS/MagShare
+          
+          # Copy icon
+          if [ -f "src/images/magshare.png" ]; then
+            cp src/images/magshare.png MagShare.app/Contents/Resources/
+          fi
+          
+          # Create Info.plist
+          cat > MagShare.app/Contents/Info.plist << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>CFBundleExecutable</key>
+              <string>MagShare</string>
+              <key>CFBundleIdentifier</key>
+              <string>io.github.iamthemag.magshare</string>
+              <key>CFBundleName</key>
+              <string>MagShare</string>
+              <key>CFBundleVersion</key>
+              <string>${{ needs.validate-tag.outputs.version }}</string>
+              <key>CFBundleShortVersionString</key>
+              <string>${{ needs.validate-tag.outputs.version }}</string>
+              <key>CFBundlePackageType</key>
+              <string>APPL</string>
+              <key>LSMinimumSystemVersion</key>
+              <string>10.12</string>
+              <key>NSHighResolutionCapable</key>
+              <true/>
+          </dict>
+          </plist>
+          EOF
+
+      - name: Deploy Qt dependencies
+        run: |
+          macdeployqt MagShare.app -always-overwrite
+          echo "✅ Qt dependencies deployed"
+
+      - name: Create DMG
+        run: |
+          # Create temporary mount point
+          mkdir -p dmg_temp
+          cp -r MagShare.app dmg_temp/
+          
+          # Create README
+          cat > dmg_temp/README.txt << EOF
+          MagShare ${{ needs.validate-tag.outputs.version }} - Secure LAN Messenger
+          
+          INSTALLATION
+          ------------
+          Drag MagShare.app to your Applications folder
+          
+          SYSTEM REQUIREMENTS
+          -------------------
+          - macOS 10.12 or later
+          - 100 MB free disk space
+          - Network connectivity for LAN communication
+          
+          FEATURES
+          --------
+          - End-to-end encrypted messaging with AES-256
+          - Serverless peer-to-peer architecture
+          - Secure file sharing with pause/resume support
+          - Group chat functionality
+          - Automatic network discovery
+          
+          LINKS
+          -----
+          Website: https://iamthemag.github.io/magshare
+          Documentation: https://iamthemag.github.io/magshare/help.html
+          GitHub: https://github.com/iamthemag/magshare
+          
+          LICENSE
+          -------
+          GNU General Public License v3.0
+          Copyright (C) 2025 Abdul Gafoor Mohammed
+          Fork of BeeBEEP (C) 2010-2023 Marco Mastroddi
+          EOF
+          
+          # Create DMG
+          hdiutil create -volname "MagShare" -srcfolder dmg_temp -ov -format UDZO "MagShare-${{ needs.validate-tag.outputs.version }}-macOS.dmg"
+          echo "✅ Created DMG package"
+
+      - name: Verify DMG
+        run: |
+          echo "════════════════════════════════════════════════════════"
+          echo "Build Verification"
+          echo "════════════════════════════════════════════════════════"
+          
+          DMG_FILE="MagShare-${{ needs.validate-tag.outputs.version }}-macOS.dmg"
+          if [ -f "$DMG_FILE" ]; then
+            DMG_SIZE=$(du -h "$DMG_FILE" | cut -f1)
+            echo "✅ DMG Package: $DMG_FILE ($DMG_SIZE)"
+          else
+            echo "❌ DMG file not found!"
+            exit 1
+          fi
+          
+          echo "════════════════════════════════════════════════════════"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: magshare-macos
+          path: MagShare-*.dmg
+          retention-days: 30
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: MagShare-*.dmg
+          draft: false
+          prerelease: false
+          body: |
+            # MagShare ${{ needs.validate-tag.outputs.version }} - macOS Release
+            
+            ## Installation
+            1. Download `MagShare-${{ needs.validate-tag.outputs.version }}-macOS.dmg`
+            2. Open the DMG file
+            3. Drag MagShare.app to your Applications folder
+            4. Launch from Applications
+            
+            ## Security Note
+            If you see a security warning, go to System Preferences → Security & Privacy and click "Open Anyway"
+            
+            ## What's Included
+            - MagShare.app (complete application bundle)
+            - All required Qt frameworks
+            - Documentation
+            
+            ## System Requirements
+            - macOS 10.12 (Sierra) or later
+            - 100 MB free disk space
+            - Network connectivity for LAN communication
+            
+            ## Features
+            - End-to-end encrypted messaging with AES-256
+            - Serverless peer-to-peer architecture
+            - Secure file sharing with pause/resume support
+            - Group chat functionality
+            - Automatic network discovery
+            
+            ## Links
+            - [Website](https://iamthemag.github.io/magshare)
+            - [Documentation](https://iamthemag.github.io/magshare/help.html)
+            - [Report Issues](https://github.com/iamthemag/magshare/issues)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate build summary
+        run: |
+          echo "════════════════════════════════════════════════════════"
+          echo "macOS Build Summary"
+          echo "════════════════════════════════════════════════════════"
+          echo "Version: ${{ needs.validate-tag.outputs.version }}"
+          echo "Tag: ${{ github.ref }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "════════════════════════════════════════════════════════"
+          
+          if [ -f MagShare-*.dmg ]; then
+            ls -lh MagShare-*.dmg
+          fi
+          
+          echo "════════════════════════════════════════════════════════"
+
+  notify-success:
+    name: Notify Success
+    runs-on: ubuntu-latest
+    needs: build-macos
+    if: always() && needs.build-macos.result == 'success'
+    
+    steps:
+      - name: Release created successfully
+        run: |
+          echo "✅ macOS release ${{ github.ref }} created successfully!"
+          echo ""
+          echo "DMG package available at:"
+          echo "https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}"

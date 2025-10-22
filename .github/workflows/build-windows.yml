@@ -1,0 +1,292 @@
+name: Build Windows - MagShare
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+env:
+  BUILD_TYPE: Release
+  PROJECT_NAME: MagShare
+  QT_VERSION: '5.15.2'
+
+jobs:
+  validate-tag:
+    name: Validate Release Tag
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      is_release: ${{ steps.version.outputs.is_release }}
+    
+    steps:
+      - name: Extract version from tag
+        id: version
+        run: |
+          if [[ $GITHUB_REF == refs/tags/v* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "is_release=true" >> $GITHUB_OUTPUT
+            echo "Release version: $VERSION"
+          else
+            VERSION="dev-build"
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "is_release=false" >> $GITHUB_OUTPUT
+          fi
+
+  build-windows:
+    name: Build Windows Release
+    runs-on: windows-2022
+    needs: validate-tag
+    
+    permissions:
+      contents: write
+      packages: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_msvc2019_64'
+          modules: 'qtmultimedia'
+          cache: true
+
+      - name: Setup MSVC
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Configure build environment
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          echo "Environment configured"
+
+      - name: Build project
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          qmake magshare-desktop.pro CONFIG+=release
+          nmake
+          echo "Build completed for version ${{ needs.validate-tag.outputs.version }}"
+
+      - name: Create distribution directory
+        shell: powershell
+        run: |
+          New-Item -ItemType Directory -Force -Path "dist"
+          New-Item -ItemType Directory -Force -Path "dist/MagShare"
+
+      - name: Copy executable
+        shell: powershell
+        run: |
+          $exePath = Get-ChildItem -Path . -Recurse -Filter "magshare.exe" | Select-Object -First 1
+          if ($exePath) {
+            Copy-Item $exePath.FullName -Destination "dist/MagShare/MagShare.exe"
+            Write-Host "✅ Executable copied: $($exePath.FullName)"
+          } else {
+            Write-Error "❌ magshare.exe not found!"
+            exit 1
+          }
+
+      - name: Deploy Qt dependencies
+        shell: cmd
+        run: |
+          cd dist\MagShare
+          windeployqt --release --no-translations --no-system-d3d-compiler --no-opengl-sw MagShare.exe
+          echo "✅ Qt dependencies deployed"
+
+      - name: Copy additional resources
+        shell: powershell
+        run: |
+          # Copy icon
+          if (Test-Path "src/images/magshare.png") {
+            Copy-Item "src/images/magshare.png" -Destination "dist/MagShare/"
+          }
+          
+          # Copy license
+          if (Test-Path "LICENSE") {
+            Copy-Item "LICENSE" -Destination "dist/MagShare/LICENSE.txt"
+          }
+          
+          # Copy README
+          if (Test-Path "README.md") {
+            Copy-Item "README.md" -Destination "dist/MagShare/README.txt"
+          }
+
+      - name: Create README for distribution
+        shell: powershell
+        run: |
+          $readme = @"
+          MagShare ${{ needs.validate-tag.outputs.version }} - Secure LAN Messenger
+          
+          INSTALLATION
+          ------------
+          1. Extract all files to a folder of your choice
+          2. Run MagShare.exe
+          
+          SYSTEM REQUIREMENTS
+          -------------------
+          - Windows 10 or later (64-bit)
+          - 100 MB free disk space
+          - Network connectivity for LAN communication
+          
+          FEATURES
+          --------
+          - End-to-end encrypted messaging with AES-256
+          - Serverless peer-to-peer architecture
+          - Secure file sharing with pause/resume support
+          - Group chat functionality
+          - Automatic network discovery
+          - Cross-platform support
+          
+          LINKS
+          -----
+          Website: https://iamthemag.github.io/magshare
+          Documentation: https://iamthemag.github.io/magshare/help.html
+          GitHub: https://github.com/iamthemag/magshare
+          
+          LICENSE
+          -------
+          MagShare is licensed under GNU General Public License v3.0
+          See LICENSE.txt for details
+          
+          Copyright (C) 2025 Abdul Gafoor Mohammed
+          Fork of BeeBEEP (C) 2010-2023 Marco Mastroddi
+          "@
+          
+          $readme | Out-File -FilePath "dist/MagShare/README.txt" -Encoding utf8
+
+      - name: Create ZIP package
+        shell: powershell
+        run: |
+          $version = "${{ needs.validate-tag.outputs.version }}"
+          $zipName = "MagShare-$version-Windows-x64.zip"
+          Compress-Archive -Path "dist/MagShare/*" -DestinationPath $zipName -CompressionLevel Optimal
+          Write-Host "✅ Created package: $zipName"
+          
+          # Verify package
+          $zipInfo = Get-Item $zipName
+          Write-Host "Package size: $([math]::Round($zipInfo.Length / 1MB, 2)) MB"
+
+      - name: Verify build
+        shell: powershell
+        run: |
+          Write-Host "════════════════════════════════════════════════════════"
+          Write-Host "Build Verification"
+          Write-Host "════════════════════════════════════════════════════════"
+          
+          $exe = "dist/MagShare/MagShare.exe"
+          if (Test-Path $exe) {
+            $fileInfo = Get-Item $exe
+            Write-Host "✅ Executable: $($fileInfo.Name) ($([math]::Round($fileInfo.Length / 1MB, 2)) MB)"
+          } else {
+            Write-Error "❌ Executable not found!"
+            exit 1
+          }
+          
+          # Count DLL files
+          $dlls = Get-ChildItem "dist/MagShare/*.dll" -Recurse
+          Write-Host "✅ Qt DLLs deployed: $($dlls.Count) files"
+          
+          # List critical DLLs
+          $criticalDlls = @("Qt5Core.dll", "Qt5Gui.dll", "Qt5Widgets.dll", "Qt5Network.dll")
+          foreach ($dll in $criticalDlls) {
+            if (Test-Path "dist/MagShare/$dll") {
+              Write-Host "  ✓ $dll"
+            } else {
+              Write-Warning "  ✗ $dll (missing)"
+            }
+          }
+          
+          Write-Host "════════════════════════════════════════════════════════"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: magshare-windows-x64
+          path: MagShare-*.zip
+          retention-days: 30
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: MagShare-*.zip
+          draft: false
+          prerelease: false
+          body: |
+            # MagShare ${{ needs.validate-tag.outputs.version }} - Windows Release
+            
+            ## Installation
+            1. Download `MagShare-${{ needs.validate-tag.outputs.version }}-Windows-x64.zip`
+            2. Extract to any folder
+            3. Run `MagShare.exe`
+            
+            ## What's Included
+            - MagShare.exe (main application)
+            - All required Qt5 DLLs
+            - Documentation and license
+            
+            ## System Requirements
+            - Windows 10 or later (64-bit)
+            - 100 MB free disk space
+            - Network connectivity for LAN communication
+            
+            ## Features
+            - End-to-end encrypted messaging with AES-256
+            - Serverless peer-to-peer architecture
+            - Secure file sharing with pause/resume support
+            - Group chat functionality
+            - Automatic network discovery
+            
+            ## Troubleshooting
+            If you encounter DLL errors:
+            1. Make sure all files are extracted together
+            2. Don't move MagShare.exe without the other files
+            3. Install Visual C++ Redistributable 2019 if needed
+            
+            ## Links
+            - [Website](https://iamthemag.github.io/magshare)
+            - [Documentation](https://iamthemag.github.io/magshare/help.html)
+            - [Report Issues](https://github.com/iamthemag/magshare/issues)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate build summary
+        shell: powershell
+        run: |
+          Write-Host "════════════════════════════════════════════════════════"
+          Write-Host "Windows Build Summary"
+          Write-Host "════════════════════════════════════════════════════════"
+          Write-Host "Version: ${{ needs.validate-tag.outputs.version }}"
+          Write-Host "Tag: ${{ github.ref }}"
+          Write-Host "Commit: ${{ github.sha }}"
+          Write-Host "════════════════════════════════════════════════════════"
+          
+          $package = Get-Item "MagShare-*.zip" | Select-Object -First 1
+          if ($package) {
+            Write-Host "Package: $($package.Name)"
+            Write-Host "Size: $([math]::Round($package.Length / 1MB, 2)) MB"
+          }
+          
+          Write-Host "════════════════════════════════════════════════════════"
+
+  notify-success:
+    name: Notify Success
+    runs-on: ubuntu-latest
+    needs: build-windows
+    if: always() && needs.build-windows.result == 'success'
+    
+    steps:
+      - name: Release created successfully
+        run: |
+          echo "✅ Windows release ${{ github.ref }} created successfully!"
+          echo ""
+          echo "Package available at:"
+          echo "https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}"

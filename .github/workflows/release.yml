@@ -1,32 +1,66 @@
-name: Build MagShare
+name: Release - Build MagShare
 
 on:
   push:
     tags:
       - 'v*'
-  pull_request:
-    branches: [ main, master ]
   workflow_dispatch:
 
-jobs:
-  build-linux:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
+env:
+  BUILD_TYPE: Release
+  PROJECT_NAME: MagShare
 
-      - name: Install Qt and dependencies
+jobs:
+  validate-tag:
+    name: Validate Release Tag
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      is_release: ${{ steps.version.outputs.is_release }}
+    
+    steps:
+      - name: Extract version from tag
+        id: version
+        run: |
+          if [[ $GITHUB_REF == refs/tags/v* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "is_release=true" >> $GITHUB_OUTPUT
+            echo "Release version: $VERSION"
+          else
+            echo "is_release=false" >> $GITHUB_OUTPUT
+          fi
+
+  build-release:
+    name: Build Release Package
+    runs-on: ubuntu-22.04
+    needs: validate-tag
+    
+    permissions:
+      contents: write
+      packages: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y qtbase5-dev qttools5-dev-tools qtmultimedia5-dev \
+          sudo apt-get install -y \
+            qtbase5-dev qttools5-dev-tools qtmultimedia5-dev \
             libqt5x11extras5-dev libxcb1-dev libxcb-screensaver0-dev libx11-dev \
             build-essential debhelper devscripts fakeroot
 
-      - name: Build application
+      - name: Build project
         run: |
           qmake magshare-desktop.pro
           make -j$(nproc)
+          echo "Build completed for version ${{ needs.validate-tag.outputs.version }}"
 
-      - name: Create .deb package
+      - name: Create DEB package
         run: |
           mkdir -p debian/magshare/usr/bin
           mkdir -p debian/magshare/usr/share/applications
@@ -51,44 +85,98 @@ jobs:
 
           cat > debian/magshare/DEBIAN/control << EOF
           Package: magshare
-          Version: 1.1.2
+          Version: ${{ needs.validate-tag.outputs.version }}
           Section: net
           Priority: optional
           Architecture: amd64
           Depends: libqt5core5a, libqt5gui5, libqt5widgets5, libqt5network5, libqt5multimedia5
-          Maintainer: MagShare Team <abdulgafoormohmd@gmail.com>
+          Maintainer: Abdul Gafoor Mohammed <abdulgafoormohmd@gmail.com>
           Description: Secure LAN Messenger and File Sharing
            MagShare is a secure peer-to-peer messenger and file sharing application
            designed for local area networks.
           EOF
 
           dpkg-deb --build debian/magshare
-          mv debian/magshare.deb magshare_1.1.2_amd64.deb
+          mv debian/magshare.deb magshare_${{ needs.validate-tag.outputs.version }}_amd64.deb
 
-      - name: Upload Linux artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: magshare-linux
-          path: |
-            magshare_1.1.2_amd64.deb
-            test/magshare
-
-  create-release:
-    needs: [build-linux]
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
-    steps:
-      - name: Download all artifacts
-        uses: actions/download-artifact@v4
+      - name: Verify DEB package
+        run: |
+          PACKAGE=$(ls magshare*.deb | head -1)
+          echo "Package: $PACKAGE"
+          dpkg-deb --info "$PACKAGE" | head -20
+          echo "✅ Package verified"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          name: MagShare ${{ github.ref_name }}
-          tag_name: ${{ github.ref_name }}
-          files: |
-            magshare-linux/magshare_1.1.2_amd64.deb
+          files: magshare*.deb
           draft: false
           prerelease: false
+          body: |
+            # MagShare ${{ needs.validate-tag.outputs.version }} Release
+            
+            ## Installation
+            ```bash
+            sudo dpkg -i magshare_${{ needs.validate-tag.outputs.version }}_amd64.deb
+            sudo apt install -f
+            ```
+            
+            ## Running
+            ```bash
+            magshare
+            ```
+            
+            ## What's New
+            For detailed changelog, see the documentation.
+            
+            ## System Requirements
+            - Ubuntu 20.04 LTS or later
+            - Qt5 5.12+
+            - Network connectivity for LAN communication
+            
+            ## Features
+            - End-to-end encrypted messaging with AES-256
+            - Serverless peer-to-peer architecture
+            - Secure file sharing with pause/resume support
+            - Group chat functionality
+            - Automatic network discovery
+            - Cross-platform support (Windows, macOS, Linux)
+            
+            ## Links
+            - [Website](https://iamthemag.github.io/magshare)
+            - [Documentation](https://iamthemag.github.io/magshare/help.html)
+            - [News](https://iamthemag.github.io/magshare/news.html)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate build summary
+        run: |
+          echo "════════════════════════════════════════════════════════"
+          echo "Release Build Summary"
+          echo "════════════════════════════════════════════════════════"
+          echo "Version: ${{ needs.validate-tag.outputs.version }}"
+          echo "Tag: ${{ github.ref }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "════════════════════════════════════════════════════════"
+          if [ -f test/magshare ]; then
+            echo "Binary: $(ls -lh test/magshare | awk '{print $5, $9}')"
+          fi
+          if [ -f magshare*.deb ]; then
+            echo "Package: $(ls -lh magshare*.deb)"
+          fi
+          echo "════════════════════════════════════════════════════════"
+
+  notify-success:
+    name: Notify Success
+    runs-on: ubuntu-latest
+    needs: build-release
+    if: always() && needs.build-release.result == 'success'
+    
+    steps:
+      - name: Release created successfully
+        run: |
+          echo "✅ Release ${{ github.ref }} created successfully!"
+          echo ""
+          echo "DEB package available at:"
+          echo "https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}"

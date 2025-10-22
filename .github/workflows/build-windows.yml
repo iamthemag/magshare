@@ -207,7 +207,7 @@ jobs:
           Write-Host "════════════════════════════════════════════════════════"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: magshare-windows-x64
           path: MagShare-*.zip

@@ -881,12 +881,7 @@ QString Settings::donationWebSite() const
 
 QString Settings::helpWebSite() const
 {
-  QString web_url = officialWebSite() + QString( MAGSHARE_HELP_WEBSITE );
-  if( m_language == "it" )
-    web_url += QString( "?lang=it_IT" );
-  else
-    web_url += QString( "?lang=en_US" );
-  return web_url;
+  return QString( MAGSHARE_HELP_WEBSITE );
 }
 
 QString Settings::languageWebSite() const
@@ -901,7 +896,7 @@ QString Settings::lastVersionUrl() const
 
 QString Settings::newsWebSite() const
 {
-  return officialWebSite() + QString( MAGSHARE_NEWS_WEBSITE );
+  return QString( MAGSHARE_NEWS_WEBSITE );
 }
 
 QString Settings::developerWebSite() const
@@ -911,32 +906,17 @@ QString Settings::developerWebSite() const
 
 QString Settings::tipsWebSite() const
 {
-  QString web_url = officialWebSite() + QString( MAGSHARE_TIPS_WEBSITE );
-  if( m_language == "it" )
-    web_url += QString( "?lang=it_IT" );
-  else
-    web_url += QString( "?lang=en_US" );
-  return web_url;
+  return officialWebSite();
 }
 
 QString Settings::factWebSite() const
 {
-  QString web_url = officialWebSite() + QString( MAGSHARE_FACT_WEBSITE );
-  if( m_language == "it" )
-    web_url += QString( "?lang=it_IT" );
-  else
-    web_url += QString( "?lang=en_US" );
-  return web_url;
+  return officialWebSite();
 }
 
 QString Settings::faqWebSite() const
 {
-  QString web_url = officialWebSite() + QString( MAGSHARE_FAQ_WEBSITE );
-  if( m_language == "it" )
-    web_url += QString( "?lang=it_IT" );
-  else
-    web_url += QString( "?lang=en_US" );
-  return web_url;
+  return officialWebSite();
 }
 
 QString Settings::hunspellVersion() const

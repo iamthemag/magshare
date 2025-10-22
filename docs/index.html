@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MagShare - Secure serverless messenger for connected communities. End-to-end encrypted chat, file sharing, and collaboration.">
+    <title>MagShare - Secure LAN Messenger</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="../MagShare-logo.png" alt="MagShare Logo" class="logo">
+                <span class="brand-name">MagShare</span>
+            </div>
+            
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#download">Download</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="https://github.com/iamthemag/magshare" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Secure Messenger for Connected Communities</h1>
+            <p class="hero-subtitle">Serverless, encrypted communication for offices and organizations that value privacy</p>
+            <div class="hero-buttons">
+                <a href="#download" class="btn btn-primary">Download Now</a>
+                <a href="https://github.com/iamthemag/magshare" class="btn btn-secondary" target="_blank">View on GitHub</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="hero-graphic">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="80" fill="#4a90e2" opacity="0.1"/>
+                    <circle cx="100" cy="100" r="60" fill="#4a90e2" opacity="0.2"/>
+                    <circle cx="100" cy="100" r="40" fill="#4a90e2" opacity="0.3"/>
+                    <path d="M100,60 L100,140 M60,100 L140,100" stroke="#4a90e2" stroke-width="4" stroke-linecap="round"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>End-to-End Encryption</h3>
+                    <p>All messages encrypted with AES-256 encryption. Your conversations stay private.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Serverless Architecture</h3>
+                    <p>No external server required. Messages are sent directly between users on your network.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📁</div>
+                    <h3>Secure File Sharing</h3>
+                    <p>Share files and folders securely with colleagues. Supports pause/resume.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Group Chat</h3>
+                    <p>Create and manage group conversations for team collaboration.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Network Discovery</h3>
+                    <p>Automatic user discovery on local networks. No configuration needed.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🖥️</div>
+                    <h3>Cross-Platform</h3>
+                    <p>Works on Windows, macOS, and Linux. One app for all your devices.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download">
+        <div class="container">
+            <h2>Download MagShare</h2>
+            <p class="download-subtitle">Choose your platform and get started</p>
+            
+            <div class="download-grid" id="downloadGrid">
+                <div class="download-card">
+                    <div class="platform-icon">🪟</div>
+                    <h3>Windows</h3>
+                    <p>Windows 7 or later</p>
+                    <button class="btn btn-download" data-platform="windows">
+                        <span class="btn-text">Download</span>
+                        <span class="btn-loading">Loading...</span>
+                    </button>
+                </div>
+                <div class="download-card">
+                    <div class="platform-icon">🐧</div>
+                    <h3>Linux</h3>
+                    <p>Ubuntu, Debian, and derivatives</p>
+                    <button class="btn btn-download" data-platform="linux">
+                        <span class="btn-text">Download .deb</span>
+                        <span class="btn-loading">Loading...</span>
+                    </button>
+                </div>
+                <div class="download-card">
+                    <div class="platform-icon">🍎</div>
+                    <h3>macOS</h3>
+                    <p>macOS 10.12 or later</p>
+                    <button class="btn btn-download" data-platform="macos">
+                        <span class="btn-text">Download</span>
+                        <span class="btn-loading">Loading...</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="download-info">
+                <p>Latest version: <span id="latestVersion">Loading...</span></p>
+                <p><a href="https://github.com/iamthemag/magshare/releases" target="_blank">View all releases</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About MagShare</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>MagShare is a fork of the excellent BeeBEEP project by Marco Mastroddi. We extend our heartfelt gratitude to Marco and the BeeBEEP community for creating such a robust foundation.</p>
+                    
+                    <h3>Security</h3>
+                    <p>MagShare inherits BeeBEEP's robust security model:</p>
+                    <ul>
+                        <li><strong>Rijndael/AES Encryption:</strong> Industry-standard 256-bit encryption</li>
+                        <li><strong>Direct Communication:</strong> No intermediary servers to compromise security</li>
+                        <li><strong>Random Keys:</strong> Unique encryption keys generated for each connection</li>
+                        <li><strong>Local Network Only:</strong> Communication limited to your trusted network</li>
+                    </ul>
+
+                    <h3>Open Source</h3>
+                    <p>MagShare is licensed under the GNU General Public License v3.0, same as the original BeeBEEP project. We welcome contributions from the community!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>MagShare</h4>
+                    <p>Secure messenger for connected communities</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="https://github.com/iamthemag/magshare" target="_blank">GitHub</a></li>
+                        <li><a href="https://github.com/iamthemag/magshare/issues" target="_blank">Report Issues</a></li>
+                        <li><a href="https://github.com/iamthemag/magshare/blob/main/LICENSE" target="_blank">License</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Acknowledgments</h4>
+                    <ul>
+                        <li><a href="https://beebeep.net" target="_blank">BeeBEEP Project</a></li>
+                        <li>Marco Mastroddi - Original Creator</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023-2025 Abdul Gafoor Mohammed. Licensed under GPL v3.0</p>
+                <p>Original BeeBEEP &copy; 2010-2023 Marco Mastroddi</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

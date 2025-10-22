@@ -26,14 +26,14 @@
 
 const char BEEBEEP_NAME[] = "MagShare";
 const char BEEBEEP_ORGANIZATION[] = "MagShareSW";
-const char MAGSHARE_ORGANIZATION_DOMAIN[] = "magshare.net";
+const char MAGSHARE_ORGANIZATION_DOMAIN[] = "iamthemag.github.io";
 const char MAGSHARE_DNS_RECORD[] = "_magshare._tcp";
-const char BEEBEEP_WEBSITE[] = "https://github.com/iamthemag/magshare";
+const char BEEBEEP_WEBSITE[] = "https://iamthemag.github.io/magshare";
 const char MAGSHARE_DOWNLOAD_WEBSITE[] = "";
 const char MAGSHARE_DONATE_WEBSITE[] = "";
-const char MAGSHARE_HELP_WEBSITE[] = "https://github.com/iamthemag/magshare";
+const char MAGSHARE_HELP_WEBSITE[] = "https://iamthemag.github.io/magshare/help.html";
 const char MAGSHARE_LANGUAGE_WEBSITE[] = "language";
-const char MAGSHARE_NEWS_WEBSITE[] = "news";
+const char MAGSHARE_NEWS_WEBSITE[] = "https://iamthemag.github.io/magshare/news.html";
 const char MAGSHARE_CHECK_VERSION_WEBSITE[] = "check_version.php";
 const char MAGSHARE_LAST_VERSION_FILE[] = "/releases/latest/download/VERSION.json";
 const char MAGSHARE_FACT_WEBSITE[] = "fact";

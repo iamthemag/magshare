@@ -760,7 +760,7 @@ void GuiMain::showAbout()
 #else
   QMessageBox::about( this, Settings::instance().programName(),
 #endif
-                      QString( "<b>%1</b> - Messenger for connected Communities<br><br>%2<br>%3 %4 %5<br><br>Fork of: magshare.net<br><br>%6 %7<br>%8<br>" )
+                      QString( "<b>%1</b> - Messenger for connected Communities<br><br>%2<br>%3 %4 %5<br><br>Fork of: <a href='https://beebeep.net'>BeeBEEP</a><br><br>%6 %7<br>%8<br>" )
                         .arg( Settings::instance().programName() )
                         .arg( Settings::instance().isDevelopmentVersion() ? tr( "Development version") : tr( "Version" ) )
                         .arg( Settings::instance().version( true, true, true ) )
@@ -775,8 +775,8 @@ void GuiMain::showAbout()
 void GuiMain::showLicense()
 {
   QString license_txt = QLatin1String(
-  "<b>MagShare</b> is a fork of MagShare (magshare.net) <br><br>"
-  "Original MagShare Copyright (C) 2010-2023 Marco Mastroddi <br>"
+  "<b>MagShare</b> is a fork of BeeBEEP (<a href='https://beebeep.net'>beebeep.net</a>) <br><br>"
+  "Original BeeBEEP Copyright (C) 2010-2023 Marco Mastroddi <br>"
   "MagShare modifications (C) 2023-2025 Abdul Gafoor Mohammed <br><br>"
   "MagShare is free software: you can redistribute it and/or modify "
   "it under the terms of the GNU General Public License as published "
@@ -786,7 +786,7 @@ void GuiMain::showLicense()
   "but WITHOUT ANY WARRANTY; without even the implied warranty "
   "of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. <br><br>"
   "See the GNU General Public License for more details. <br><br>"
-  "<br>Thanks to Marco Mastroddi and the MagShare project for the excellent foundation." );
+  "<br>Thanks to Marco Mastroddi and the BeeBEEP project for the excellent foundation." );
 #ifdef Q_OS_MACOS
   QMessageBox::about( Q_NULLPTR, Settings::instance().programName(), license_txt );
 #else
